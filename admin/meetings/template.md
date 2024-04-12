@@ -1,7 +1,7 @@
 # Meeting Title - Infinite Loops (Team 12)
 
-**Type of meeting**: online/hybrid/in-person
-**Location**: Place if in person / N/A if online
+**Type of meeting**: online/hybrid/in-person \
+**Location**: Place if in person / N/A if online \
 **Date & Time**:
 
 ## Attendance
