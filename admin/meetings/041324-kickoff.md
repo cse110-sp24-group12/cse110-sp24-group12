@@ -73,6 +73,6 @@ N/A since this was the first team meeting.
 ### Action Items
 
 - [ ] Please write bio snippets in the shared document on Slack
-- [ ] Submit headshots via email to Lindsey
+- [ ] Submit headshots via email to **Lindsey**
 
 **Meeting ended at: 1:30pm**
