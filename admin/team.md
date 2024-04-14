@@ -80,7 +80,7 @@ GitHub Account: [Wen](https://github.com/whc004)
 
 ### Sophia Davis
 
-<img src="headshots/sophia.HEIC" alt="Profile Picture" width="200">
+<img src="headshots/sophia.jpeg" alt="Profile Picture" width="200">
 
 Role: Developer
 
