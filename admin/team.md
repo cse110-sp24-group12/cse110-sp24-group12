@@ -75,7 +75,7 @@ Role: Developer
 
 GitHub Account: [Guan](https://github.com/ghuangchen01)
 
-Bio: 
+Bio: Hi, my name is Guan Huang Chen. A student in computer science major. Currently third year in UCSD. My favorite sport is soccer and that’s how I spend my free times. I also like reading novels in Chinese, I can finish a 3000 chapter novel within a month!
 
 ### Ritviksiddha Penchala
 
