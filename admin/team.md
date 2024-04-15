@@ -52,7 +52,7 @@ Bio: My name is Lindsey Rappaport & I am a Computer Science major at UCSD. I tra
 
 Role: Leader
 
-GitHub Account: [Ramtin](https://github/ramtintjb)
+GitHub Account: [Ramtin](https://github.com/ramtintjb)
 
 Bio: Hi! My name is Ramtin Tajbakhsh and I’m a third-year CS major at UCSD. I’m currently working as a Developer at Triton Software Engineering and we are developing a web application for the Union Station Homeless Services so that they can keep track of their information and referrals in an organized way. I love working out, mostly calisthenics, powerlifting, and bouldering. I also enjoy reading fantasy novels and taking naps.
 
