@@ -1,6 +1,36 @@
 # Infinite Loops
 
+## Branding
+
+### Logo
+
+TODO
+
+### Mascot
+
+Since our team name is **Infinite Loops**, we thought we could draw inspiration from **Avengers: Infinity War**. So we chose **Thanos** to be the mascot of our team.
+Here is a picture of what we had in mind:
+
+<img src="branding/mascot-thanos.jpeg" alt="Thanos Mascot" width="300"/>
+
+### Theme
+
+With the same reasoning as above, the theme for our team is **Avengers: Infinity War** and we thought we could also incorporate some elements from fractals in our designs.
+
+The introduction video of our team can be found here: [Video](videos/teamintro.mp4)
+
 ## Our Values
+
+- Communication:
+  - Responding to team mates in a timely manner
+  - Being open, honest, and upfront by sharing project updates regularly, voicing concerns early, and discussing uncertainties as they arise
+  - Reaching out for help whenever needed. Asking for help is a strength and an opportunity for collaboration and learning, not a weakness
+  - Openly praising each other for efforts and achievements
+  - Sharing constructive criticisms for areas needing improvement and missed opportunities
+- Comraderie:
+  - Promoting psychological safety within the team
+  - Covering for each other during hard times
+  - Helping each other out whenever needed
 
 ## Memes and random stuff that we think are important :)
 
