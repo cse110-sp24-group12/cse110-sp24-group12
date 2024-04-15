@@ -27,6 +27,7 @@ The introduction video of our team can be found here: [Video](videos/teamintro.m
   - Reaching out for help whenever needed. Asking for help is a strength and an opportunity for collaboration and learning, not a weakness
   - Openly praising each other for efforts and achievements
   - Sharing constructive criticisms for areas needing improvement and missed opportunities
+  - Letting the team know of any conflicts that arise as soon as you are aware & making sure your responsibilities are covered (whether that’s by you early on or by someone else who is willing to cover during a conflict)
 - Comraderie:
   - Promoting psychological safety within the team
   - Covering for each other during hard times
