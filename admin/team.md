@@ -4,7 +4,7 @@
 
 ### Logo
 
-TODO
+<img src="branding/logo.jpg" alt="Infinite Loops Logo" width="400"/>
 
 ### Mascot
 
@@ -32,8 +32,6 @@ The introduction video of our team can be found here: [Video](videos/teamintro.m
   - Promoting psychological safety within the team
   - Covering for each other during hard times
   - Helping each other out whenever needed
-
-## Memes and random stuff that we think are important :)
 
 ## Team Members
 
