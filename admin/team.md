@@ -2,9 +2,13 @@
 
 ## Branding
 
-### Logo
+### Logo 
 
 <img src="branding/logo.jpg" alt="Infinite Loops Logo" width="400"/>
+
+Raise your hand if your reaction was this after seeing the logo:
+
+<img src="branding/logo-meme.jpg" alt="Logo meme" width="400"/>
 
 ### Mascot
 
