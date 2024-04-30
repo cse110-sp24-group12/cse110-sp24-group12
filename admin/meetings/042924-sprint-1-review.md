@@ -8,7 +8,7 @@
 - [x] Lindsey Rappaport
 - [x] Ramtin Tajbakhsh
 - [x] Eban Covarrubias
-- [ ] Guan Huang Chen
+- [x] Guan Huang Chen
 - [x] Ibraheem Syed
 - [x] Sophia Davis
 - [x] Jordan Chang
