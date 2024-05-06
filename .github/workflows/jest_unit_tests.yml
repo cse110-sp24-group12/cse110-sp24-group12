@@ -8,6 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Dependencies
+        working-directory: ./source
         run: npm install
       - name: Unit Test
+        working-directory: ./source
         run: npm run test
