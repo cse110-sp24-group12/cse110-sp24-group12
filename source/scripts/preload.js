@@ -1,3 +1,8 @@
+const {
+    contextBridge,
+    ipcRenderer
+} = require('electron');
+
 window.addEventListener('DOMContentLoaded', () => {
     const replaceText = (selector, text) => {
         const element = document.getElementById(selector);
@@ -7,3 +12,14 @@ window.addEventListener('DOMContentLoaded', () => {
         replaceText(`${dependency}-version`, process.versions[dependency]);
     }
 });
+
+contextBridge.exposeInMainWorld(
+    'api', {
+        writeFile: (args) => ipcRenderer.send('write-file', args),
+        readMarkdown: (args) => ipcRenderer.send('read-markdown', args),
+        onReadMarkdownReply: (callback) => ipcRenderer.on('read-markdown-reply', (event, args) => callback(args))
+    },
+    'markdown', {
+        
+    }
+);
