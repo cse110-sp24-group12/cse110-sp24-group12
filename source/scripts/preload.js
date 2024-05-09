@@ -1,3 +1,7 @@
+/**
+ * @namespace Preload
+ */
+
 const {
     contextBridge,
     ipcRenderer
@@ -13,6 +17,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+/**
+ * This function defines the API that will be exposed to the renderer process.
+ * @author Ramtin Tajbakhsh
+ * @memberof Preload
+ */
 contextBridge.exposeInMainWorld(
     'api', {
         writeFile: (args) => ipcRenderer.send('write-file', args),

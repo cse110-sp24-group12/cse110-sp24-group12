@@ -1,6 +1,6 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('node:path');
-const fs = require('fs');
+import { app, BrowserWindow, ipcMain } from 'electron';
+import path from 'node:path';
+import fs from 'fs';
 
 let win;
 
@@ -45,12 +45,13 @@ ipcMain.on('write-file', (event, args) => {
     }
 })
 
-const markdown = require('markdown-it')();
+import markdown from 'markdown-it';
+const md = markdown();
 ipcMain.on('read-markdown', (event, args) => {
     try {
         const data = fs.readFileSync(args, 'utf-8');
         //event.reply('read-markdown-reply', data);
-        event.sender.send('read-markdown-reply', markdown.render(data));
+        event.sender.send('read-markdown-reply', md.render(data));
     } catch (error) {
         console.error(error);
     }
