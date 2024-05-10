@@ -7,7 +7,9 @@
     "test": "jest",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
+    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
+    "lint": "npx eslint .",
+    "lint-fix": "npx eslint . --fix"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.4.0",
@@ -19,8 +21,9 @@
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
     "@eslint/js": "^9.2.0",
-    "electron": "^30.0.2",
-    "eslint": "^9.2.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
     "jest": "^29.7.0",
     "jsdoc": "^4.0.3"
   },
@@ -31,6 +34,7 @@
   "main": "main.js",
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "markdown-it": "^14.1.0"
+    "markdown-it": "^14.1.0",
+    "electron": "^30.0.2"
   }
 }

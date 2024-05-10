@@ -1,0 +1,5 @@
+node_modules
+docs
+preload.js
+__tests__
+forge.config.js

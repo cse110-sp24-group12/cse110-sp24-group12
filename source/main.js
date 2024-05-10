@@ -2,6 +2,8 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import fs from 'fs';
 
+import markdown from 'markdown-it';
+
 let win;
 
 const createWindow = () => {
@@ -16,7 +18,7 @@ const createWindow = () => {
 
     win.loadFile('index.html');
     win.maximize();
-}
+};
 
 app.whenReady().then(() => {
     createWindow();
@@ -43,16 +45,14 @@ ipcMain.on('write-file', (event, args) => {
     } catch (error) {
         console.error(error);
     }
-})
-
-import markdown from 'markdown-it';
+});
 const md = markdown();
 ipcMain.on('read-markdown', (event, args) => {
     try {
         const data = fs.readFileSync(args, 'utf-8');
-        //event.reply('read-markdown-reply', data);
+        // event.reply('read-markdown-reply', data);
         event.sender.send('read-markdown-reply', md.render(data));
     } catch (error) {
         console.error(error);
     }
-})
+});
