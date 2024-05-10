@@ -18,7 +18,7 @@ We want to protect user data and ensure user's personal information cannot be ac
 
 ## Decision Outcome
 
-Chosen option: "{Having password page}", because we can protect user's data and ensure that potentially sensitive information cannot be stolen and only access by the user.
+Chosen option: "Having password page", because we can protect user's data and ensure that potentially sensitive information cannot be stolen and only access by the user.
 
 ## Pros and Cons of the Options
 
