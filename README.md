@@ -10,10 +10,10 @@ Click [this link](admin/team.md) to visit our team page!
 git clone https://github.com/cse110-sp24-group12/cse110-sp24-group12
 ```
 
-2. install the required packages in the `src` directory
+2. install the required packages in the `source` directory
 
 ```sh
-cd src
+cd source
 npm install
 ```
 
