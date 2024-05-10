@@ -22,11 +22,6 @@ Chosen option: "{Having password page}", because we can protect user's data and 
 
 ## Pros and Cons of the Options
 
-### {title of option 1}
-
-
-{example | description | pointer to more information | …}
-
 * Pro: Having a password to access personal data significantly reduces the risk of unauthorized access. 
 * Pro: Implementing a password page can enhance user trust in your platform, as it demonstrates a commitment to protecting their personal and sensitive information.
 
