@@ -1,6 +1,6 @@
 ---
 # These are optional elements. Feel free to remove any of them.
-status: "{accepted}"
+status: "accepted"
 date: {2024-05-08 when the decision was last updated}
 deciders: { Lindsey Rappaport, Ramtin Tajbakhsh, Eban Covarrubias, Guan Huang Chen, Ibraheem Syed,Jordan Chang, Matthew Williams, Ritviksiddha Penchala, Sidhant Singhvi, Sophia Davis, Wen Hsin Chang}
 informed: {Jash Makhija}
