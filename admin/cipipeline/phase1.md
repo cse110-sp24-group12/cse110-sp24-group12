@@ -37,6 +37,9 @@ Our CI/CD pipeline is made to smoothly automate code-integration, testing, quali
 ### Documentation
 - Using JSDoc to document our code due to the clarity and maintainability.
 
+### Diagram of Current Phase 1 Functionalities
+![Diagram](Flowchart.jpg)  
+
 ## Next Steps
 - **Enhance Our Testing**: Expand test coverage, include functionality testing.
 - **Streamline Preview Deployment**: Automate preview deployment processes.
