@@ -38,10 +38,14 @@ Our CI/CD pipeline is made to smoothly automate code-integration, testing, quali
 - Using JSDoc to document our code due to the clarity and maintainability.
 
 ### Diagram of Current Phase 1 Functionalities
-![Diagram](Flowchart.jpg)  
+![Diagram](phase1.jpg)  
 
 ## Next Steps
 - **Enhance Our Testing**: Expand test coverage, include functionality testing.
 - **Streamline Preview Deployment**: Automate preview deployment processes.
 
+## Our plans for phase 2 and beyond
 
+- **Electron Build**: We are going to create a workflow to build executables using the Electron build process. The workflow will run on Ubuntu, Windows, and MacOS to generate executables and artifacts for all of these platforms. This way our program will be multiplatform.
+- **Codacy Code Analysis**: We will integrate Codacy analysis tools in our repository to analyze code coverage and code quality when merging to `main`
+- **E2E Testing**: We will add E2E and functional testing to our program using either `Playwright` or `Puppeteer`. We will add GitHub workflows for these tests and add the status checks to pull request to improve code quality.
