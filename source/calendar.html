@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Calendar</title>
-    <link rel="stylesheet" type="text/css" href="calendarStyle.css" />
+    <link rel="stylesheet" type="text/css" href="styles/calendarStyle.css" />
 
 </head>
 <body>
@@ -15,47 +15,42 @@
     The user can have the options of clicking a button to add a task list and 
     a button to add a markdown entry upon hovering on a day (these options should be hidden on other days and it's ok if these button don't do anything for now)-->
 
-    <a href="./index.html">Back</a>
+  <a href="./index.html">Back</a> <br>
+  <div class="month-select">
     <label for="month">Select Month and Year:</label>
-  <select id="month">
-    <option value="0">January</option>
-    <option value="1">February</option>
-    <option value="2">March</option>
-    <option value="3">April</option>
-    <option value="4">May</option>
-    <option value="5">June</option>
-    <option value="6">July</option>
-    <option value="7">August</option>
-    <option value="8">September</option>
-    <option value="9">October</option>
-    <option value="10">November</option>
-    <option value="11">December</option>
-  </select>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const monthSelect = document.getElementById("month");
-      const yearInput = document.getElementById("year");
+     <select id="month">
+        <option value="0">January</option>
+        <option value="1">February</option>
+        <option value="2">March</option>
+        <option value="3">April</option>
+        <option value="4">May</option>
+        <option value="5">June</option>
+        <option value="6">July</option>
+        <option value="7">August</option>
+        <option value="8">September</option>
+        <option value="9">October</option>
+        <option value="10">November</option>
+        <option value="11">December</option>
+     </select>
 
-      // Set current month and year as initial values
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth(); // Month is zero-based
-      const currentYear = currentDate.getFullYear();
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const monthSelect = document.getElementById("month");
+        const yearInput = document.getElementById("year");
 
-      // Set initial values for month and year inputs
-      monthSelect.value = currentMonth.toString();
-      yearInput.value = currentYear.toString();
-    });
-  </script>
-  <input type="number" id="year" placeholder="Year">
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const yearInput = document.getElementById("year");
+        // Set current month and year as initial values
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth(); // Month is zero-based
+        const currentYear = currentDate.getFullYear();
 
-      // Set current year as the initial value
-      const currentYear = new Date().getFullYear();
-      yearInput.value = currentYear.toString();
-    });
-  </script>
+        // Set initial values for month and year inputs
+        monthSelect.value = currentMonth.toString();
+        yearInput.value = currentYear.toString();
+      });
+    </script>
+    <input type="number" id="year" placeholder="Year">
+  </div>
+  <div class="calendar-box">
   <table id = 'calendar'>
    
         <!--
@@ -67,6 +62,7 @@
         -->
     
   </table>
+</div>
 
     <script src="scripts/calendar.js"></script>
 </body>

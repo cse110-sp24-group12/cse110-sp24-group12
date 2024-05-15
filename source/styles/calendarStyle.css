@@ -1,26 +1,42 @@
+.calendar-box{
+  margin-inline: 2%;
+  margin-top: 2%;
+
+}
+.month-select{
+  margin: auto;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
+    border-color: #ffffff;
+    border-width: 1px;
+    border-style: solid;
   }
   th{
     border: 1px solid #ddd;
     background-color: #c775b9;
     padding: 8px;
     height: 40px;
-    text-align: start;
+    width: 14%;
+    text-align: center;
   }
   #standardCell{
     border: 1px solid #ddd;
     background-color: #f5f5f5;
     padding: 8px;
+    height: 80px;
     text-align: start;
+    vertical-align: top;
   }
 
   #emptyCell{
     border: 1px solid #ddd;
-    background-color: #afaeae;
+    background-color: #d3d3d3;
     padding: 8px;
     text-align: center;
+    vertical-align: top;
   }
   .today {
     background-color: #ffff00;

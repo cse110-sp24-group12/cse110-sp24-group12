@@ -45,10 +45,26 @@ document.addEventListener("DOMContentLoaded", function () {
   
     monthSelect.addEventListener("change", updateCalendar);
     yearInput.addEventListener("input", updateCalendar);
+
+    
+    // Defualt date set to current date
+    document.addEventListener("DOMContentLoaded", function () {
+      yearInput = document.getElementById("year");
+
+      // Set current year as the initial value
+      const currentYear = new Date().getFullYear();
+      yearInput.value = currentYear.toString();
+    });
+
+    // Generate calendar on page load, with current date set to default
+    updateCalendar();
   
     // Event listener for hover on day
     calendarContainer.addEventListener("mouseover", function (event) {
       const target = event.target;
+
+      console.log(target.id);
+
       if (target.classList.contains("calendar-cell")) {
         target.classList.add("hovered");
   
