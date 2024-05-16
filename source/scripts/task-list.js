@@ -23,6 +23,13 @@ class TaskListWidget extends HTMLElement {
                     <div>
                         <input type="date" id="dateInput">
                         <input type="time" id="timeInput" step="60">
+                        <select id="priorityInput">
+                            <option value="0">Select one</option>
+                            <option value="4">critical</option>
+                            <option value="3">high</option>
+                            <option value="2">medium</option>
+                            <option value="1">low</option>
+                        </select>
                     </div>
                 </div>
                 <button id="addBtn">Add Task</button>
@@ -94,6 +101,12 @@ class TaskListWidget extends HTMLElement {
         titleText.setAttribute("for", `task${id}`)
         titleText.style.marginLeft = '10px'; // Add margin for spacing between checkbox and title
 
+
+        // Display priority level
+        const priority = document.createElement('h4');
+        priority.innerHTML = 'Priority level: ' + task.priorityInput;
+
+
         // Display due date
         const dueDateText = document.createElement('h4');
         const dueDate = new Date(task.due_date);
@@ -113,6 +126,7 @@ class TaskListWidget extends HTMLElement {
         task_container.appendChild(checkbox);
         task_container.appendChild(titleText);
         task_container.appendChild(dueDateText);
+        task_container.appendChild(priority);
         task_container.appendChild(deleteBtn);
 
         container.appendChild(task_container); // Append <li> to <ul>
@@ -129,11 +143,12 @@ class TaskListWidget extends HTMLElement {
     /* 
     Add a task to the task list and update the local storage
     */
-    addTaskToList(taskText, taskDate, taskTime, isChecked) {
+    addTaskToList(taskText, taskDate, taskTime, taskPriority, isChecked) {
         const task = {
             title: taskText,
             is_done: isChecked,
-            due_date: `${taskDate} ${taskTime}`
+            due_date: `${taskDate} ${taskTime}`,
+            priority: taskPriority
         }
 
         this.tasks.push(task);
@@ -156,14 +171,16 @@ class TaskListWidget extends HTMLElement {
         const taskInput = document.getElementById('taskInput');
         const dateInput = document.getElementById('dateInput');
         const timeInput = document.getElementById('timeInput');
+        const priorityInput = document.getElementById('priorityInput');
 
         // Get info about new task and add it to the list to be rendered
         addBtn.addEventListener('click', () => {
             const taskText = taskInput.value.trim();
             const taskDate = dateInput.value;
             const taskTime = timeInput.value;
+            const taskPriority = priorityInput.value;
             if (taskText !== '') {
-                this.addTaskToList(taskText, taskDate, taskTime, false);
+                this.addTaskToList(taskText, taskDate, taskTime, taskPriority, false);
                 taskInput.value = '';
                 // Preserve the current date and time if not modified
                 if (dateInput.value === `${year}-${month}-${day}`) {
