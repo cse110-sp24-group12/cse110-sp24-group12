@@ -172,6 +172,21 @@ footer {
     width: 100%;
 }
 
+.edit-button {
+    background-color: rgb(126, 154, 245);
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    transition-duration: 150ms;
+
+    &:hover {
+        background-color: #8a1c0b;
+    }
+}
+
 #google_translate_element {
     position: absolute;
     top: 10px;

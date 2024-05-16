@@ -75,16 +75,14 @@ class TaskListWidget extends HTMLElement {
         const task_container = document.createElement('div'); // Create <li> for each task
         task_container.classList.add("task-item");
         task_container.style.marginBottom = '10px'; // Add margin for spacing between tasks
-        task_container.addEventListener('click', (event) => { // Toggle checkbox when clicking on task
+/**
+ *      task_container.addEventListener('click', (event) => { // Toggle checkbox when clicking on task
             if (event.target !== checkbox && event.target !== deleteBtn && event.target !== editBtn) { // ensure not clicking on checkbox or delete button
                 checkbox.click();
             }
         });
-        task_container.addEventListener("dblclick", (event) => {
-            if (event.target !== checkbox && event.target !== deleteBtn) {
-                this.updateNote(id, task_container, task.title)
-            }
-        });
+ */
+
 
         // Create checkbox for task status
         const checkbox = document.createElement('input');
