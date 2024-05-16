@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if(count % 7 == 0){
             calendarHTML +=" </tr> <tr>";
         }
-        calendarHTML += `<td id='standardCell'>${day}</td> `;
+        calendarHTML += `<td id='standardCell' class='mouseOut'>${day}</td> `;
         count++;
       }
   
@@ -63,30 +63,50 @@ document.addEventListener("DOMContentLoaded", function () {
     calendarContainer.addEventListener("mouseover", function (event) {
       const target = event.target;
 
-      console.log(target.id);
+      //target.classList.contains("standardCell")
+      if (target.getAttribute('id') == "standardCell") {
+        target.classList.remove("mouseOut");
+        target.classList.add("mouseIn");
+  
+        //pull day from the cell clicked
+        const dayDate = target.innerHTML;
+        console.log(dayDate);
 
-      if (target.classList.contains("calendar-cell")) {
-        target.classList.add("hovered");
-  
-        // Add buttons for tasks and markdown entries
-        const taskButton = document.createElement("button");
-        taskButton.textContent = "Add Task";
-        taskButton.classList.add("task-button");
-  
-        const markdownButton = document.createElement("button");
-        markdownButton.textContent = "Add Markdown";
-        markdownButton.classList.add("markdown-button");
-  
-        target.appendChild(taskButton);
-        target.appendChild(markdownButton);
+        // when user clicks 
+        target.addEventListener('click', function (event) {
+          var modal = document.getElementById("myModal");
+          var span = document.getElementsByClassName("close")[0];
+          var text = document.getElementById("modal-txt");
+          modal.style.display = "block";
+
+          //this is to display current date on top left corner
+          text.innerHTML = document.getElementById("month").value+'/'+dayDate+'/'+document.getElementById("year").value;
+          // When the user clicks on <span> (x), close the modal
+          span.onclick = function() {
+            modal.style.display = "none";
+          }
+    
+          // When the user clicks anywhere outside of the modal, close it
+          window.onclick = function(event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          }
+        });
+
+        
       }
     });
+    
+    
+
   
     calendarContainer.addEventListener("mouseout", function (event) {
       const target = event.target;
-      if (target.classList.contains("calendar-cell")) {
-        target.classList.remove("hovered");
-  
+      if (target.getAttribute('id') == "standardCell") {
+        target.classList.remove("mouseIn");
+        target.classList.add("mouseOut");
+        //target.style.background = '#af8181';
         // Remove buttons for tasks and markdown entries
         const taskButton = target.querySelector(".task-button");
         if (taskButton) {
