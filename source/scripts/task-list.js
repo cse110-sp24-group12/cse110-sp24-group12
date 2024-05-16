@@ -76,7 +76,7 @@ class TaskListWidget extends HTMLElement {
         task_container.classList.add("task-item");
         task_container.style.marginBottom = '10px'; // Add margin for spacing between tasks
         task_container.addEventListener('click', (event) => { // Toggle checkbox when clicking on task
-            if (event.target !== checkbox && event.target !== deleteBtn) { // ensure not clicking on checkbox or delete button
+            if (event.target !== checkbox && event.target !== deleteBtn && event.target !== editBtn) { // ensure not clicking on checkbox or delete button
                 checkbox.click();
             }
         });
@@ -108,6 +108,13 @@ class TaskListWidget extends HTMLElement {
         priority.innerHTML = 'Priority level: ' + task.priority;
         console.log(task.priority)
 
+        // Create edit button
+        const editBtn = document.createElement('button');
+        editBtn.innerHTML = 'Edit';
+        editBtn.classList.add('edit-button');
+        editBtn.addEventListener('click', () => {
+            this.editForm(task, task_container, id);
+        });        
 
         // Create delete button
         const deleteBtn = document.createElement('button');
@@ -123,31 +130,52 @@ class TaskListWidget extends HTMLElement {
         task_container.appendChild(checkbox);
         task_container.appendChild(titleText);
         task_container.appendChild(priority);
+        task_container.appendChild(editBtn);
         task_container.appendChild(deleteBtn);
 
         container.appendChild(task_container); // Append <li> to <ul>
     }
 
-    /* 
-    Edit the note method
-    */
-    updateNote(id, task_container, currentTitle) {
-        const inputField = document.createElement('input');
-        inputField.type = 'text';
-        inputField.value = currentTitle;
+    /**
+     * Edits a pre existing task
+     */
+    editForm(task, taskContainer, id) {
+        taskContainer.innerHTML = `
+            <input type="text" id="editTaskInput" value="${task.title}">
+            <select id="editPriorityInput">
+                <option value="0">Select one</option>
+                <option value="4">Critical</option>
+                <option value="3">High</option>
+                <option value="2">Medium</option>
+                <option value="1">Low</option>
+            </select>
+            <button id="saveBtn">Save</button>
+        `;
+        const editTaskInput = taskContainer.querySelector('#editTaskInput');
+        const editPriorityInput = taskContainer.querySelector('#editPriorityInput');
+        const saveBtn = taskContainer.querySelector('#saveBtn');
 
-        const saveBtn = document.createElement('button');
-        saveBtn.innerHTML = 'Save';
-        saveBtn.classList.add('save-button');
+        editPriorityInput.value = task.priority;
+
         saveBtn.addEventListener('click', () => {
-            this.tasks[id].title = inputField.value;
-            this.updateLocalStorage();
-            this.renderTasks();
+            const newTaskText = editTaskInput.value.trim();
+            const newPriority = editPriorityInput.value;
+            if (newTaskText !== '') {
+                this.updateTask(id, newTaskText, newPriority);
+            } else {
+                alert('Task cannot be empty.');
+            }
         });
+    }
 
-        task_container.innerHTML = '';
-        task_container.appendChild(inputField);
-        task_container.appendChild(saveBtn);
+    /* 
+    Update the task
+    */
+    updateTask(id, newTaskText, newPriority) {
+        this.tasks[id].title = newTaskText;
+        this.tasks[id].priority = newPriority;
+        this.renderTasks();
+        this.updateLocalStorage();
     }
 
     /* 
