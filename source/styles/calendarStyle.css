@@ -89,6 +89,8 @@ textarea[id=markdown] {
   width: 80%; /* Could be more or less, depending on screen size */
   height: 80%;
   scroll-behavior: none;
+  justify-content: center; /* Horizontally center the child elements */
+
 }
 
 /* The Close Button */
@@ -100,24 +102,25 @@ textarea[id=markdown] {
 }
 /* The Save .save-markdown button */
 .saveButton{
-  /* position: relative;
-  margin-left: 95%; */
-  /* Optional: Add padding or margin */
-  align-self: right;
-  padding: 10px;
+  position: absolute;
+  margin-left: 50%;
+  padding: 0px;
 }
 .saveMarkdown{
   position: relative;
-  margin-left: 0%;
+  /* //margin-left: 10%; */
+  top: 0;
+
   /* Optional: Add padding or margin */
-  align-self: right;
+  align-self: center; 
   padding: 10px;
 }
 .saveTask{
   position: relative;
-  margin-left: 95%;
+  /* margin-right: 0%; */
+  /* right: 0; */
   /* Optional: Add padding or margin */
-  align-self: right;
+  align-self: center;
   padding: 10px;
 }
 
