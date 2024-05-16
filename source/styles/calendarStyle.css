@@ -2,21 +2,45 @@
   margin-inline: 2%;
   margin-top: 2%;
 }
-.month-select{
-  margin: auto;
+.pageTop {
+  display: flex;
+  /* justify-content: space-between; Distribute items along the main axis */
+  /* align-items: center; Center items vertically */
+  padding: 30px; /* Add padding for spacing */
 }
-.mouseOut{
-  border: 1px solid #1b1b1b;
-  background-color: #ececec;
-  padding: 8px;
-  height: 80px;
-  text-align: start;
-  vertical-align: top;
+
+.centeredTitle {
+  text-align: center; /* Center the text horizontally */
+  margin: 0 auto; /* Center the title horizontally */
+
+}
+.month-select {
+  display: flex;
+  justify-content: center; /* Center children horizontally */
+  align-items: center; /* Center children vertically */
+  height: 0vh; /* Adjust as needed */
+}
+
+.monthBox, .yearBox {
+  padding: 10px; /* Add padding */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  background-color: #f9f9f9; /* Add background color */
+  margin: 0 5px; /* Adjust spacing between elements */
+  text-align: center;
 }
 .mouseIn {
   border-style: solid;
   border-width: 5px;
   background-color: #edceff;
+  padding: 8px;
+  height: 80px;
+  text-align: start;
+  vertical-align: top;
+}
+.mouseOut{
+  border: 1px solid #1b1b1b;
+  background-color: #ececec;
   padding: 8px;
   height: 80px;
   text-align: start;
@@ -92,6 +116,7 @@ textarea[id=markdown] {
   justify-content: center; /* Horizontally center the child elements */
 
 }
+
 
 /* The Close Button */
 .close {

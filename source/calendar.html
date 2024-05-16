@@ -6,7 +6,7 @@
 
 </head>
 <body>
-    <h1>Calendar</h1>
+    
     
     <!-- Your content goes here -->
     <!--Is able to render any month dynamically
@@ -14,11 +14,12 @@
     there is an indicator on which day the user's cursor is on
     The user can have the options of clicking a button to add a task list and 
     a button to add a markdown entry upon hovering on a day (these options should be hidden on other days and it's ok if these button don't do anything for now)-->
-
-  <a href="./index.html">Back</a> <br>
+    <div class="pageTop">
+      <a href="./index.html">Back</a>
+      <h1 class="centeredTitle">Calendar</h1>
+    </div> 
   <div class="month-select">
-    <label for="month">Select Month and Year:</label>
-     <select id="month">
+     <select class="monthBox" id="month">
         <option value="0">January</option>
         <option value="1">February</option>
         <option value="2">March</option>
@@ -32,7 +33,7 @@
         <option value="10">November</option>
         <option value="11">December</option>
      </select>
-
+    <input class="yearBox" type="number" id="year" placeholder="Year">
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const monthSelect = document.getElementById("month");
@@ -48,7 +49,6 @@
         yearInput.value = currentYear.toString();
       });
     </script>
-    <input type="number" id="year" placeholder="Year">
   </div>
   <div class="calendar-box">
   <table id = 'calendar'>
