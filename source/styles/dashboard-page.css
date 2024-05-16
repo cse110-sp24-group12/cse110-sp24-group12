@@ -1,0 +1,29 @@
+/* styles/dashboard-page.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 2px;
+}
+
+.square {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ddd;
+}
+
+.active {
+    background-color: #2ea44f; /* GitHub's contribution graph green */
+}
+
+.more-active {
+    background-color: #196127; /* Darker green for more contributions */
+}
+
+#bookmarked-notes {
+    margin-top: 20px;
+}

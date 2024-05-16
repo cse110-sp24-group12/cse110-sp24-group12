@@ -2,12 +2,28 @@
 <html>
 <head>
     <title>Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard-page.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/wa0x6e/cal-heatmap/master/cal-heatmap.css" />
 </head>
 <body>
     <h1>Dashboard</h1>
     
-    <!-- Your content goes here -->
+    <!-- Contribution graph -->
+    <div class="container" id="graph-container"></div>
+
+    <!-- Bookmarked notes -->
+    <div id="bookmarked-notes">
+        <h2>Bookmarked Notes</h2>
+        <ul>
+            <li>Note 1</li>
+            <li>Note 2</li>
+            <li>Note 3</li>
+        </ul>
+    </div>
+
     <a href="./index.html">Back</a>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdn.rawgit.com/wa0x6e/cal-heatmap/master/cal-heatmap.min.js"></script>
     <script src="scripts/dashboard.js"></script>
 </body>
 </html>
