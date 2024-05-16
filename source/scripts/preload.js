@@ -24,11 +24,9 @@ window.addEventListener('DOMContentLoaded', () => {
  */
 contextBridge.exposeInMainWorld(
     'api', {
-        writeFile: (args) => ipcRenderer.send('write-file', args),
-        readMarkdown: (args) => ipcRenderer.send('read-markdown', args),
-        onReadMarkdownReply: (callback) => ipcRenderer.on('read-markdown-reply', (event, args) => callback(args))
-    },
-    'markdown', {
-        
+        writeFile: (args) => ipcRenderer.invoke('write-file', args),
+        readMarkdown: (args) => ipcRenderer.invoke('read-markdown', args),
+        readFile: (args) => ipcRenderer.invoke('read-file', args),
+        renderMarkdown: (args) => ipcRenderer.invoke('render-markdown', args),
     }
 );

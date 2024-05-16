@@ -3,6 +3,7 @@ import path from 'node:path';
 import fs from 'fs';
 
 import markdown from 'markdown-it';
+import hljs from 'highlight.js';
 
 let win;
 
@@ -39,20 +40,53 @@ app.on('window-all-closed', () => {
     }
 });
 
-ipcMain.on('write-file', (event, args) => {
+ipcMain.handle('read-markdown', async (event, arg) => {
     try {
-        fs.writeFileSync('test.txt', args, 'utf-8');
+        const data = fs.readFileSync(arg, 'utf-8');
+        const md = markdown();
+        return md.render(data);
+    } catch (error) {
+        console.error(error);
+        return '';
+    }
+});
+
+ipcMain.handle('read-file', async (event, arg) => {
+    try {
+        return fs.readFileSync(arg, 'utf-8');
+    } catch (error) {
+        console.error(error);
+        return '';
+    }
+});
+
+ipcMain.handle('write-file', async (event, arg) => {
+    try {
+        fs.writeFileSync(arg.filePath, arg.data, 'utf-8');
     } catch (error) {
         console.error(error);
     }
 });
-const md = markdown();
-ipcMain.on('read-markdown', (event, args) => {
+
+ipcMain.handle('render-markdown', async (event, arg) => {
     try {
-        const data = fs.readFileSync(args, 'utf-8');
-        // event.reply('read-markdown-reply', data);
-        event.sender.send('read-markdown-reply', md.render(data));
+        const md = markdown({
+            highlight: (code, lang) => {
+                if (lang && hljs.getLanguage(lang)) {
+                    try {
+                        return `<pre><code class="hljs">${
+                            hljs.highlight(code, { language: lang, ignoreIllegals: true }).value
+                        }</code></pre>`;
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+                return `<pre><code class="hljs">${md.utils.escapeHtml(code)}</code></pre>`;
+            },
+        });
+        return md.render(arg);
     } catch (error) {
         console.error(error);
+        return '';
     }
 });
