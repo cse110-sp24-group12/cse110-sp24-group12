@@ -115,7 +115,7 @@ input:checked~h4 {
 /*Added a hover effect to the task items*/
 
 .task-item:hover {
-    background-color: rgb(203, 151, 245);
+    background-color: rgb(187, 199, 233);
 }
 
 .list-widget {

@@ -179,6 +179,8 @@ class TaskListWidget extends HTMLElement {
     renderTasks() {
         this.init();
         const tasklist_container = document.getElementById("taskList");
+        // sort the task list based on the priorty level
+        this.tasks.sort((a, b) => b.priority - a.priority);
 
         this.tasks.forEach((task, idx) => {
             this.addTask(task, tasklist_container, idx);
