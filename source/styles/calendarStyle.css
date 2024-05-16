@@ -6,9 +6,13 @@
   display: flex;
   /* justify-content: space-between; Distribute items along the main axis */
   /* align-items: center; Center items vertically */
-  padding: 30px; /* Add padding for spacing */
+  padding: 15px; /* Add padding for spacing */
 }
-
+.backLink {
+  font-size: 20px; /* Adjust font size as needed */
+  text-decoration: none; /* Remove underline */
+  padding-right: 30%;
+}
 .centeredTitle {
   text-align: center; /* Center the text horizontally */
   margin: 0 auto; /* Center the title horizontally */
@@ -18,6 +22,7 @@
   display: flex;
   justify-content: center; /* Center children horizontally */
   align-items: center; /* Center children vertically */
+  margin-right: 10px;
   height: 0vh; /* Adjust as needed */
 }
 
@@ -26,7 +31,8 @@
   border: 1px solid #ccc; /* Add border */
   border-radius: 5px; /* Add border radius for rounded corners */
   background-color: #f9f9f9; /* Add background color */
-  margin: 0 5px; /* Adjust spacing between elements */
+  margin: 1px; /* Adjust spacing between elements */
+  margin-right: 0%;
   text-align: center;
 }
 .mouseIn {
