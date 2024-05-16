@@ -18,7 +18,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: rgb(247, 233, 255);
+    background-color: rgb(198, 222, 245);
 }
 
 .container {
@@ -38,20 +38,17 @@ body {
     margin-bottom: 10px;
 }
 
-#dateInput {
-    width: 15%;
+#priorityInput {
+    width: 20%;
+    padding: 5px;
     margin-bottom: 10px;
 }
 
-#timeInput {
-    width: 15%;
-    margin-bottom: 10px;
-}
 
 #addBtn,
 .removeBtn {
     padding: 10px 20px;
-    background-color: #e0b90de0;
+    background-color: #f39243e0;
     color: white;
     border: none;
     cursor: pointer;

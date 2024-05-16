@@ -14,7 +14,7 @@ class TaskListWidget extends HTMLElement {
     init() {
         this.innerHTML = `
             <div class="container">
-                <h2>Todo List</h2>
+                <h1>Task List</h1>
                 
                 <div class="inputContainer">
                     <div>
@@ -161,7 +161,7 @@ class TaskListWidget extends HTMLElement {
     /* 
     Add a task to the task list and update the local storage
     */
-    addTaskToList(taskText, taskDate, taskTime, taskPriority, isChecked) {
+    addTaskToList(taskText, taskPriority, isChecked) {
         const task = {
             title: taskText,
             is_done: isChecked,
@@ -206,9 +206,9 @@ class TaskListWidget extends HTMLElement {
     /*
     When a task is checked, update the task status in the local storage so it is not rendered improperly
     */
-    removeTaskFromLocalStorage(taskText, taskDate, taskTime) {
+    removeTaskFromLocalStorage(taskText) {
         // Find index of the task to remove
-        const index = tasks.findIndex(task => task.text === taskText && task.date === taskDate && task.time === taskTime);
+        const index = tasks.findIndex(task => task.text === taskText);
         if (index !== -1) {
             tasks.splice(index, 1); // Remove task from array
             this.updateLocalStorage();
