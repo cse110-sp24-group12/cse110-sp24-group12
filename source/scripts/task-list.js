@@ -21,8 +21,6 @@ class TaskListWidget extends HTMLElement {
                         <input type="text" id="taskInput" placeholder="Enter task...">
                     </div>
                     <div>
-                        <input type="date" id="dateInput">
-                        <input type="time" id="timeInput" step="60">
                         <select id="priorityInput">
                             <option value="0">Select one</option>
                             <option value="4">critical</option>
@@ -39,8 +37,6 @@ class TaskListWidget extends HTMLElement {
                 </div>
             </div>`;
 
-        document.getElementById("dateInput").valueAsDate = new Date();
-        document.getElementById("timeInput").valueAsDate = new Date();
     }
 
     /* 
@@ -84,6 +80,11 @@ class TaskListWidget extends HTMLElement {
                 checkbox.click();
             }
         });
+        task_container.addEventListener("dblclick", (event) => {
+            if (event.target !== checkbox && event.target !== deleteBtn) {
+                this.updateNote(id, task_container, task.title)
+            }
+        });
 
         // Create checkbox for task status
         const checkbox = document.createElement('input');
@@ -104,13 +105,9 @@ class TaskListWidget extends HTMLElement {
 
         // Display priority level
         const priority = document.createElement('h4');
-        priority.innerHTML = 'Priority level: ' + task.priorityInput;
+        priority.innerHTML = 'Priority level: ' + task.priority;
+        console.log(task.priority)
 
-
-        // Display due date
-        const dueDateText = document.createElement('h4');
-        const dueDate = new Date(task.due_date);
-        dueDateText.innerHTML = 'Due Date: ' + dueDate.toLocaleString();
 
         // Create delete button
         const deleteBtn = document.createElement('button');
@@ -125,7 +122,6 @@ class TaskListWidget extends HTMLElement {
         // Append checkbox, title, and due date to <li> element
         task_container.appendChild(checkbox);
         task_container.appendChild(titleText);
-        task_container.appendChild(dueDateText);
         task_container.appendChild(priority);
         task_container.appendChild(deleteBtn);
 
@@ -133,10 +129,32 @@ class TaskListWidget extends HTMLElement {
     }
 
     /* 
+    Edit the note method
+    */
+    updateNote(id, task_container, currentTitle) {
+        const inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.value = currentTitle;
+
+        const saveBtn = document.createElement('button');
+        saveBtn.innerHTML = 'Save';
+        saveBtn.classList.add('save-button');
+        saveBtn.addEventListener('click', () => {
+            this.tasks[id].title = inputField.value;
+            this.updateLocalStorage();
+            this.renderTasks();
+        });
+
+        task_container.innerHTML = '';
+        task_container.appendChild(inputField);
+        task_container.appendChild(saveBtn);
+    }
+
+    /* 
     Update the local storage with the new tasks array as needed (generally after adding or removing tasks)
     */
     updateLocalStorage() {
-        console.log("Hello")
+        console.log("Update local storage")
         localStorage.setItem("tasks", JSON.stringify(this.tasks)); // Store tasks in local storage
     }
 
@@ -147,7 +165,6 @@ class TaskListWidget extends HTMLElement {
         const task = {
             title: taskText,
             is_done: isChecked,
-            due_date: `${taskDate} ${taskTime}`,
             priority: taskPriority
         }
 
@@ -169,26 +186,15 @@ class TaskListWidget extends HTMLElement {
 
         const addBtn = document.getElementById('addBtn');
         const taskInput = document.getElementById('taskInput');
-        const dateInput = document.getElementById('dateInput');
-        const timeInput = document.getElementById('timeInput');
         const priorityInput = document.getElementById('priorityInput');
 
         // Get info about new task and add it to the list to be rendered
         addBtn.addEventListener('click', () => {
             const taskText = taskInput.value.trim();
-            const taskDate = dateInput.value;
-            const taskTime = timeInput.value;
             const taskPriority = priorityInput.value;
             if (taskText !== '') {
-                this.addTaskToList(taskText, taskDate, taskTime, taskPriority, false);
+                this.addTaskToList(taskText, taskPriority, false);
                 taskInput.value = '';
-                // Preserve the current date and time if not modified
-                if (dateInput.value === `${year}-${month}-${day}`) {
-                    dateInput.value = '';
-                }
-                if (timeInput.value === `${hours}:${minutes}`) {
-                    timeInput.value = '';
-                }
             } else {
                 alert('Please enter a task.');
             }
