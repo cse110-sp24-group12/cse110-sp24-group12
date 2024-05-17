@@ -28,6 +28,7 @@ contextBridge.exposeInMainWorld(
         readMarkdown: (args) => ipcRenderer.send('read-markdown', args),
         onReadMarkdownReply: (callback) => ipcRenderer.on('read-markdown-reply', (event, args) => callback(args)),
         writePassword: (args) => ipcRenderer.invoke('write-password', args),
+        readPassword: (args) => ipcRenderer.invoke('read-password',args),
     },
     'markdown', {
         

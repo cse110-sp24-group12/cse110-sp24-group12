@@ -59,7 +59,15 @@ ipcMain.on('read-markdown', (event, args) => {
 
 ipcMain.handle('write-password', (event, args) => {
     try {
-        fs.writeFileSync("./data/password.json", args, 'utf-8');
+        fs.writeFileSync('./data/password.json', args, 'utf-8');
+    } catch (error) {
+        console.error(error);
+    }
+});
+ipcMain.handle('read-password', async (event, args) => {
+    try {
+        const data = fs.readFileSync('./data/password.json', 'utf8');
+        return data;
     } catch (error) {
         console.error(error);
     }
