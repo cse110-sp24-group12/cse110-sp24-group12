@@ -56,3 +56,11 @@ ipcMain.on('read-markdown', (event, args) => {
         console.error(error);
     }
 });
+
+ipcMain.handle('write-password', (event, args) => {
+    try {
+        fs.writeFileSync("./data/password.json", args, 'utf-8');
+    } catch (error) {
+        console.error(error);
+    }
+});

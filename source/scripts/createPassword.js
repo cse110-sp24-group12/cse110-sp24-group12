@@ -12,6 +12,11 @@ function init() {
         if(input.value.length < 6){
             if(button.textContent === 'Create'){
                 pin = input.value;
+                const data = {
+                    password : password,
+                    pin : pin
+                }
+                window.api.writePassword(JSON.stringify(data));
                 passwordPage.click();
             }else{
                 alert.style.color = "red";
@@ -24,4 +29,5 @@ function init() {
             input.value = '';
         }
     });
+
 }

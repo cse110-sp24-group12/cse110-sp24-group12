@@ -26,7 +26,8 @@ contextBridge.exposeInMainWorld(
     'api', {
         writeFile: (args) => ipcRenderer.send('write-file', args),
         readMarkdown: (args) => ipcRenderer.send('read-markdown', args),
-        onReadMarkdownReply: (callback) => ipcRenderer.on('read-markdown-reply', (event, args) => callback(args))
+        onReadMarkdownReply: (callback) => ipcRenderer.on('read-markdown-reply', (event, args) => callback(args)),
+        writePassword: (args) => ipcRenderer.invoke('write-password', args),
     },
     'markdown', {
         
