@@ -6,6 +6,10 @@
   margin-inline: 2%;
   margin-top: 2%;
 }
+.entryButton{
+  min-width: 100%;
+  
+}
 .pageTop {
   display: flex;
   /* justify-content: space-between; Distribute items along the main axis */

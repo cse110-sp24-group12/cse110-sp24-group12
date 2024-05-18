@@ -2,6 +2,8 @@
  * A reusable calendar widget
  * @class Calendar
  */
+
+//&&& need to implement a third "..." redirect button and corresponding modal window
 document.addEventListener("DOMContentLoaded", function () {
     const monthSelect = document.getElementById("month");
     const yearInput = document.getElementById("year");
@@ -79,9 +81,90 @@ document.addEventListener("DOMContentLoaded", function () {
     // }
     // Event listener for hover on day
     //MOVE GENERAL MODAL FUNCTION OPENING FUNCTION HERE:
-    
+    function openModal (event) {
+      console.log("you opened the modal");//test to see if we're clicking through our buttons
+      console.log("This is the id of what you clicked on: "+event.target.id);
+      
+      // pull elements from HTML for the modal window
+      var modal = document.getElementById("myModal");
+      var span = document.getElementsByClassName("close")[0];
+      var text = document.getElementById("modalTxt");
+      var saveMarkDown = document.getElementById("save-markdown");
+      var markdownInput = document.getElementById("markdown");
+      var date = document.getElementById("month").value+'/'+dayDate+'/'+document.getElementById("year").value;
+      var title = document.getElementById("entryTitle");
 
 
+      if(localStorage.getItem(event.target.id) == null){
+         //clear out all old data
+         markdownInput.value = null;
+         title.value = null;
+      }
+      else{
+        markdownInput.value = localStorage.getItem(event.target.id) ;
+        title.value = event.target.innerHTML;
+      }
+       
+
+
+      modal.style.display = "block";
+      //show date on the modals inner html (top left)
+      text.innerHTML = date;
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+      //look for user input in the title
+      
+      
+      //When we click save, close the pop up, add local storage data (New entry title), update Calendar
+      saveMarkDown.onclick = function(){
+        
+        if(title.value == ''){
+          alert('You must add a title!');
+        }
+        else if(title.value.includes('.') || title.value.includes(" ")){
+        
+          alert('Cannot use "." symbol or spaces within title, please update your title');
+        }
+        else{
+          // We enter this else if we are ready to close and save
+          modal.style.display = "none";
+          var cell = document.getElementsByClassName(text.innerHTML);
+          //console.log(cell);//testing
+        
+          //cell.innerHTML = dayDate+"Text";
+          // console.log('The inner html:', cell.innerHTML);
+          // console.log('Class to use for key of local storage:', document.getElementById("month").value+'/'+dayDate+'/'+document.getElementById("year").value);
+          let localStorageFill = localStorage.getItem(date);
+          if(localStorageFill == null){
+            localStorageFill = dayDate+"<button class='entryButton' id="+title.value+date+">"+title.value+"</button>";
+          }
+          else{
+            //remember to prevent users from naming events the same title
+            // console.log("localstorageFill value: " + localStorageFill.value);
+            if (localStorageFill.includes("id="+title.value+date+"")){
+              alert("An entry already exists with this name.");
+            }else{
+              localStorageFill += "<button class='entryButton' id="+title.value+date+">"+title.value+"</button>";
+            }
+          }
+          localStorage.setItem(date, localStorageFill);// &&& CHANGE KEY TO HAVE BOTH DATE AND ENTRY TITLE
+          localStorage.setItem(title.value+date, markdownInput.value);
+          updateCalendar();
+        }
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    }
+    var dayDate;
+
+    //This is when we hover over some calendar cell
     calendarContainer.addEventListener("mouseover", function (event) {
 
       const target = event.target;
@@ -94,7 +177,6 @@ document.addEventListener("DOMContentLoaded", function () {
         //pull day from the cell clicked
         const classPattern = /^\d/;
         //var list = JSON.parse(target.classList);
-        var dayDate;
         for(let i = 0; i < target.classList.length; i++){
           if(classPattern.test(target.classList[i])){
             const parts = target.classList[i].split('/');
@@ -103,79 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         
         // When user clicks on specific day cell to open modal window
-        target.addEventListener('click', function (event) {
-          console.log("you opened the modal");//test to see if we're clicking through our buttons
-          
-          // pull elements from HTML for the modal window
-          var modal = document.getElementById("myModal");
-          var span = document.getElementsByClassName("close")[0];
-          var text = document.getElementById("modalTxt");
-          var saveMarkDown = document.getElementById("save-markdown");
-          var markdownInput = document.getElementById("markdown");
-          var date = document.getElementById("month").value+'/'+dayDate+'/'+document.getElementById("year").value;
-          var title = document.getElementById("entryTitle");
-          //clear out all old data
-          markdownInput.value = null;
-          title.value = null;
-
-
-          modal.style.display = "block";
-          //show date on the modals inner html (top left)
-          text.innerHTML = date;
-          // When the user clicks on <span> (x), close the modal
-          span.onclick = function() {
-            modal.style.display = "none";
-          }
-          //look for user input in the title
-          
-          
-          //When we click save, close the pop up, add local storage data (New entry title), update Calendar
-          saveMarkDown.onclick = function(){
-            
-            if(title.value == ''){
-              alert('You must add a title!');
-            }
-            else if(title.value.includes('.')){
-            
-              alert('Cannot use "." symbol within title, please update your title');
-            }
-            else{
-              // We enter this else if we are ready to close and save
-              modal.style.display = "none";
-              var cell = document.getElementsByClassName(text.innerHTML);
-              //console.log(cell);//testing
-            
-              //cell.innerHTML = dayDate+"Text";
-              // console.log('The inner html:', cell.innerHTML);
-              // console.log('Class to use for key of local storage:', document.getElementById("month").value+'/'+dayDate+'/'+document.getElementById("year").value);
-              let localStorageFill = localStorage.getItem(date);
-              if(localStorageFill == null){
-                localStorageFill = dayDate+"<button class='entryButton' id="+title.value+date+">"+title.value+"</button>";
-              }
-              else{
-                //remember to prevent users from naming events the same title
-                // console.log("localstorageFill value: " + localStorageFill.value);
-                if (localStorageFill.includes("id="+title.value+date+"")){
-                  alert("An entry already exists with this name.");
-                }else{
-                  localStorageFill += "<button class='entryButton' id="+title.value+date+">"+title.value+"</button>";
-                }
-              }
-              localStorage.setItem(date, localStorageFill);// &&& CHANGE KEY TO HAVE BOTH DATE AND ENTRY TITLE
-              localStorage.setItem(title.value+date, markdownInput.value);
-              updateCalendar();
-            }
-          }
-    
-          // When the user clicks anywhere outside of the modal, close it
-          window.onclick = function(event) {
-            if (event.target == modal) {
-              modal.style.display = "none";
-            }
-          }
-        });
-
-        
+        target.addEventListener('click', (event) => openModal(event));
       }
     });
 
@@ -207,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
           entryButtons[i].addEventListener('click', function(event){
             console.log("This is the entry button you just clicked:"+entryButtons[i].id+"this is the index:"+i); // &&& Keeps logging way too many clicks
             event.stopPropagation();//this is to prevent the cell under from being clicked after we click a button
-
+            openModal(event);
             getOut = 1;
           });
           if(getOut == 1){
