@@ -1,7 +1,7 @@
 # Sprint Review - Infinite Loops (Team 12)
 
-**Type of meeting**: Zoom/Online
-**Location**:  N/A
+**Type of meeting**: Zoom/Online \
+**Location**:  N/A \
 **Date & Time**: 05/13/24 @ 1:30pm
 
 ## Attendance

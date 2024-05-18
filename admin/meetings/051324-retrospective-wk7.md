@@ -1,7 +1,7 @@
 # Retrospective W7 - Infinite Loops (Team 12)
 
-**Type of meeting**: Zoom/Online
-**Location**:  N/A
+**Type of meeting**: Zoom/Online \
+**Location**:  N/A \
 **Date & Time**: 05/13/24 @ 2:00pm
 
 ## Attendance
@@ -25,8 +25,8 @@
 ## New Business to be Discussed
 
 - What went well?
-  - Progresss
-  - Assigments
+  - Progress
+  - Assignments
     - this was a past issue, but now is considered something that went well
     - shows that we have improved as a team
   - Meetings and Participation

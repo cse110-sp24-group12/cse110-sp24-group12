@@ -1,7 +1,7 @@
 # Work/Review Meeting - Infinite Loops (Team 12)
 
-**Type of meeting**: Hybrid
-**Location**:  FAH
+**Type of meeting**: Hybrid \
+**Location**:  FAH \
 **Date & Time**: 05/10/24 @ 3:00pm
 
 ## Attendance
@@ -35,13 +35,13 @@
 
 - Ramtin will make issues based on the above tasks
 - Goal: have a basic functioning structure done by next Friday 5/17
-- Design team will work throughout the week, contributing asychronously, and meet to review on Sunday 5/12
+- Design team will work throughout the week, contributing asynchronously, and meet to review on Sunday 5/12
 - try to code frequently
   - if you need help, just ask
   - push frequently as well
 
-- JSDoc syntax, auto documentaition software
-  - if you use this format and merge to main branch, automatically gnereates documentation website
+- JSDoc syntax, auto documentation software
+  - if you use this format and merge to main branch, automatically generates documentation website
   - shows code and comments
 npm run test
     -runs all unit tests
@@ -69,6 +69,6 @@ npm run test
 
 ### Relevant Links
 
-- [Link here](./mmddyy-meeting.md)
+N/A
 
-**Meeting ended at:** 
+**Meeting ended at: 4:30** 
