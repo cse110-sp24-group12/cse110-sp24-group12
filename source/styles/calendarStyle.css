@@ -1,4 +1,8 @@
-.calendar-box{
+/* body{
+  background: linear-gradient(220deg, rgba(255, 255, 255, 0.00) 30.34%, rgba(147, 139, 165, 0.60) 54.76%, rgba(103, 93, 129, 0.60) 68.86%, rgba(40, 26, 77, 0.60) 99.13%);
+  background-color: rgb(104, 69, 118);
+} */
+.calendarBox{
   margin-inline: 2%;
   margin-top: 2%;
 }
@@ -17,13 +21,6 @@
   text-align: center; /* Center the text horizontally */
   margin: 0 auto; /* Center the title horizontally */
 
-}
-.month-select {
-  display: flex;
-  justify-content: center; /* Center children horizontally */
-  align-items: center; /* Center children vertically */
-  margin-right: 10px;
-  height: 0vh; /* Adjust as needed */
 }
 
 .monthBox, .yearBox {
@@ -111,7 +108,7 @@ textarea[id=markdown] {
 }
 
 /* Modal Content/Box */
-.modal-content {
+.modalContent {
   background-color: #fefefe;
   margin: 2% auto; /* 15% from the top and centered */
   padding: 20px;

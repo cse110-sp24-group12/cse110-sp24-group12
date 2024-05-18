@@ -16,6 +16,7 @@
     a button to add a markdown entry upon hovering on a day (these options should be hidden on other days and it's ok if these button don't do anything for now)-->
     <div class="pageTop">
       <a class="backLink" href="./index.html">&#8592; Back</a>
+      <button id="clearBtn" class="clearBtn">Press Me to Clear data</button>
      <select class="monthBox" id="month">
         <option value="0">January</option>
         <option value="1">February</option>
@@ -48,7 +49,7 @@
       });
     </script>
   </div>
-  <div class="calendar-box">
+  <div class="calendarBox">
   <table id = 'calendar'>
   </table>
   </div>
@@ -56,19 +57,19 @@
   <div id="myModal" class="modal">
 
     <!-- Modal content -->
-    <div class="modal-content">
+    <div class="modalContent">
       <span class="close">&times;</span>
-      <p id="modal-txt">Display Date here</p>
-
+      <p id="modalTxt">Display Date here</p>
+      <!-- input for title entry -->
+      <label for="entryTitle"></label>
+      <input id="entryTitle" type="text" class="entryTitle" placeholder="enter your title here">
       <!-- textarea for markdown input -->
       <label for="markdown"></label>
       <textarea id="markdown" type="text" placeholder="Enter Markdown Entry Here!"></textarea>
 
       <!-- buttons to save to markdown or send to -->
       <div class="saveButton">
-        <!-- <label for="save-markdown">Save as markdown</label> -->
         <button class="saveMarkdown" type="button" id="save-markdown">Save As Markdown</button>
-        <!-- <label for="save-task">Save as task list</label> -->
         <button  class="saveTask" type="button" id="save-task">Save As Task List</button>
     </div>
     </div>
