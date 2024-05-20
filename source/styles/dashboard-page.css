@@ -41,4 +41,10 @@ h1, h2 {
     margin-bottom: 5px;
     border-radius: 4px;
 }
+a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+}
 
