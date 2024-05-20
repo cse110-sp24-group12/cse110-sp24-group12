@@ -29,6 +29,27 @@ h1, h2 {
     background-color: #196127; /* Darker green for more contributions */
 }
 
-#bookmarked-notes {
+#bookmarked-notes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#bookmarked-notes li {
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+a {
+    display: inline-block;
     margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
