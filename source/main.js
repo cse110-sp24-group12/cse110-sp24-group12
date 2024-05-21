@@ -187,7 +187,8 @@ ipcMain.handle('get-entry-by-id', async (event, arg) => {
  * await window.api.addMarkdownEntry({
  *    date: '2022-01-01',
  *    title: 'New Entry',
- *    markdownContent: '## This is a new entry.'
+ *    markdownContent: '## This is a new entry.',
+ *    bookmarked: false
  * });
  */
 ipcMain.handle('add-markdown-entry', async (event, arg) => {
@@ -221,7 +222,8 @@ ipcMain.handle('add-markdown-entry', async (event, arg) => {
  *   id: '1',
  *   date: '2022-01-01',
  *   title: 'Updated Entry',
- *   markdownContent: '## This is an updated entry.'
+ *   markdownContent: '## This is an updated entry.',
+ *   bookmarked: true
  * });
  */
 ipcMain.handle('update-markdown-entry', async (event, arg) => {
