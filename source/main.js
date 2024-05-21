@@ -172,9 +172,8 @@ ipcMain.handle('get-entry-by-id', async (event, arg) => {
     const filtered = entries.filter((entry) => entry.id === arg);
     if (filtered.length > 0) {
         return filtered[0];
-    } else {
-        return null;
     }
+    return null;
 });
 
 /**
@@ -201,7 +200,7 @@ ipcMain.handle('add-markdown-entry', async (event, arg) => {
         fileName: `data/${newId}.md`,
         title: arg.title,
         type: 'markdown',
-        bookmarked: arg.bookmarked
+        bookmarked: arg.bookmarked,
     };
 
     entries.push(newEntry);
