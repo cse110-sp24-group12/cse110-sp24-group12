@@ -53,7 +53,8 @@ app.on('window-all-closed', () => {
  * renderMarkdownHelper - Render the markdown text into HTML.
  * @function
  * @param {string} markdownText - The markdown text to render into HTML.
- * @returns {string} The HTML rendering of the markdown text. It highlights the code blocks as well using highlight.js.
+ * @returns {string} The HTML rendering of the markdown text.
+ *                  It highlights the code blocks as well using highlight.js.
  */
 const renderMarkdownHelper = (markdownText) => {
     try {
@@ -76,7 +77,7 @@ const renderMarkdownHelper = (markdownText) => {
         console.error(error);
         return '';
     }
-}
+};
 
 /**
  * render-markdown - Render the markdown text from a file into HTML.
@@ -127,6 +128,4 @@ ipcMain.handle('write-file', async (event, arg) => {
  * @param {string} arg - The markdown text to render into HTML.
  * @returns {string} The HTML rendering of the markdown text.
  */
-ipcMain.handle('render-markdown', async (event, arg) => {
-    return renderMarkdownHelper(arg);
-});
+ipcMain.handle('render-markdown', async (event, arg) => renderMarkdownHelper(arg));
