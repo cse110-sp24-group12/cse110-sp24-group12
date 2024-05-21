@@ -15,6 +15,10 @@ document.getElementById('markdown-input').addEventListener('keydown', async (e) 
     }
 });
 
+/**
+ * Render the markdown text into the markdown-container
+ * element every 100ms.
+ */
 setInterval(async () => {
     const markdownInput = document.getElementById('markdown-input');
     const markdownText = markdownInput.value;
