@@ -5,19 +5,5 @@
         "fileName": "data/1.md",
         "title": "Test",
         "type": "markdown"
-    },
-    {
-        "id": "1fce5def-d733-44a6-9673-fb04c32b8973",
-        "date": "2022-01-01",
-        "fileName": "data/1fce5def-d733-44a6-9673-fb04c32b8973.md",
-        "title": "New Entry",
-        "type": "markdown"
-    },
-    {
-        "id": "0ca4f4c2-ee57-4d85-96ce-1eaf13874973",
-        "date": "2022-01-01",
-        "fileName": "data/0ca4f4c2-ee57-4d85-96ce-1eaf13874973.md",
-        "title": "New Entry",
-        "type": "markdown"
     }
 ]
