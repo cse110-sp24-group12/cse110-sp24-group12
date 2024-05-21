@@ -16,9 +16,12 @@ for (let i = 0; i < contributions.length; i++) {
     if (contributions[i] > 0) {
         if (contributions[i] >= 10) {
             square.classList.add('more-active');
-        } else {
+        } else{
             square.classList.add('active');
         }
     }
+    square.classList.add('inactive');
+
     container.appendChild(square);
 }
+
