@@ -1,4 +1,4 @@
-# Retrospective W7 - Infinite Loops (Team 12)
+# Retrospective W6 - Infinite Loops (Team 12)
 
 **Type of meeting**: Zoom/Online \
 **Location**:  N/A \
