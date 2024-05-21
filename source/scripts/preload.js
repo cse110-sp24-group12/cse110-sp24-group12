@@ -37,5 +37,9 @@ contextBridge.exposeInMainWorld(
         readMarkdown: (args) => ipcRenderer.invoke('read-markdown', args),
         readFile: (args) => ipcRenderer.invoke('read-file', args),
         renderMarkdown: (args) => ipcRenderer.invoke('render-markdown', args),
+        getEntryByMonth: (args) => ipcRenderer.invoke('get-entries-for-month', args),
+        getEntryById: (args) => ipcRenderer.invoke('get-entry-by-id', args),
+        addMarkdownEntry: (args) => ipcRenderer.invoke('add-markdown-entry', args),
+        updateMarkdownEntry: (args) => ipcRenderer.invoke('update-markdown-entry', args),
     }
 );

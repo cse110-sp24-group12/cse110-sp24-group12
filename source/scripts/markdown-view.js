@@ -15,6 +15,24 @@ document.getElementById('markdown-input').addEventListener('keydown', async (e) 
     }
 });
 
+document.addEventListener('DOMContentLoaded', async () => {
+    const entry = await window.api.getEntryById('1');
+    const markdownContent = await window.api.readFile(entry[0].fileName);
+    document.getElementById('markdown-input').value = markdownContent;
+});
+
+document.querySelector('button').addEventListener('click', async () => {
+    const markdownInput = document.getElementById('markdown-input');
+    const markdownText = markdownInput.value;
+    const entry = await window.api.getEntryById('1');
+    await window.api.updateMarkdownEntry({
+        id: entry[0].id,
+        date: entry[0].date,
+        title: entry[0].title,
+        markdownContent: markdownText,
+    });
+});
+
 /**
  * Render the markdown text into the markdown-container
  * element every 100ms.

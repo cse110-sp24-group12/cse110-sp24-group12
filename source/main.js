@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import fs from 'fs';
+import { v4 } from 'uuid';
 
 import markdown from 'markdown-it';
 import hljs from 'highlight.js';
@@ -129,3 +130,107 @@ ipcMain.handle('write-file', async (event, arg) => {
  * @returns {string} The HTML rendering of the markdown text.
  */
 ipcMain.handle('render-markdown', async (event, arg) => renderMarkdownHelper(arg));
+
+const readEntriesJSONFile = () => {
+    try {
+        return JSON.parse(fs.readFileSync('./data/entries.json', 'utf-8'));
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+};
+
+const writeEntriesJSONFile = (entries) => {
+    try {
+        fs.writeFileSync('data/entries.json', JSON.stringify(entries, null, 4), 'utf-8');
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+/**
+ * get-entries-for-month - Get all the entries for a given month.
+ * @param {string} arg - The year and month to get the entries for.
+ * @returns {array} The entries for the given month.
+ * @example
+ * const entries = await window.api.getEntriesForMonth('2022-01');
+ */
+ipcMain.handle('get-entries-for-month', async (event, arg) => {
+    const entries = readEntriesJSONFile();
+    return entries.filter((entry) => entry.date.startsWith(arg));
+});
+
+/**
+ * get-entry-by-id - Get an entry by its id.
+ * @param {string} arg - The id of the entry.
+ * @returns {object} The entry with the given id.
+ * @example
+ * const entry = await window.api.getEntryById('1');
+ */
+ipcMain.handle('get-entry-by-id', async (event, arg) => {
+    const entries = readEntriesJSONFile();
+    return entries.filter((entry) => entry.id === arg);
+});
+
+/**
+ * add-markdown-entry - Add a new markdown entry.
+ * @param {object} arg - The entry details.
+ * @param {string} arg.date - The date of the entry.
+ * @param {string} arg.title - The title of the entry.
+ * @param {string} arg.markdownContent - The markdown content of the entry.
+ * @example
+ * await window.api.addMarkdownEntry({
+ *    date: '2022-01-01',
+ *    title: 'New Entry',
+ *    markdownContent: '## This is a new entry.'
+ * });
+ */
+ipcMain.handle('add-markdown-entry', async (event, arg) => {
+    const entries = readEntriesJSONFile();
+
+    const newId = v4();
+    const newEntry = {
+        id: newId,
+        date: arg.date,
+        fileName: `data/${newId}.md`,
+        title: arg.title,
+        type: 'markdown',
+    };
+
+    entries.push(newEntry);
+    fs.writeFileSync(newEntry.fileName, arg.markdownContent, 'utf-8');
+    writeEntriesJSONFile(entries);
+});
+
+/**
+ * update-markdown-entry - Update an existing markdown entry.
+ * @param {object} arg - The entry details.
+ * @param {string} arg.id - The id of the entry.
+ * @param {string} arg.date - The date of the entry.
+ * @param {string} arg.title - The title of the entry.
+ * @param {string} arg.markdownContent - The markdown content of the entry.
+ * @example
+ * await window.api.updateMarkdownEntry({
+ *   id: '1',
+ *   date: '2022-01-01',
+ *   title: 'Updated Entry',
+ *   markdownContent: '## This is an updated entry.'
+ * });
+ */
+ipcMain.handle('update-markdown-entry', async (event, arg) => {
+    const entries = readEntriesJSONFile();
+    const entryIndex = entries.findIndex((entry) => entry.id === arg.id);
+
+    if (entryIndex !== -1) {
+        const newEntry = {
+            id: arg.id,
+            date: arg.date,
+            fileName: `data/${arg.id}.md`,
+            title: arg.title,
+            type: 'markdown',
+        };
+        entries[entryIndex] = newEntry;
+        writeEntriesJSONFile(entries);
+        fs.writeFileSync(entries[entryIndex].fileName, arg.markdownContent, 'utf-8');
+    }
+});
