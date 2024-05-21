@@ -163,13 +163,18 @@ ipcMain.handle('get-entries-for-month', async (event, arg) => {
 /**
  * get-entry-by-id - Get an entry by its id.
  * @param {string} arg - The id of the entry.
- * @returns {object} The entry with the given id.
+ * @returns {object} The entry with the given id or null if the entry doesn't exist.
  * @example
  * const entry = await window.api.getEntryById('1');
  */
 ipcMain.handle('get-entry-by-id', async (event, arg) => {
     const entries = readEntriesJSONFile();
-    return entries.filter((entry) => entry.id === arg);
+    const filtered = entries.filter((entry) => entry.id === arg);
+    if (filtered.length > 0) {
+        return filtered[0];
+    } else {
+        return null;
+    }
 });
 
 /**
@@ -178,6 +183,7 @@ ipcMain.handle('get-entry-by-id', async (event, arg) => {
  * @param {string} arg.date - The date of the entry.
  * @param {string} arg.title - The title of the entry.
  * @param {string} arg.markdownContent - The markdown content of the entry.
+ * @param {boolean} arg.bookmarked - The bookmark status of the entry.
  * @example
  * await window.api.addMarkdownEntry({
  *    date: '2022-01-01',
@@ -195,6 +201,7 @@ ipcMain.handle('add-markdown-entry', async (event, arg) => {
         fileName: `data/${newId}.md`,
         title: arg.title,
         type: 'markdown',
+        bookmarked: arg.bookmarked
     };
 
     entries.push(newEntry);
@@ -208,6 +215,7 @@ ipcMain.handle('add-markdown-entry', async (event, arg) => {
  * @param {string} arg.id - The id of the entry.
  * @param {string} arg.date - The date of the entry.
  * @param {string} arg.title - The title of the entry.
+ * @param {boolean} arg.bookmarked - The bookmark status of the entry.
  * @param {string} arg.markdownContent - The markdown content of the entry.
  * @example
  * await window.api.updateMarkdownEntry({
@@ -228,6 +236,7 @@ ipcMain.handle('update-markdown-entry', async (event, arg) => {
             fileName: `data/${arg.id}.md`,
             title: arg.title,
             type: 'markdown',
+            bookmarked: arg.bookmarked,
         };
         entries[entryIndex] = newEntry;
         writeEntriesJSONFile(entries);

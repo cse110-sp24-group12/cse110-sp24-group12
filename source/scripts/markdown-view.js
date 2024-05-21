@@ -17,7 +17,7 @@ document.getElementById('markdown-input').addEventListener('keydown', async (e) 
 
 document.addEventListener('DOMContentLoaded', async () => {
     const entry = await window.api.getEntryById('1');
-    const markdownContent = await window.api.readFile(entry[0].fileName);
+    const markdownContent = await window.api.readFile(entry.fileName);
     document.getElementById('markdown-input').value = markdownContent;
 });
 
@@ -26,9 +26,10 @@ document.querySelector('button').addEventListener('click', async () => {
     const markdownText = markdownInput.value;
     const entry = await window.api.getEntryById('1');
     await window.api.updateMarkdownEntry({
-        id: entry[0].id,
-        date: entry[0].date,
-        title: entry[0].title,
+        id: entry.id,
+        date: entry.date,
+        title: entry.title,
+        bookmarked: entry.bookmarked,
         markdownContent: markdownText,
     });
 });
