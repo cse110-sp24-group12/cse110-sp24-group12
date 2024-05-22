@@ -1,6 +1,7 @@
 /* styles/dashboard-page.css */
 html {
     height: 100%;
+    width:100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -18,13 +19,23 @@ body {
     background: #49414F;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
     border-radius: 25px;
-    width: 54.3%;
-    height: 31%;
+    width: 650px;
+    height: 250px;
     align-self: center;
-    margin-left: 3%;
-
+    margin-left: 75px;
+    justify-content: center;
 }
 .containerbig2{
+
+    background: #49414F;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
+    border-radius: 25px;
+    width: 1350px;
+    height: 50px;
+    align-self: center;
+    margin-left: 40px;
+}
+.containerbig3{
 
     background: #49414F;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
@@ -37,30 +48,45 @@ body {
 }
 .h3 {
     color: white;
+    
   }
 .my-heading {
     color: white;
-    font-size: small;
-    font-weight: normal;
+    font-size: large;
+    font-weight: 100;
   }
 .tab {
     display: inline-block;
-    margin-left: 40px;  /* for e.g: value = 40px*/
+    margin-left: 20px;
 }
-
+.tabwithsmallline {
+    display: inline-block;
+    margin-left: 20px; 
+    margin-top: 30px;
+}
 .container {
-
     display: grid;
-    width:110px;
-    margin:3px;
+    width:130px;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    grid-gap: 1px;
-    padding: 2px;
-    border: 2px transparent;
-    
-    
+    grid-gap: 4px;
+    padding: 4px;
+    margin-left: 5px;
+    margin-top: 25px;
 }
+.whitecontainer {
+    background: #2d2d44;
+    background-blend-mode:overlay ;
+    width:250px;
+    margin-left:225px;
+    background-color: #bcbcce; /* White background for the outer box */
+    padding: 10px; /* Padding to create some space inside the white container */
+    border-radius: 10px; /* Rounded corners for a smoother look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a 3D effect */
+    max-width: 400px; /* Adjust width as needed */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
 .background-layer1 {
     position: absolute;
     top: 0;
@@ -85,18 +111,11 @@ body {
     height: 100%;
     background: linear-gradient(220deg, rgba(255, 255, 255, 0.00) 30.34%, rgba(164, 147, 202, 0.6) 54.76%, rgba(81, 67, 114, 0.6) 68.86%, rgba(40, 26, 77, 0.60) 99.13%);
 }
-.graph-container {
-    margin:3px;
-    display: flex;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-gap: 1px;
-    padding: 2px;
-}
+/*  */
 .square {
-    width: 20px;
+    width: 25px;
     margin: 1px;
-    height: 20px;
+    height: 25px;
     border-radius: 5px;
 }
 h1, h2 {
