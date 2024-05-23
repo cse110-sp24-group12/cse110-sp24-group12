@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "electron .",
-    "test": "jest",
+    "test": "mocha tests",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
@@ -35,10 +35,16 @@
   },
   "main": "main.js",
   "dependencies": {
-    "electron": "^30.0.2",
+    "chai": "^5.1.1",
+    "electron": "^30.0.6",
     "electron-squirrel-startup": "^1.0.0",
     "highlight.js": "^11.9.0",
     "markdown-it": "^14.1.0",
+    "mocha": "^10.4.0",
+    "puppeteer": "^22.9.0",
+    "puppeteer-core": "^22.9.0",
+    "puppeteer-in-electron": "^3.0.5",
+    "spectron": "^19.0.0",
     "uuid": "^9.0.1"
   }
 }
