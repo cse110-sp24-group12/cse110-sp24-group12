@@ -36,7 +36,13 @@ test.describe('Playwright Testing', () => {
     let window, electronApp;
 
     test.beforeAll(async () => {
-        electronApp = await electron.launch({ args: ['.'] });
+        electronApp = await electron.launch({ 
+            args: ['.'],
+            env: {
+                ...process.env,
+                NODE_ENV: 'development'
+            }
+        });
         window = await electronApp.firstWindow();
     });
 
