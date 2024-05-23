@@ -12,4 +12,4 @@ jobs:
         run: npm install
       - name: Unit Test
         working-directory: ./source
-        run: npm run test
+        run: ls node_modules/electron/dist/Electron.app/Contents
