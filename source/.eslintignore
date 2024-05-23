@@ -3,3 +3,6 @@ docs
 preload.js
 __tests__
 forge.config.js
+tests
+wdio.conf.js
+test-results
