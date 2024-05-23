@@ -33,21 +33,6 @@
      </select>
     <input class="yearBox" type="number" id="year" placeholder="Year">
     <h1 class="centeredTitle">Calendar</h1>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const monthSelect = document.getElementById("month");
-        const yearInput = document.getElementById("year");
-
-        // Set current month and year as initial values
-        const currentDate = new Date();
-        const currentMonth = currentDate.getMonth(); // Month is zero-based
-        const currentYear = currentDate.getFullYear();
-
-        // Set initial values for month and year inputs
-        monthSelect.value = currentMonth.toString();
-        yearInput.value = currentYear.toString();
-      });
-    </script>
   </div>
   <div class="calendarBox">
   <table id = 'calendar'>
