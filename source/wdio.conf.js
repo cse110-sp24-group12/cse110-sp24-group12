@@ -21,7 +21,7 @@ export const config = {
     // of the config file unless it's absolute.
     //
     specs: [
-        './tests/*.e2e.js'
+        './tests/*.e2e.js',
     ],
     // Patterns to exclude.
     exclude: [
@@ -55,9 +55,9 @@ export const config = {
         // see https://webdriver.io/docs/desktop-testing/electron/configuration/#service-options
         'wdio:electronServiceOptions': {
             // custom application args
-            appBinaryPath: "./node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
-            appArgs: ["app=."]
-        }
+            appBinaryPath: './node_modules/.bin/electron',
+            appArgs: ['app=.'],
+        },
     }],
 
     //
@@ -116,7 +116,7 @@ export const config = {
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
     framework: 'mocha',
-    
+
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -136,7 +136,7 @@ export const config = {
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 60000,
     },
 
     //
@@ -236,7 +236,6 @@ export const config = {
     // afterTest: function(test, context, { error, result, duration, passed, retries }) {
     // },
 
-
     /**
      * Hook that gets executed after the suite has ended
      * @param {object} suite suite details
@@ -298,4 +297,4 @@ export const config = {
     */
     // afterAssertion: function(params) {
     // }
-}
+};
