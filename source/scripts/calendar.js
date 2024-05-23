@@ -1,34 +1,33 @@
 /**
- * updateCellLocalStorage 
+ * updateCellLocalStorage
  *
- * @function 
+ * @function
  * @param {string} cell - the namespace and name of the event
  * @param {string} eventToDelete - the id of the event
  *                  Deletes a designated button from the HTML.
  */
-function updateCellLocalStorage(cell, eventToDelete){
-  let data = localStorage.getItem(cell);
-  let dataArray = data.split("</button> ");
-  if(dataArray.length == 1){
-    //in the case that there was only the one button we just clear everything
-    console.log("We have one button, so we clear out the cell");
-    localStorage.removeItem(cell);
-    return;
-  }
-  let updatedData = "";
-  let length = dataArray.length;
-  for(let i = 0; i < length; i += 1){
-    let current = dataArray[i];
-    console.log("This is the value of current", current);
-    if (current === `<button class='entryButton' id=${eventToDelete}>${eventToDelete.split(".")[0]}`){
-      //we have found the part we want to delete
-      //dont do anything
+function updateCellLocalStorage(cell, eventToDelete) {
+    const data = localStorage.getItem(cell);
+    const dataArray = data.split('</button> ');
+    if (dataArray.length === 1) {
+    // in the case that there was only the one button we just clear everything
+        console.log('We have one button, so we clear out the cell');
+        localStorage.removeItem(cell);
+        return;
     }
-    else{
-      updatedData += current+"</button>";
+    let updatedData = '';
+    const { length } = dataArray;
+    for (let i = 0; i < length; i += 1) {
+        const current = dataArray[i];
+        console.log('This is the value of current', current);
+        if (current === `<button class='entryButton' id=${eventToDelete}>${eventToDelete.split('.')[0]}`) {
+            // we have found the part we want to delete
+            // dont do anything
+        } else {
+            updatedData += `${current}</button>`;
+        }
     }
-  }
-  localStorage.setItem(cell, updatedData);
+    localStorage.setItem(cell, updatedData);
 }
 
 // &&& need to implement a third "..." redirect button and corresponding modal window
@@ -40,7 +39,7 @@ function updateCellLocalStorage(cell, eventToDelete){
  */
 document.addEventListener('DOMContentLoaded', () => {
     const monthSelect = document.getElementById('month');
-    let yearInput = document.getElementById('year');
+    const yearInput = document.getElementById('year');
     const calendarContainer = document.getElementById('calendar');
     const clearDataButton = document.getElementById('clearBtn');
     const entryButtons = document.getElementsByClassName('entryButton');
@@ -80,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 calendarHTML += ' </tr> <tr>';// creates a new row
             }
             let fill;
-            const memory = localStorage.getItem(`${month +1}/${day}/${year}`);
+            const memory = localStorage.getItem(`${month + 1}/${day}/${year}`);
             // check what was stored for that day
             if (memory === null) {
                 fill = day;
@@ -109,29 +108,25 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('you opened the modal');// test to see if we're clicking through our buttons
         console.log('this is the id of what you clicked on', event.target.id);
         console.log('this is the class what you clicked on:', event.target.classList);
-        let infoArray = event.target.id.split(".");
+        const infoArray = event.target.id.split('.');
         let name = null;
         let date;
-        
-        if(infoArray.length === 2){
-          //this means we are working with existing event
-          [name, date] = infoArray;
-        }
-        else{
-          [date] = infoArray;
+
+        if (infoArray.length === 2) {
+            // this means we are working with existing event
+            [name, date] = infoArray;
+        } else {
+            [date] = infoArray;
         }
         // let [possibleName, dayDate] = event.target.id.split("/");
         // let name;
 
-        //event.target.id is either... name4/2/2003 <-this is on clicking on saved event
-        //or it may be 4/2/2003 <-this is clicking on empty cell
-        //(4/2/2003, <buttons class= enteryBUtton id=name4/2/2003><\buttons id=name2><buttons><\buttons><buttons><\buttons>)
-        //(name4/2/2003, textEntry Value whatever the user typed in)
-        //therefore possibleName can either be name4 or 4 depending on if we clicked
-        //we need to identify if user clicked on a old event, or is creating a new one
-        //if they clicked on an old event, we should include new option, delete button
-        //we should also make the name of the event unchangable, or at least ask for a confirmation
-
+        // event.target.id is either... name4/2/2003 <-this is on clicking on saved event
+        // or it may be 4/2/2003 <-this is clicking on empty cell
+        // therefore possibleName can either be name4 or 4 depending on if we clicked
+        // we need to identify if user clicked on a old event, or is creating a new one
+        // if they clicked on an old event, we should include new option, delete button
+        // we should also make the name of the event unchangable, or at least ask for a confirmation
 
         // pull elements from HTML for the modal window
         const modal = document.getElementById('myModal');
@@ -139,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = document.getElementById('modalTxt');
         const saveMarkDown = document.getElementById('save-markdown');
         const markdownInput = document.getElementById('markdown');
-        //const date = `${document.getElementById('month').value}/${dayDate}/${document.getElementById('year').value}`;
         const title = document.getElementById('entryTitle');
 
         if (name === null) {
@@ -148,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title.value = null;
         } else {
             // reenter old data
-            //we need to make a button
+            // we need to make a button
             markdownInput.value = localStorage.getItem(event.target.id);
             title.value = event.target.innerHTML;
         }
@@ -156,26 +150,23 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'block';
         // show date on the modals inner html (top left)
         text.innerHTML = date;
-        if(name != null){
-          text.innerHTML += "<button id=\'deleteEntryButton\'>Delete Entry</button>";//add class here for styling?
-          const deleteEntryButton = document.getElementById("deleteEntryButton");
-          deleteEntryButton.addEventListener('click', ()=>{
-            //should add a confirm choice to make sure it wasnt misclick
-            localStorage.removeItem(event.target.id);//this clears the entry
-            //what if we split by </button> and then get rid of the one that starts with <button id = event.target.id>
-            //then update using setItem, and put our new string
-            //do we make a helper function?
-            //date is the id of the cell we are updating, and event.target.id is the id of the button we are removing
-            updateCellLocalStorage(date, event.target.id);
-            modal.style.display = 'none';
-            generateCalendar();
-          });
+        if (name != null) {
+            text.innerHTML += "<button id='deleteEntryButton'>Delete Entry</button>";// add class here for styling?
+            const deleteEntryButton = document.getElementById('deleteEntryButton');
+            deleteEntryButton.addEventListener('click', () => {
+            // should add a confirm choice to make sure it wasnt misclick
+                localStorage.removeItem(event.target.id);// this clears the entry
+                // then update using setItem, and put our new string
+                // do we make a helper function?
+                updateCellLocalStorage(date, event.target.id);
+                modal.style.display = 'none';
+                generateCalendar();
+            });
         }
         // When the user clicks on <span> (x), close the modal
         span.onclick = () => {
             modal.style.display = 'none';
         };
-
 
         // look for user input in the title
 
@@ -205,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   id=${title.value}.${date}>${title.value}</button>`;
                 }
                 localStorage.setItem(date, localStorageFill);
-                localStorage.setItem(title.value+"."+ date, markdownInput.value);
+                localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
                 generateCalendar();
             }
         };
