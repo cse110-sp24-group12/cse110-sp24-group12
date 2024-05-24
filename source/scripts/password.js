@@ -21,18 +21,22 @@ async function init() {
     const modal = document.getElementById('myModal');
     const img = document.getElementById('triggerPopup');
     const span = document.getElementsByClassName('close')[0];
+    const container = document.querySelector('.container');
 
     img.onclick = () => {
         modal.style.display = 'block';
+        container.style.display = 'none';
     };
 
     span.onclick = () => {
         modal.style.display = 'none';
+        container.style.display = 'flex';
     };
 
     window.onclick = (event) => {
         if (event.target === modal) {
             modal.style.display = 'none';
+            container.style.display = 'flex';
         }
     };
 }
