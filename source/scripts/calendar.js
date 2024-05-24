@@ -64,6 +64,12 @@ function formatButtons(htmlString, extraId){
     }
 }
 
+function changeCellStorage(date, oldName, newName){
+    let data = localStorage.getItem(date);
+    let newData = data.replace(oldName+".", newName+".").replace(oldName+"<", newName+"<");//should replace exactly 2x
+    localStorage.setItem(date, newData);
+}
+
 /**
  * Listen for DOMContentLoaded
  *
@@ -156,9 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let date;
 
         // check length of infoArray to see if entry exists, or is new
+        let editing = false;
         if (infoArray.length === 2) {
             // this means we are working with existing event
             [name, date] = infoArray;
+            editing = true;
         } else {
             [date] = infoArray;
         }
@@ -238,31 +246,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // get entry from local storage
                 let localStorageFill = localStorage.getItem(date);
-
+                if(!editing){
                 // check if there is an existing entry on this day; 
                 //  else, append button to HTML string, and update local storage
-                if (localStorageFill === null) {
+                    if (localStorageFill === null) {
 
                     // if no entry exists, set current date/title to first entry
-                    localStorageFill = `<button class='entryButton' id=${title.value}.${date}>${title.value}</button>`;
+                        localStorageFill = `<button class='entryButton' id=${title.value}.${date}>${title.value}</button>`;
 
-                } else if (localStorageFill.includes(`id=${title.value}.${date}`)) {
+                    }
+                    else if (localStorageFill.includes(`id=${title.value}.${date}`)) {
                     /**
                      * &&& title bug -- prevents user from editing an existing entry
                      * potential fix: "alert" with text next to button prompting to click button again to confirm.
                      *                 less annoying than having to click accept or okay like our other alerts.
                      */
                     
-                    alert('An entry already exists with this name.'); // eslint-disable-line no-alert
+                        alert('An entry already exists with this name.'); // eslint-disable-line no-alert
 
-                } else {
+                    } else {
                     // append new entry button to the HTML string
-                    localStorageFill += `<button class='entryButton' \
-                  id=${title.value}.${date}>${title.value}</button>`;
-                }
+                        localStorageFill += `<button class='entryButton' \
+                      id=${title.value}.${date}>${title.value}</button>`;
+                    }
                 // update local storage with new entry buttons, update calendar using generateCalendar()
-                localStorage.setItem(date, localStorageFill);
-                localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
+                    localStorage.setItem(date, localStorageFill);
+                    localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
+                }
+                else{
+                    console.log("We are editing");
+                    if(title.value != name){
+                        console.log("We should be updating the title here!", name, title.value);
+                        //the user has updated the title, act accordingly
+                        localStorage.removeItem(`${name}.${date}`);
+                        changeCellStorage(date, name, title.value);
+                    }
+                    localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
+                }
+                
                 generateCalendar();
             }
         };
