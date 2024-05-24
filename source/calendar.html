@@ -39,7 +39,7 @@
 
     <!-- Modal content -->
     <div class="modalContent">
-      <span class="close">&times;</span>
+      <span id = 'closeModal' class="close">&times;</span>
       <p id="modalTxt">Display Date here</p>
       <!-- input for title entry -->
       <label for="entryTitle"></label>
@@ -52,6 +52,18 @@
       <div class="saveButton">
         <button class="saveMarkdown" type="button" id="save-markdown">Save As Markdown</button>
         <button class="saveTask" type="button" id="save-task">Save As Task List</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- The Extra Modal -->
+  <div id="extraModal" class="extraModal">
+
+    <!-- Modal content -->
+    <div class="extraModalContent">
+      <span id = 'closeExtra' class="close">&times;</span>
+      <div id = 'extraButtons'></div>
       </div>
     </div>
 

@@ -148,6 +148,24 @@ const writeEntriesJSONFile = (entries) => {
     }
 };
 
+
+const readcellStorageJSON = () => {
+    try {
+        return JSON.parse(fs.readFileSync('.data/cellStorage.json', 'utf-8'));
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+};
+
+const writecellStorageJSON = (entries) => {
+    try {
+        fs.writeFileSync('data/cellStorage.json', JSON.stringify(entries, null, 4), 'utf-8');
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 /**
  * get-entries-for-month - Get all the entries for a given month.
  * @param {string} arg - The year and month to get the entries for.

@@ -5,6 +5,7 @@
         "fileName": "data/1.md",
         "title": "Test",
         "type": "markdown",
+        "data" : "This is the text the user wrote for said entry",
         "bookmarked": false
     }
 ]

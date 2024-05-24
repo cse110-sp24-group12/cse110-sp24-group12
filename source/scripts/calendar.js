@@ -7,6 +7,9 @@
  *                  Deletes a designated button from the HTML.
  */
 function updateCellLocalStorage(cell, eventToDelete) {
+    // For documentation on these functions, see `../main.js`
+
+
     const data = localStorage.getItem(cell);
     const dataArray = data.split('</button> ');
     if (dataArray.length === 1) {
@@ -30,6 +33,21 @@ function updateCellLocalStorage(cell, eventToDelete) {
     localStorage.setItem(cell, updatedData);
 }
 
+function formatButtons(htmlString, id){
+    const dataArray = htmlString.split('</button>');
+    console.log("Should format button display");
+    console.log("length<", dataArray.length);
+    if(dataArray.length > 3){
+        console.log("should reduce number of visible buttons");
+        //show only 2 buttons and then a ... if we have more than 3 entries
+        let updatedData = dataArray[0]+"</button>" + dataArray[1] + "</button>";//re-attach button tags
+        updatedData += "<button id ='"+id+"' class = 'extra'>...</button>";
+        return updatedData;
+    }
+    else{
+        return htmlString;
+    }
+}
 // &&& need to implement a third "..." redirect button and corresponding modal window
 /**
  * Listen for DOMContentLoaded
@@ -43,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const calendarContainer = document.getElementById('calendar');
     const clearDataButton = document.getElementById('clearBtn');
     const entryButtons = document.getElementsByClassName('entryButton');
+    const extraButtons = document.getElementsByClassName('extra');
     // Set current month and year as initial values
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth(); // Month is zero-based
@@ -84,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (memory === null) {
                 fill = day;
             } else {
-                fill = day + memory;
+                fill = day + formatButtons(memory, `extra.${month + 1}/${day}/${year}`);
             }
             calendarHTML += `<td id='${month + 1}/${day}/${year}' class='mouseOut standardCell'  >${fill}</td> `;
             count += 1;
@@ -92,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         calendarHTML += '</tr></tbody>';
         calendarContainer.innerHTML = calendarHTML;
     }
-
+    
     monthSelect.addEventListener('change', generateCalendar);
     yearInput.addEventListener('input', generateCalendar);
 
@@ -128,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // pull elements from HTML for the modal window
         const modal = document.getElementById('myModal');
-        const span = document.getElementsByClassName('close')[0];
+        const span = document.getElementById('closeModal');
         const text = document.getElementById('modalTxt');
         const saveMarkDown = document.getElementById('save-markdown');
         const markdownInput = document.getElementById('markdown');
@@ -183,8 +202,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // We enter this else if we are ready to close and save
                 modal.style.display = 'none';
-
+                
                 let localStorageFill = localStorage.getItem(date);
+                //let data = readcellStorageJSON();
+                //console.log(data);
+                //data = JSON.parse(data);
+
                 if (localStorageFill === null) {
                     localStorageFill = `<button class='entryButton' id=${title.value}.${date}>${title.value}</button>`;
                 } else if (localStorageFill.includes(`id=${title.value}.${date}`)) {
@@ -211,6 +234,41 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    //Create/Update modal to view list of 
+    function openExtraModal(event){
+        const modal = document.getElementById('extraModal');
+        const span = document.getElementById('closeExtra');
+        const extraButtons = document.getElementById('extraButtons');
+        let [,date] = event.target.id.split(".");
+        extraButtons.innerHTML = localStorage.getItem(date);
+        modal.style.display='block';
+        console.log("This is the content that we want to show on our modal:", localStorage.getItem(date));
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = () => {
+            modal.style.display = 'none';
+        };
+
+        window.onclick = (modalOutsideClick) => {
+            if (modalOutsideClick.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+            //Event listeners for the entry buttons ("Save as Markdown/Task")
+    for (let i = 0; i < entryButtons.length; i += 1) {
+        entryButtons[i].addEventListener('click', (entryButtonClick) => {
+            console.log(`This is the entry button you just clicked:${entryButtons[i].id}this is the index:${i}`); // &&& Keeps logging way too many clicks
+            // this is to prevent the cell under from being clicked after we click a button
+            entryButtonClick.stopPropagation();
+            modal.style.display = 'none';
+            openModal(entryButtonClick);
+        });
+    }
+
+
+    }
+
     // This is when we hover over some calendar cell
     /**
     * Listens for mouseover of the calendar button.
@@ -221,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Some mouse hover event happened');
         const { target } = event;
 
-        // target.classList.contains("standardCell")
         if (target.classList.contains('standardCell')) {
             console.log('hovered over something');
             target.classList.remove('mouseOut');
@@ -238,6 +295,17 @@ document.addEventListener('DOMContentLoaded', () => {
         generateCalendar();
     });
 
+    //Event listeners for the entry buttons ("Save as Markdown/Task")
+    for (let i = 0; i < entryButtons.length; i += 1) {
+        entryButtons[i].addEventListener('click', (entryButtonClick) => {
+            console.log(`This is the entry button you just clicked:${entryButtons[i].id}this is the index:${i}`); // &&& Keeps logging way too many clicks
+            // this is to prevent the cell under from being clicked after we click a button
+            entryButtonClick.stopPropagation();
+            openModal(entryButtonClick);
+        });
+    }
+
+    //Checking to m
     calendarContainer.addEventListener('mouseout', (event) => {
         const { target } = event;
         if (target.classList.contains('standardCell')) {
@@ -252,14 +320,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (markdownButton) {
                 target.removeChild(markdownButton);
             }
-            for (let i = 0; i < entryButtons.length; i += 1) {
-                entryButtons[i].addEventListener('click', (entryButtonClick) => {
-                    console.log(`This is the entry button you just clicked:${entryButtons[i].id}this is the index:${i}`); // &&& Keeps logging way too many clicks
-                    // this is to prevent the cell under from being clicked after we click a button
-                    entryButtonClick.stopPropagation();
-                    openModal(entryButtonClick);
+            
+            //Event listeners for the "extra" buttons on each cell ("...")
+            for(let i = 0; i < extraButtons.length; i+=1){
+                extraButtons[i].addEventListener('click', (extraButtonClick) =>{
+                   console.log(`This is the extra button you just clicked:${extraButtons[i].id}this is the index:${i}`);
+                   extraButtonClick.stopPropagation();
+                   openExtraModal(extraButtonClick);
                 });
             }
+            
+            
         }
     });
 });
