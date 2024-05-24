@@ -269,7 +269,6 @@ ipcMain.handle('write-password', (event, args) => {
 ipcMain.handle('read-password', async () => {
     try {
         const data = fs.readFileSync('./data/password.json', 'utf8');
-        console.log(data);
         return data;
     } catch (error) {
         console.error(error);
