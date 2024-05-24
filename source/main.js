@@ -247,7 +247,7 @@ ipcMain.handle('update-markdown-entry', async (event, arg) => {
 /**
  * write-password - Writes password and backup pin to the password.json file
  * @param {string} arg - String for the password
- * @param {string} arg - String for backup pin 
+ * @param {string} arg - String for backup pin
  * input: {"password":"1234556","pin":"1234"}
  */
 ipcMain.handle('write-password', (event, args) => {
@@ -262,7 +262,6 @@ ipcMain.handle('write-password', (event, args) => {
  * Handles the 'read-password' IPC event.
  * Reads the password data from a JSON file and returns it as a string.
  * The JSON string typically contains `password` and `pin` properties.
- * 
  * @returns {string} returns.password - The password.
  * @returns {string} returns.pin - The pin.
  * return example: {"password":"1234556","pin":"1234"}
