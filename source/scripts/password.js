@@ -23,12 +23,12 @@ async function init() {
     const img = document.getElementById('triggerPopup');
     const span = document.getElementsByClassName('close')[0];
     const container = document.querySelector('.container');
-    // when ? button is clicked, dont display the password page underneath 
+    // when ? button is clicked, dont display the password page underneath
     img.onclick = () => {
         modal.style.display = 'block';
         container.style.display = 'none';
     };
-    
+
     span.onclick = () => {
         modal.style.display = 'none';
         container.style.display = 'flex';
