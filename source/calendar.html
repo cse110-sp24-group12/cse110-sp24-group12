@@ -1,13 +1,63 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Calendar</title>
+  <title>Calendar</title>
+  <link rel="stylesheet" type="text/css" href="styles/calendarStyle.css" />
+
 </head>
+
 <body>
-    <h1>Calendar</h1>
-    
-    <!-- Your content goes here -->
-    <a href="./index.html">Back</a>
-    <script src="scripts/calendar.js"></script>
+
+
+  <div class="pageTop">
+    <a class="backLink" href="./index.html">&#8592; Back</a>
+    <button id="clearBtn" class="clearBtn">Press Me to Clear data</button>
+    <select class="monthBox" id="month">
+      <option value="0">January</option>
+      <option value="1">February</option>
+      <option value="2">March</option>
+      <option value="3">April</option>
+      <option value="4">May</option>
+      <option value="5">June</option>
+      <option value="6">July</option>
+      <option value="7">August</option>
+      <option value="8">September</option>
+      <option value="9">October</option>
+      <option value="10">November</option>
+      <option value="11">December</option>
+    </select>
+    <input class="yearBox" type="number" id="year" placeholder="Year">
+    <h1 class="centeredTitle">Calendar</h1>
+  </div>
+  <div class="calendarBox">
+    <table id='calendar'>
+    </table>
+  </div>
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modalContent">
+      <span class="close">&times;</span>
+      <p id="modalTxt">Display Date here</p>
+      <!-- input for title entry -->
+      <label for="entryTitle"></label>
+      <input id="entryTitle" type="text" class="entryTitle" placeholder="enter your title here">
+      <!-- textarea for markdown input -->
+      <label for="markdown"></label>
+      <textarea id="markdown" type="text" placeholder="Enter Markdown Entry Here!"></textarea>
+
+      <!-- buttons to save to markdown or send to -->
+      <div class="saveButton">
+        <button class="saveMarkdown" type="button" id="save-markdown">Save As Markdown</button>
+        <button class="saveTask" type="button" id="save-task">Save As Task List</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="scripts/calendar.js"></script>
 </body>
+
 </html>
