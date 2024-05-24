@@ -118,8 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             [date] = infoArray;
         }
-        // let [possibleName, dayDate] = event.target.id.split("/");
-        // let name;
 
         // event.target.id is either... name4/2/2003 <-this is on clicking on saved event
         // or it may be 4/2/2003 <-this is clicking on empty cell
@@ -172,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // When we click save, close the pop up,
         // add local storage data (New entry title), re-generateCalendar
-        /*
+        /**
         * Listens for click of the saveMarkDown button.
         *
         * @type {HTMLElement} - the target of the event, being the save button
@@ -201,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        /*
+        /**
         * Listens for click outside of modal window, closes if detected
         *
         * @type {HTMLElement} - the target of the event, being outside the modal
@@ -214,11 +212,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // This is when we hover over some calendar cell
-    /*
-        * Listens for mouseover of the calendar button.
-        *
-        * @type {HTMLElement} - the target of the event, being the save button
-        */
+    /**
+    * Listens for mouseover of the calendar button.
+    *
+    * @type {HTMLElement} - the target of the event, being the save button
+    */
     calendarContainer.addEventListener('mouseover', (event) => {
         console.log('Some mouse hover event happened');
         const { target } = event;
