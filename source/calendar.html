@@ -1,42 +1,38 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Calendar</title>
-    <link rel="stylesheet" type="text/css" href="styles/calendarStyle.css" />
+  <title>Calendar</title>
+  <link rel="stylesheet" type="text/css" href="styles/calendarStyle.css" />
 
 </head>
+
 <body>
-    
-    
-    <!-- Your content goes here -->
-    <!--Is able to render any month dynamically
-    User can choose the month and year in a dropdown
-    there is an indicator on which day the user's cursor is on
-    The user can have the options of clicking a button to add a task list and 
-    a button to add a markdown entry upon hovering on a day (these options should be hidden on other days and it's ok if these button don't do anything for now)-->
-    <div class="pageTop">
-      <a class="backLink" href="./index.html">&#8592; Back</a>
-      <button id="clearBtn" class="clearBtn">Press Me to Clear data</button>
-     <select class="monthBox" id="month">
-        <option value="0">January</option>
-        <option value="1">February</option>
-        <option value="2">March</option>
-        <option value="3">April</option>
-        <option value="4">May</option>
-        <option value="5">June</option>
-        <option value="6">July</option>
-        <option value="7">August</option>
-        <option value="8">September</option>
-        <option value="9">October</option>
-        <option value="10">November</option>
-        <option value="11">December</option>
-     </select>
+
+
+  <div class="pageTop">
+    <a class="backLink" href="./index.html">&#8592; Back</a>
+    <button id="clearBtn" class="clearBtn">Press Me to Clear data</button>
+    <select class="monthBox" id="month">
+      <option value="0">January</option>
+      <option value="1">February</option>
+      <option value="2">March</option>
+      <option value="3">April</option>
+      <option value="4">May</option>
+      <option value="5">June</option>
+      <option value="6">July</option>
+      <option value="7">August</option>
+      <option value="8">September</option>
+      <option value="9">October</option>
+      <option value="10">November</option>
+      <option value="11">December</option>
+    </select>
     <input class="yearBox" type="number" id="year" placeholder="Year">
     <h1 class="centeredTitle">Calendar</h1>
   </div>
   <div class="calendarBox">
-  <table id = 'calendar'>
-  </table>
+    <table id='calendar'>
+    </table>
   </div>
   <!-- The Modal -->
   <div id="myModal" class="modal">
@@ -55,12 +51,13 @@
       <!-- buttons to save to markdown or send to -->
       <div class="saveButton">
         <button class="saveMarkdown" type="button" id="save-markdown">Save As Markdown</button>
-        <button  class="saveTask" type="button" id="save-task">Save As Task List</button>
-    </div>
+        <button class="saveTask" type="button" id="save-task">Save As Task List</button>
+      </div>
     </div>
 
   </div>
 
-    <script src="scripts/calendar.js"></script>
+  <script src="scripts/calendar.js"></script>
 </body>
+
 </html>
