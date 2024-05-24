@@ -1,7 +1,7 @@
 class TaskListWidget extends HTMLElement {
     /**
      * A basic constructor that initializes the tasks array.
-     */  
+     */
     constructor() {
         super(); // necessary js call prior to self-referencing via this
         this.tasks = [];
@@ -60,7 +60,7 @@ class TaskListWidget extends HTMLElement {
                     console.error('Error fetching JSON:', error);
                 });
         } else {
-            console.error('No src attribute provided.'); 
+            console.error('No src attribute provided.');
         }
     }
 
@@ -71,24 +71,23 @@ class TaskListWidget extends HTMLElement {
      * @param {*} id - the id of the task
      */
     addTask(task, container, id) {
-        const task_container = document.createElement('div'); 
-        task_container.classList.add('task-item');
-        task_container.style.marginBottom = '10px'; 
+        const taskContainer = document.createElement('div');
+        taskContainer.classList.add('task-item');
+        taskContainer.style.marginBottom = '10px';
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.checked = task.is_done || false; 
+        checkbox.checked = task.is_done || false;
         checkbox.id = `task${id}`;
         checkbox.addEventListener('change', () => {
             this.tasks[id].is_done = checkbox.checked;
             this.updateLocalStorage();
         });
 
-
         const titleText = document.createElement('label');
         titleText.innerHTML = task.title;
         titleText.setAttribute('for', `task${id}`);
-        titleText.style.marginLeft = '10px'; 
+        titleText.style.marginLeft = '10px';
 
         const priority = document.createElement('h4');
         priority.innerHTML = `Priority level: ${task.priority}`;
@@ -98,34 +97,35 @@ class TaskListWidget extends HTMLElement {
         editBtn.innerHTML = 'Edit';
         editBtn.classList.add('edit-button');
         editBtn.addEventListener('click', () => {
-            this.editForm(task, task_container, id);
+            this.editForm(task, taskContainer, id);
         });
 
         const deleteBtn = document.createElement('button');
         deleteBtn.innerHTML = 'X';
         deleteBtn.classList.add('delete-button');
         deleteBtn.addEventListener('click', () => {
-            task_container.remove(); 
-            this.tasks.splice(id, 1); 
-            this.updateLocalStorage(); 
+            taskContainer.remove();
+            this.tasks.splice(id, 1);
+            this.updateLocalStorage();
         });
 
-        task_container.appendChild(checkbox);
-        task_container.appendChild(titleText);
-        task_container.appendChild(priority);
-        task_container.appendChild(editBtn);
-        task_container.appendChild(deleteBtn);
+        taskContainer.appendChild(checkbox);
+        taskContainer.appendChild(titleText);
+        taskContainer.appendChild(priority);
+        taskContainer.appendChild(editBtn);
+        taskContainer.appendChild(deleteBtn);
 
-        container.appendChild(task_container); 
+        container.appendChild(taskContainer);
     }
 
     /**
      * Edits a pre-existing task
      * @param {*} task - the task that is going to be edited
-     * @param {*} taskContainer - the container that holds all of the task items
+     * @param {*} taskContainerParam - the container that holds all of the task items
      * @param {*} id - the id of the task
      */
-    editForm(task, taskContainer, id) {
+    editForm(task, taskContainerParam, id) {
+        const taskContainer = taskContainerParam;
         taskContainer.innerHTML = `
             <input type="text" id="editTaskInput" value="${task.title}">
             <select id="editPriorityInput">
@@ -168,7 +168,8 @@ class TaskListWidget extends HTMLElement {
     }
 
     /**
-     * Update the local storage with the new tasks array as needed (generally after adding or removing tasks)
+     * Update the local storage with the new tasks array as needed
+     * (generally after adding or removing tasks)
      */
     updateLocalStorage() {
         console.log('Update local storage');
@@ -190,7 +191,7 @@ class TaskListWidget extends HTMLElement {
 
         this.tasks.push(task);
         this.renderTasks();
-        this.updateLocalStorage(); 
+        this.updateLocalStorage();
     }
 
     /*
@@ -198,11 +199,11 @@ class TaskListWidget extends HTMLElement {
     */
     renderTasks() {
         this.init();
-        const tasklist_container = document.getElementById('taskList');
+        const tasklistContainer = document.getElementById('taskList');
         this.tasks.sort((a, b) => b.priority - a.priority);
 
         this.tasks.forEach((task, idx) => {
-            this.addTask(task, tasklist_container, idx);
+            this.addTask(task, tasklistContainer, idx);
         });
 
         const addBtn = document.getElementById('addBtn');
@@ -220,17 +221,18 @@ class TaskListWidget extends HTMLElement {
             }
         });
 
-        this.appendChild(tasklist_container); 
+        this.appendChild(tasklistContainer);
     }
 
     /**
-     * When a task is checked, update the task status in the local storage so it is not rendered improperly
+     * When a task is checked, update the task status
+     * in the local storage so it is not rendered improperly
      * @param {*} taskText - the task text
      */
     removeTaskFromLocalStorage(taskText) {
-        const index = tasks.findIndex((task) => task.text === taskText);
+        const index = this.tasks.findIndex((task) => task.text === taskText);
         if (index !== -1) {
-            tasks.splice(index, 1); 
+            this.tasks.splice(index, 1);
             this.updateLocalStorage();
             this.renderTasks();
         }
