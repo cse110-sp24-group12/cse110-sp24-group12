@@ -7,6 +7,7 @@
         "type": "markdown",
         "bookmarked": false
     },
+    
     {
         "id": "2",
         "date": "2024-05-02",
@@ -36,6 +37,46 @@
         "date": "2024-05-05",
         "fileName": "data/5.md",
         "title": "Entry 5",
+        "type": "markdown",
+        "bookmarked": false
+    },
+    {
+        "id": "6",
+        "date": "2024-05-05",
+        "fileName": "data/5.md",
+        "title": "Entry 5",
+        "type": "markdown",
+        "bookmarked": false
+    },
+    {
+        "id": "6",
+        "date": "2024-05-05",
+        "fileName": "data/5.md",
+        "title": "Entry 5",
+        "type": "markdown",
+        "bookmarked": true
+    },
+    {
+        "id": "6",
+        "date": "2024-05-05",
+        "fileName": "data/5.md",
+        "title": "Entry 5",
+        "type": "markdown",
+        "bookmarked": true
+    },
+    {
+        "id": "7",
+        "date": "2024-05-10",
+        "fileName": "data/1.md",
+        "title": "Entry 1",
+        "type": "markdown",
+        "bookmarked": true
+    },
+    {
+        "id": "8",
+        "date": "2024-05-10",
+        "fileName": "data/1.md",
+        "title": "Entry 1",
         "type": "markdown",
         "bookmarked": false
     }
