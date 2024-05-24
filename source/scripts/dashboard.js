@@ -27,7 +27,7 @@ console.log('Dashboard script loaded');
         // Loop through each day and create a square with appropriate class
         for (let date in contributions) {
             const square = document.createElement('div');
-            square.classList.add('square');
+            square.classList.add('square'); 
             if (contributions[date] > 0) {
                 if (contributions[date] >= 10) {
                     square.classList.add('more-active');
