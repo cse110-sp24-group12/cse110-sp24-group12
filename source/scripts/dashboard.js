@@ -1,4 +1,5 @@
 console.log('Dashboard script loaded');
+
 (async () => {
     try {
         // Define the path to the JSON file
@@ -7,37 +8,45 @@ console.log('Dashboard script loaded');
 
         // Read the JSON file
         const data = await window.api.readFile(jsonPath);
-        console.log(data)
+        console.log(data);
 
         // Parse the JSON data
         const entries = JSON.parse(data);
 
-        // Create an object where the keys are the dates and the values are the number of entries for each date
-        const contributions = entries.reduce((acc, entry) => {
-            const date = entry.date;
-            if (!acc[date]) {
-                acc[date] = 0;
-            }
-            acc[date]++;
-            return acc;
-        }, {});
-
         const container = document.getElementById('graph-container');
 
-        // Loop through each day and create a square with appropriate class
-        for (let date in contributions) {
+        // Create a start date for May 1st
+        const startDate = new Date('2024-05-01');
+
+        // Loop through the days of May
+        for (let i = 0; i < 28; i++) {
+            // Calculate the date for the current day
+            const currentDate = new Date(startDate.getTime() + (i * 24 * 60 * 60 * 1000));
+
+            // Check if the day exists in the entries
+            const matchingEntries = entries.filter(entry => entry.date === currentDate.toISOString().split('T')[0]);
+            console.log('Current Date:', currentDate);
+            console.log('Entries for Current Date:', matchingEntries);
+            const entryCount = matchingEntries.length;
+            console.log('Entry Count:', entryCount);
+
+            // Create a day square
             const square = document.createElement('div');
-            square.classList.add('square'); 
-            if (contributions[date] > 0) {
-                if (contributions[date] >= 10) {
+            square.classList.add('square');
+            if (entryCount > 0) {
+                if (entryCount >= 3) {
+                    square.classList.add('most-active');
+                }else if(entryCount==2){
                     square.classList.add('more-active');
-                } else {
+                } 
+                else {
                     square.classList.add('active');
                 }
             } else {
                 square.classList.add('inactive');
             }
 
+            // Append the square to the container
             container.appendChild(square);
         }
     } catch (err) {
