@@ -12,6 +12,7 @@ async function init() {
     } else {
         createPassword.textContent = 'Create Password';
     }
+    // check if password matches
     button.addEventListener('click', () => {
         if (password.value === jsonPassword.password) {
             homePage.click();
@@ -22,12 +23,12 @@ async function init() {
     const img = document.getElementById('triggerPopup');
     const span = document.getElementsByClassName('close')[0];
     const container = document.querySelector('.container');
-
+    // when ? button is clicked, dont display the password page underneath 
     img.onclick = () => {
         modal.style.display = 'block';
         container.style.display = 'none';
     };
-
+    
     span.onclick = () => {
         modal.style.display = 'none';
         container.style.display = 'flex';
