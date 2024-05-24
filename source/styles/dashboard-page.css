@@ -78,14 +78,16 @@ body {
 .whitecontainer {
     background: #2d2d44;
     background-blend-mode:overlay ;
-    width:250px;
-    margin-left:225px;
+    width:230px;
+    height:175px;
+    margin-left:200px;
+   margin-top: 5px;
     background-color: #bcbcce; /* White background for the outer box */
-    padding: 10px; /* Padding to create some space inside the white container */
+    padding: 5px; /* Padding to create some space inside the white container */
     border-radius: 10px; /* Rounded corners for a smoother look */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a 3D effect */
     max-width: 400px; /* Adjust width as needed */
-    margin: 0 auto; /* Center the container horizontally */
+   /* margin: 0 auto; /* Center the container horizontally */
 }
 
 .background-layer1 {
@@ -130,11 +132,14 @@ h2{
     background-color: white;
 }
 .active {
-    background-color: #2ea44f; /* GitHub's contribution graph green */
+    background-color: #9effb8; /* GitHub's contribution graph green */
 }
 
 .more-active {
-    background-color: #196127; /* Darker green for more contributions */
+    background-color: #61bd4f; /* Darker green for more contributions */
+}
+.most-active {
+    background-color: #0a6a34; /* Darker green for more contributions */
 }
 
 #bookmarked-notes ul {
