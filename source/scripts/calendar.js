@@ -48,6 +48,12 @@ function formatButtons(htmlString, id){
         return htmlString;
     }
 }
+
+function changeCellStorage(date, oldName, newName){
+    let data = localStorage.getItem(date);
+    let newData = data.replace(oldName+".", newName+".").replace(oldName+"<", newName+"<");//should replace exactly 2x
+    localStorage.setItem(date, newData);
+}
 // &&& need to implement a third "..." redirect button and corresponding modal window
 /**
  * Listen for DOMContentLoaded
@@ -130,10 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const infoArray = event.target.id.split('.');
         let name = null;
         let date;
-
+        let editing = false;
         if (infoArray.length === 2) {
             // this means we are working with existing event
             [name, date] = infoArray;
+            editing = true;
         } else {
             [date] = infoArray;
         }
@@ -207,17 +214,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 //let data = readcellStorageJSON();
                 //console.log(data);
                 //data = JSON.parse(data);
-
-                if (localStorageFill === null) {
-                    localStorageFill = `<button class='entryButton' id=${title.value}.${date}>${title.value}</button>`;
-                } else if (localStorageFill.includes(`id=${title.value}.${date}`)) {
-                    alert('An entry already exists with this name.'); // eslint-disable-line no-alert
-                } else {
-                    localStorageFill += `<button class='entryButton' \
-                  id=${title.value}.${date}>${title.value}</button>`;
+                if(!editing){
+                    if (localStorageFill === null) {
+                        localStorageFill = `<button class='entryButton' id=${title.value}.${date}>${title.value}</button>`;
+                    }
+                    else if (localStorageFill.includes(`id=${title.value}.${date}`)) {
+                        alert('An entry already exists with this name.'); // eslint-disable-line no-alert
+                    } else {
+                        localStorageFill += `<button class='entryButton' \
+                      id=${title.value}.${date}>${title.value}</button>`;
+                    }
+                    localStorage.setItem(date, localStorageFill);
+                    localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
                 }
-                localStorage.setItem(date, localStorageFill);
-                localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
+                else{
+                    console.log("We are editing");
+                    if(title.value != name){
+                        console.log("We should be updating the title here!", name, title.value);
+                        //the user has updated the title, act accordingly
+                        localStorage.removeItem(`${name}.${date}`);
+                        changeCellStorage(date, name, title.value);
+                    }
+                    localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
+                }
+                
                 generateCalendar();
             }
         };
