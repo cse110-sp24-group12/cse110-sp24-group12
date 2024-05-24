@@ -1,5 +1,3 @@
-window.addEventListener('DOMContentLoaded', init);
-
 async function init() {
     // check for password
     const button = document.querySelector('button');
@@ -20,21 +18,23 @@ async function init() {
         }
     });
 
-    var modal = document.getElementById("myModal");
-    var img = document.getElementById("triggerPopup");
-    var span = document.getElementsByClassName("close")[0]; 
-    
-    img.onclick = function() {
-        modal.style.display = "block";
-    }
+    const modal = document.getElementById('myModal');
+    const img = document.getElementById('triggerPopup');
+    const span = document.getElementsByClassName('close')[0];
 
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
+    img.onclick = () => {
+        modal.style.display = 'block';
+    };
 
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+    span.onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
         }
-    }
+    };
 }
+
+window.addEventListener('DOMContentLoaded', init);

@@ -1,4 +1,3 @@
-window.addEventListener('DOMContentLoaded', init);
 function init() {
     const button = document.querySelector('button');
     const input = document.getElementById('password');
@@ -29,3 +28,5 @@ function init() {
         }
     });
 }
+
+window.addEventListener('DOMContentLoaded', init);

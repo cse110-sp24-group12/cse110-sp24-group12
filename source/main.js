@@ -252,11 +252,13 @@ ipcMain.handle('write-password', (event, args) => {
         console.error(error);
     }
 });
+
 ipcMain.handle('read-password', async (event, args) => {
     try {
         const data = fs.readFileSync('./data/password.json', 'utf8');
         return data;
     } catch (error) {
         console.error(error);
+        return '';
     }
 });

@@ -27,9 +27,8 @@ window.addEventListener('DOMContentLoaded', () => {
  * @memberof Preload
  */
 contextBridge.exposeInMainWorld('api', {
-  writeFile: (args) => ipcRenderer.send('write-file', args),
-  readMarkdown: (args) => ipcRenderer.send('read-markdown', args),
-  onReadMarkdownReply: (callback) => ipcRenderer.on('read-markdown-reply', (event, args) => callback(args)),
+  writeFile: (args) => ipcRenderer.invoke('write-file', args),
+  readMarkdown: (args) => ipcRenderer.invoke('read-markdown', args),
   writePassword: (args) => ipcRenderer.invoke('write-password', args),
   readPassword: (args) => ipcRenderer.invoke('read-password', args),
   readFile: (args) => ipcRenderer.invoke('read-file', args),
