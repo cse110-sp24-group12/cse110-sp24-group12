@@ -1,3 +1,4 @@
 .DS_Store
 source/node_modules
 source/docs
+.vscode/settings.json
