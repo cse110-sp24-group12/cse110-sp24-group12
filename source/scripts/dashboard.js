@@ -24,7 +24,7 @@ console.log('Dashboard script loaded');
 
             //  Check if the day exists in the entries
             const dateString = currentDate.toISOString().split('T')[0];
-            const mE = entries.filter((entry) => entry.date === dateString);            
+            const mE = entries.filter((entry) => entry.date === dateString);          
             console.log('Current Date:', currentDate);
             console.log('Entries for Current Date:', mE);
             const entryCount = mE.length;
