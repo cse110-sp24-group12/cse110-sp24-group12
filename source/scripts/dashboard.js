@@ -23,7 +23,8 @@ console.log('Dashboard script loaded');
             const currentDate = new Date(startDate.getTime() + (i * 24 * 60 * 60 * 1000));
 
             //  Check if the day exists in the entries
-            const mE=entries.filter((entry)=>entry.date===currentDate.toISOString().split('T')[0]);
+            const dateString = currentDate.toISOString().split('T')[0];
+            const mE = entries.filter((entry) => entry.date === dateString);            
             console.log('Current Date:', currentDate);
             console.log('Entries for Current Date:', mE);
             const entryCount = mE.length;
