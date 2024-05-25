@@ -1,6 +1,6 @@
 console.log('Dashboard script loaded');
 
-(async () => {
+(async () => {  
     try {
         // Define the path to the JSON file
         const jsonPath = 'data/entries.json';
@@ -14,12 +14,25 @@ console.log('Dashboard script loaded');
         const entries = JSON.parse(data);
 
         const container = document.getElementById('graph-container');
-
-        // Create a start date for May 1st
+        const daysInMonth = [
+            31, // January
+            29, // February (assuming non-leap year)
+            31, // March
+            30, // April
+            31, // May
+            30, // June
+            31, // July
+            31, // August
+            30, // September
+            31, // October
+            30, // November
+            31  // December
+          ];
         const startDate = new Date('2024-05-01');
+        const monthIndex = startDate.getMonth();
 
         // Loop through the days of May
-        for (let i = 0; i < 28; i++) {
+        for (let i = 0; i < daysInMonth[monthIndex-1]; i++) {
             // Calculate the date for the current day
             const currentDate = new Date(startDate.getTime() + (i * 24 * 60 * 60 * 1000));
 
