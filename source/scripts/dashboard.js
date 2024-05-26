@@ -1,11 +1,9 @@
-
-
 (async () => {
     try {
         //  Define the path to the JSON file
         const jsonPath = 'data/entries.json';
         //  Read the JSON file
-
+        const data = await window.api.readFile(jsonPath);
         //  Parse the JSON data
         const entries = JSON.parse(data);
 
