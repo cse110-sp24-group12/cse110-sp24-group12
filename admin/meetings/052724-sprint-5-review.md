@@ -45,7 +45,7 @@
 
 ### Action Items
 
-- see 
+- see corresponding [retrospective notes](./052724-retrospective-w8.md) for action items
 
 ### Relevant Links
 
