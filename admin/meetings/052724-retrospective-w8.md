@@ -1,8 +1,8 @@
 # Retrospective W8 - Infinite Loops (Team 12)
 
-**Type of meeting**: Zoom/Online
-**Location**:  N/A
-**Date & Time**: 05/27/24 @ 2:00pm
+**Type of meeting**: Zoom/Online \
+**Location**:  N/A \
+**Date & Time**: 05/27/24 @ 2:00pm \
 
 ## Attendance
 
