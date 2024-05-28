@@ -2,3 +2,4 @@
 source/node_modules
 source/docs
 source/test-results
+.vscode/settings.json

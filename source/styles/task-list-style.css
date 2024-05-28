@@ -1,0 +1,203 @@
+title {
+    text-decoration: underline;
+}
+
+h1 {
+    color: rgb(46, 9, 128);
+}
+
+* {
+    font-family: arial;
+    color: rgb(20, 5, 110);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: rgb(198, 222, 245);
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputContainer {
+    width: 100%;
+}
+
+#taskInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#priorityInput {
+    width: 20%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+
+#addBtn,
+.removeBtn {
+    padding: 10px 20px;
+    background-color: #f39243e0;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#task_list_ul {
+    padding: 0px;
+}
+
+#taskList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.taskItem {
+    margin-bottom: 5px;
+}
+
+input:checked+label {
+    text-decoration: line-through;
+    color: rgb(46, 9, 128);
+}
+
+input+label {
+    margin-right: 50px;
+}
+
+input:checked~h4 {
+    color: rgb(46, 9, 128);
+}
+
+.list-widget {
+    /* text-align:center; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+
+    max-height: 400px;
+    min-width: 600px;
+    overflow-y: scroll;
+}
+
+.task-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 40px;
+    gap: 10px;
+    width: 90%;
+    /*Added a border to the tasks*/
+    border: 2px solid black;
+    padding: 7px;
+    border-radius: 100px;
+    overflow-wrap: break-word;
+    transition-duration: 150ms;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+
+/*Added a hover effect to the task items*/
+
+.task-item:hover {
+    background-color: rgb(187, 199, 233);
+}
+
+.list-widget {
+    /*text-align:center;*/
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    transition-duration: 150ms;
+
+    &:hover {
+        background-color: #8a1c0b;
+    }
+}
+
+h4 {
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: #fff6c3;
+    /* Example background color */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #fff6c3;
+    /* Example background color */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.edit-button {
+    background-color: rgb(126, 154, 245);
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    transition-duration: 150ms;
+
+    &:hover {
+        background-color: #8a1c0b;
+    }
+}
+
+#google_translate_element {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    /* Ensure it appears above other content */
+}
+
+main {
+    margin-top: 100px;
+    /* Adjust margin top to accommodate header height */
+    padding-top: 20px;
+    /* Add padding to create space between header and todo list */
+}
