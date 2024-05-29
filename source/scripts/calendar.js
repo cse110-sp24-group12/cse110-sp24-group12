@@ -4,6 +4,8 @@
  * @function
  * @param {string} cell - the namespace and name of the event
  * @param {string} eventToDelete - the id of the event
+ * @example
+ * updateCellLocalStorage
  *                  Deletes a designated button from the HTML.
  */
 function updateCellLocalStorage(cell, eventToDelete) {
@@ -49,9 +51,30 @@ function formatButtons(htmlString, id){
     }
 }
 
+function formatButtons2(inputArray, id){
+    
+    console.log("length,", inputArray.length);
+    if(inputArray.length > 3){
+        console.log("should reduce number of visible buttons");
+        //show only 2 buttons and then a ... if we have more than 3 entries
+        let updatedData = "<button id='"+inputArray[0].title+"."+inputArray[0].date+"' class='entryButton'"+inputArray[0].title+"</button>"/
+        + "<button id='"+inputArray[1].title+"."+inputArray[1].date+"' class='entryButton'"+inputArray[1].title+"</button>";//re-attach button tags
+        updatedData += "<button id ='"+id+"' class = 'extra'>...</button>";
+        return updatedData;
+    }
+    else{
+        let entryStringButtons = "";
+        for (let entry in inputArray){
+            entryStringButtons += "<button id'" +entry.title+"."+ entry.date+"' class='entryButton'>" + entry.title + "</button>";
+        }
+        return entryStringButtons;
+    }
+}
+
 function changeCellStorage(date, oldName, newName){
     let data = localStorage.getItem(date);
-    let newData = data.replace(oldName+".", newName+".").replace(oldName+"<", newName+"<");//should replace exactly 2x
+    let newData = data.replace(oldName+".", newName+".").replace(oldName+"<", newName+"<");
+    //should replace exactly 2x
     localStorage.setItem(date, newData);
 }
 // &&& need to implement a third "..." redirect button and corresponding modal window
@@ -82,7 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * @function
      *                  It modifies the HTML to create the calendar layout.
      */
-    function generateCalendar() {
+    async function generateCalendar() {
+
         const month = parseInt(monthSelect.value, 10);
         const year = parseInt(yearInput.value, 10);
         const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -104,13 +128,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 calendarHTML += ' </tr> <tr>';// creates a new row
             }
             let fill;
-            const memory = localStorage.getItem(`${month + 1}/${day}/${year}`);
+            //const memory = localStorage.getItem(`${month + 1}/${day}/${year}`);
+
+            console.log(window.api); // Should log the api object
+            console.log(window.api.getEntriesOnDate); // Should log the function definition
+            console.log(window.api.getEntryById);
+            console.log(window.api.deleteEntryByTitleAndDate);
+
+            const memory = await window.api.getEntriesOnDate(`${month + 1}/${day}/${year}`);
             // check what was stored for that day
-            if (memory === null) {
+            if(memory.length === 0){
                 fill = day;
-            } else {
-                fill = day + formatButtons(memory, `extra.${month + 1}/${day}/${year}`);
             }
+            else{
+                fill = day + formatButtons2(memory, `extra.${month + 1}/${day}/${year}`);
+            }
+
+            // if (memory === null) {
+            //     fill = day;
+            // } else {
+            //     fill = day + formatButtons(memory, `extra.${month + 1}/${day}/${year}`);
+            // }
             calendarHTML += `<td id='${month + 1}/${day}/${year}' class='mouseOut standardCell'  >${fill}</td> `;
             count += 1;
         }
@@ -129,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * @function
      *                  allow users to make entries
      */
-    function openModal(event) {
+    async function openModal(event) {
         console.log('you opened the modal');// test to see if we're clicking through our buttons
         console.log('this is the id of what you clicked on', event.target.id);
         console.log('this is the class what you clicked on:', event.target.classList);
@@ -144,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             [date] = infoArray;
         }
+        console.log(date);
 
         // event.target.id is either... name4/2/2003 <-this is on clicking on saved event
         // or it may be 4/2/2003 <-this is clicking on empty cell
@@ -167,8 +206,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // reenter old data
             // we need to make a button
-            markdownInput.value = localStorage.getItem(event.target.id);
-            title.value = event.target.innerHTML;
+            //markdownInput.value = localStorage.getItem(event.target.id);
+            markdownInput.value = await window.api.getEntryByTitleAndDate([name, date]);
+            //title.value = event.target.innerHTML;
+            title.value = name;
         }
 
         modal.style.display = 'block';
@@ -177,12 +218,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (name != null) {
             text.innerHTML += "<button id='deleteEntryButton'>Delete Entry</button>";// add class here for styling?
             const deleteEntryButton = document.getElementById('deleteEntryButton');
-            deleteEntryButton.addEventListener('click', () => {
+            deleteEntryButton.addEventListener('click', async () => {
             // should add a confirm choice to make sure it wasnt misclick
-                localStorage.removeItem(event.target.id);// this clears the entry
+                //localStorage.removeItem(event.target.id);// this clears the entry
+                await window.api.deleteEntryByTitleAndDate([name, date]);
                 // then update using setItem, and put our new string
                 // do we make a helper function?
-                updateCellLocalStorage(date, event.target.id);
+                //updateCellLocalStorage(date, event.target.id);
                 modal.style.display = 'none';
                 generateCalendar();
             });
@@ -201,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         *
         * @type {HTMLElement} - the target of the event, being the save button
         */
-        saveMarkDown.onclick = () => {
+        saveMarkDown.onclick = async () => {
             if (title.value === '') {
                 alert('You must add a title!'); // eslint-disable-line no-alert
             } else if (title.value.includes('.') || title.value.includes(' ')) {
@@ -210,32 +252,59 @@ document.addEventListener('DOMContentLoaded', () => {
                 // We enter this else if we are ready to close and save
                 modal.style.display = 'none';
                 
-                let localStorageFill = localStorage.getItem(date);
+                //let localStorageFill = localStorage.getItem(date);
+
+                // need to use entryStorage to create a string with the correct button fill!
+                // let entryStorage = await window.api.getEntriesOnDate(date);
+                // let fillString = "";
+                // for(let entry in entryStorage){
+                //     fillString += "<button id='"+entry.title+"."+entry.date+"' class='entryButton'>"+entry.title+"</button>";
+                // }
+                // for now this loop to generate string is not needed
+
+
                 //let data = readcellStorageJSON();
                 //console.log(data);
                 //data = JSON.parse(data);
                 if(!editing){
-                    if (localStorageFill === null) {
-                        localStorageFill = `<button class='entryButton' id=${title.value}.${date}>${title.value}</button>`;
-                    }
-                    else if (localStorageFill.includes(`id=${title.value}.${date}`)) {
-                        alert('An entry already exists with this name.'); // eslint-disable-line no-alert
-                    } else {
-                        localStorageFill += `<button class='entryButton' \
-                      id=${title.value}.${date}>${title.value}</button>`;
-                    }
-                    localStorage.setItem(date, localStorageFill);
-                    localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
+                    console.log("We commented out this whole section on line 262 of calendar.js");
+                    // if (localStorageFill === null) {
+                    //     localStorageFill = `<button class='entryButton' id=${title.value}.${date}>${title.value}</button>`;
+                    // }
+                    // else if (localStorageFill.includes(`id=${title.value}.${date}`)) {
+                    //     alert('An entry already exists with this name.'); // eslint-disable-line no-alert
+                    // } else {
+                    //     localStorageFill += `<button class='entryButton' \
+                    //   id=${title.value}.${date}>${title.value}</button>`;
+                    // }
+                    // localStorage.setItem(date, localStorageFill);
+                    // localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
                 }
                 else{
-                    console.log("We are editing");
                     if(title.value != name){
-                        console.log("We should be updating the title here!", name, title.value);
                         //the user has updated the title, act accordingly
-                        localStorage.removeItem(`${name}.${date}`);
-                        changeCellStorage(date, name, title.value);
+                        //localStorage.removeItem(`${name}.${date}`);
+
+                        await window.api.deleteEntryByTitleAndDate([name, date]);
+
+
+                        //changeCellStorage(date, name, title.value);
                     }
-                    localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
+
+                    //localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
+                    
+                }
+                try {
+                    //add new entry with unique ID
+                    console.log("We are about to add an entry");
+                    await window.api.addMarkdownEntry({
+                        date: date,
+                        title: title.value,
+                        bookmarked: false,
+                        markdownContent: markdownInput.value,
+                    });
+                } catch (error) {
+                    console.error('An error occurred:', error);
                 }
                 
                 generateCalendar();
@@ -255,14 +324,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //Create/Update modal to view list of 
-    function openExtraModal(event){
+    async function openExtraModal(event){
         const modal = document.getElementById('extraModal');
         const span = document.getElementById('closeExtra');
         const extraButtons = document.getElementById('extraButtons');
         let [,date] = event.target.id.split(".");
-        extraButtons.innerHTML = localStorage.getItem(date);
+        //extraButtons.innerHTML = localStorage.getItem(date);
+
+        let entries = await window.api.getEntriesOnDate(date);
+        for(let entry in entries){
+            extraButtons.innerHTML += "<button id='"+entry.title+"."+entry.date+"' class='entryButton'"+entry.title+"</button>"; 
+        }
+
         modal.style.display='block';
-        console.log("This is the content that we want to show on our modal:", localStorage.getItem(date));
+        console.log("This is the content that we want to show on our modal:", entries);
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = () => {
@@ -310,8 +385,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // clear button
-    clearDataButton.addEventListener('click', () => {
-        localStorage.clear();
+    clearDataButton.addEventListener('click', async () => {
+        //localStorage.clear();
+        await window.api.clearEntries();
         generateCalendar();
     });
 

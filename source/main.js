@@ -2,7 +2,6 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import fs from 'fs';
 import { v4 } from 'uuid';
-
 import markdown from 'markdown-it';
 import hljs from 'highlight.js';
 
@@ -148,35 +147,132 @@ const writeEntriesJSONFile = (entries) => {
     }
 };
 
-
-const readcellStorageJSON = () => {
-    try {
-        return JSON.parse(fs.readFileSync('.data/cellStorage.json', 'utf-8'));
-    } catch (error) {
-        console.error(error);
+// /**
+//  * get-entries-on-date - Get an array of entries by their date.
+//  * @param {string} arg - The date of the entry.
+//  * @returns {object} The entry with the given date or null if the entry doesn't exist.
+//  * @example
+//  * const entry = await window.api.getAllEntryByDate('1');
+//  */
+ipcMain.handle('get-entries-on-date', async (event, arg) => {
+    const entries = readEntriesJSONFile();
+    const filtered = entries.filter((entry) => entry.date === arg);
+    if(filtered.length === 0){
         return [];
     }
-};
+    return filtered
+});
 
-const writecellStorageJSON = (entries) => {
-    try {
-        fs.writeFileSync('data/cellStorage.json', JSON.stringify(entries, null, 4), 'utf-8');
-    } catch (error) {
-        console.error(error);
-    }
-};
+// /**
+//  * get-entry-by-id - Get an entry by its id.
+//  * @param {string} arg - The id of the entry.
+//  * @returns {object} The entry with the given id or null if the entry doesn't exist.
+//  * @example
+//  * const entry = await window.api.getEntryById('1');
+//  */
+// ipcMain.handle('get-entry-by-id', async (event, arg) => {
+//     const entries = readEntriesJSONFile();
+//     const filtered = entries.filter((entry) => entry.id === arg);
+//     if (filtered.length > 0) {
+//         return filtered[0];
+//     }
+//     return null;
+// });
+
 
 /**
- * get-entries-for-month - Get all the entries for a given month.
- * @param {string} arg - The year and month to get the entries for.
- * @returns {array} The entries for the given month.
+ * get-entry-by-title-and-date - Get an entry by its title and date.
+ * @param {array} arg - An array with the title and date in that order [title, date]
+ * @returns {object|null} The entry with the given title and date or null if it doesnt exist
  * @example
- * const entries = await window.api.getEntriesForMonth('2022-01');
+ * const entry = await window.api.getEntryByTitleAndDate('1');
  */
-ipcMain.handle('get-entries-for-month', async (event, arg) => {
+ipcMain.handle('get-entry-by-title-and-date', async (event, arg) => {
+    const [name, date] = arg;
     const entries = readEntriesJSONFile();
-    return entries.filter((entry) => entry.date.startsWith(arg));
+    const filtered = entries.filter((entry) => entry.title === name && entry.date === date);
+    if (filtered.length > 0) {
+        return filtered[0];
+    }
+    return null;
 });
+
+// Function to delete a file
+function deleteFile(filePath) {
+    // Check if the file exists
+    if (fs.existsSync(filePath)) {
+        // Delete the file
+        fs.unlink(filePath, (err) => {
+            if (err) {
+                console.error(`Error deleting file: ${err}`);
+            } else {
+                console.log(`File deleted successfully: ${filePath}`);
+            }
+        });
+    } else {
+        console.log(`File not found: ${filePath}`);
+    }
+}
+
+/**
+ * delete-entry-by-title-and-date - delete an entry by its title and date.
+ * @param {array} arg - An array with the title and date in that order [title, date]
+ * @returns {object} true if we were able to delete it, false if it failed
+ * @example
+ * const entry = await window.api.deleteEntryByTitleAndDate(name, date);
+ */
+ipcMain.handle('delete-entry-by-title-and-date', async (event, arg) => {
+    const [name, date] = arg;
+    const entries = readEntriesJSONFile();
+    const entryToDel = getEntryByTitleAndDate(name, date);
+    const oldID = entryToDel.id;
+    const arrayWithoutElement = entries.filter((entry) => !(entry.title === name && entry.date === date));
+    if (arrayWithoutElement.length < entries.length) {
+        writeEntriesJSONFile(arrayWithoutElement);
+        deleteFile(`data/${oldID}.md`)
+        return true;
+    }
+    return false;
+});
+
+// Function to ensure the directory exists
+async function ensureDirectoryExists(dirPath) {
+    try {
+        await fs.promises.mkdir(dirPath, { recursive: true });
+        console.log(`Directory ensured: ${dirPath}`);
+    } catch (err) {
+        console.error(`Error ensuring directory exists: ${err}`);
+    }
+}
+// Function to clear the contents of a file
+async function clearFileContents(filePath) {
+    try {
+        await fs.promises.writeFile(filePath, '[]');
+        console.log(`File contents cleared: ${filePath}`);
+    } catch (err) {
+        console.error(`Error clearing file contents: ${err}`);
+    }
+}
+
+// Function to write an empty JSON array to a new file
+async function createEmptyJsonFile(filePath) {
+    const emptyArrayContent = '[]';
+    try {
+        await fs.promises.writeFile(filePath, emptyArrayContent);
+        console.log(`File created and written to successfully: ${filePath}`);
+    } catch (err) {
+        console.error(`Error writing to file: ${err}`);
+    }
+}
+
+ipcMain.handle('clear-entries', async (event) => {
+    const dirPath = 'data';
+    const filePath = path.join(dirPath, 'entries.json'); // Ensure this points to a file, not a directory
+    await ensureDirectoryExists(dirPath);
+    await clearFileContents(filePath);
+    await createEmptyJsonFile(filePath);
+});
+
 
 /**
  * get-entry-by-id - Get an entry by its id.
@@ -211,8 +307,8 @@ ipcMain.handle('get-entry-by-id', async (event, arg) => {
  */
 ipcMain.handle('add-markdown-entry', async (event, arg) => {
     const entries = readEntriesJSONFile();
-
-    const newId = v4();
+    console.log('We just added an entry!');
+    const newId = arg.title+"."+arg.date;//may also use v4() to get random id's
     const newEntry = {
         id: newId,
         date: arg.date,
