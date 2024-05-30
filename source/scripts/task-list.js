@@ -13,29 +13,29 @@ class TaskListWidget extends HTMLElement {
      */
     init() {
         this.innerHTML = `
-            <div class="container">
-                <h1>Task List</h1>
-                
-                <div class="inputContainer">
-                    <div>
-                        <input type="text" id="taskInput" placeholder="Enter task...">
+            <h1 id="tasklist-title">Task List</h1>
+                <div class="container">
+                    
+                    <div class="inputContainer">
+                        <div>
+                            <input type="text" id="taskInput" placeholder="Enter task...">
+                        </div>
+                        <div>
+                            <select id="priorityInput">
+                                <option value="0">Select one</option>
+                                <option value="4">critical</option>
+                                <option value="3">high</option>
+                                <option value="2">medium</option>
+                                <option value="1">low</option>
+                            </select>
+                        </div>
+                        <button id="addBtn">Add Task</button>
                     </div>
-                    <div>
-                        <select id="priorityInput">
-                            <option value="0">Select one</option>
-                            <option value="4">critical</option>
-                            <option value="3">high</option>
-                            <option value="2">medium</option>
-                            <option value="1">low</option>
-                        </select>
+                    
+                    <div class="list-widget" id="taskList">
+                        <!-- Tasks will be added dynamically here -->
                     </div>
-                </div>
-                <button id="addBtn">Add Task</button>
-                
-                <div class="list-widget" id="taskList">
-                    <!-- Tasks will be added dynamically here -->
-                </div>
-            </div>`;
+                </div>`;
     }
 
     /**
