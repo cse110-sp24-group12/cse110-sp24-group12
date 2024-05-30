@@ -1,3 +1,5 @@
+//get the version number when user create entries with duplicate titles
+//this will help titles  have the form: title(#) where # is the ver number
 async function findVersionNumber(title, date) {
     let string = "(";
     const regex = new RegExp(`^${title}\\((\\d+)\\)$`);
@@ -17,6 +19,27 @@ async function findVersionNumber(title, date) {
     
     console.log("This is what we are going to append", string);
     return string + ')';
+}
+
+function replaceEntitiesWithQuotes(inputString) {
+    // Replace all &quot; with double quotes (")
+    const stringWithDoubleQuotes = inputString.replace(/&quot;/g, '"');
+    
+    // Replace all &apos; with single quotes (')
+    const stringWithSingleQuotes = stringWithDoubleQuotes.replace(/&apos;/g, '\'');
+
+    return stringWithSingleQuotes;
+}
+
+//this is to fix the bug of ID's being generated with quotes
+function replaceQuotesWithEntities(inputString) {
+    // Replace all double quotes (") with &quot;
+    const stringWithQuotEntity = inputString.replace(/"/g, '&quot;');
+    
+    // Replace all single quotes (') with &apos;
+    const stringWithAposEntity = stringWithQuotEntity.replace(/'/g, '&apos;');
+
+    return stringWithAposEntity;
 }
 
 //convert from xx-xx-xxxx to Month day, year format.
@@ -178,9 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // this means we are working with existing event
             [name, date] = infoArray;
             editing = true;
+            //bug fix for when users add in ' or " to a title 
+            name = replaceQuotesWithEntities(name);
         } else {
             [date] = infoArray;
         }
+        
         console.log(date);
 
         /* *** BRAINSTORM FOR DELETE FUNCTIONALITY ***
@@ -209,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // we need to make a button
             markdownInput.value = await window.api.getMarkDownEntryById(name+"."+date);
             //title.value = event.target.innerHTML;
-            title.value = name;
+            title.value = replaceEntitiesWithQuotes(name);
         }
 
         modal.style.display = 'block';
@@ -247,10 +273,12 @@ document.addEventListener('DOMContentLoaded', () => {
         */
         saveMarkDown.onclick = async () => {
             console.log("Save button was just pressed to save entry:", title.value);
+            title.value.replace(/ /g, '_');
+            title.value = replaceQuotesWithEntities(title.value);
             if (title.value === '') {
                 alert('You must add a title!'); // eslint-disable-line no-alert
-            } else if (title.value.includes('.') || title.value.includes(' ')) {
-                alert('Cannot use "." symbol or " " (spaces) within title, please update your title.'); // eslint-disable-line no-alert
+            } else if (title.value.includes('.')) {
+                alert('Cannot use "." within title, please update your title.'); // eslint-disable-line no-alert
             } else {
                 // We enter this else if we are ready to close and save
                 // close popup
@@ -359,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Get the newly created buttons
         const entryButtons = extraButtons.getElementsByClassName('entryButton');
     
-        // Event listeners for the entry buttons ("Save as Markdown/Task")
+        // Event listeners for the entry buttons
         Array.from(entryButtons).forEach(button => {
             button.addEventListener('click', (entryButtonClick) => {
                 console.log(`This is the entry button you just clicked: ${button.id}`);
