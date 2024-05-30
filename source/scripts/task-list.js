@@ -5,6 +5,7 @@ class TaskListWidget extends HTMLElement {
     constructor() {
         super(); // necessary js call prior to self-referencing via this
         this.tasks = [];
+        this.filePath = '';
     }
 
     /**
@@ -41,26 +42,25 @@ class TaskListWidget extends HTMLElement {
      * The connectedCallback method is called when the element is added to the DOM.
      * This method fetches the JSON/localStorage data and renders the tasks.
      */
-    connectedCallback() {
-        if (localStorage.getItem('tasks') !== null) {
-            this.tasks = JSON.parse(localStorage.getItem('tasks'));
-            this.renderTasks();
-            return;
-        }
-
-        const src = this.getAttribute('src');
-        if (src) {
-            fetch(src)
-                .then((response) => response.json())
-                .then((data) => {
-                    this.tasks = data;
-                    this.renderTasks();
-                })
-                .catch((error) => {
-                    console.error('Error fetching JSON:', error);
-                });
+    async connectedCallback() {
+        // currently read if by it but could it change it to read by type?
+        const entryId = this.getAttribute('data-entry-id');
+        if (entryId) {
+            try {
+                const entry = await window.api.getEntryById(entryId);
+                const tasks = await window.api.readFile(entry.fileName);
+                this.filePath = entry.fileName;
+                this.tasks = JSON.parse(tasks);
+                console.log(this.tasks);
+                console.log("Finish reading tasks");
+                this.renderTasks();
+            } catch (error) {
+                console.log(entryId);
+                console.log(this.tasks);
+                console.error('Error fetching tasks:', error);
+            }
         } else {
-            console.error('No src attribute provided.');
+            console.error('No data-entry-id provided.');
         }
     }
 
@@ -68,7 +68,7 @@ class TaskListWidget extends HTMLElement {
      * A basic method that adds a task to the task list.
      * @param {*} task - the task that is being added to the list
      * @param {*} container - container that holds the taks items
-     * @param {*} id - the id of the task
+     * @param {*} id - the id of the task(using like the index)
      */
     addTask(task, container, id) {
         const taskContainer = document.createElement('div');
@@ -79,9 +79,9 @@ class TaskListWidget extends HTMLElement {
         checkbox.type = 'checkbox';
         checkbox.checked = task.is_done || false;
         checkbox.id = `task${id}`;
-        checkbox.addEventListener('change', () => {
+        checkbox.addEventListener('change', async () => {
             this.tasks[id].is_done = checkbox.checked;
-            this.updateLocalStorage();
+            await this.updateTasks();
         });
 
         const titleText = document.createElement('label');
@@ -91,7 +91,6 @@ class TaskListWidget extends HTMLElement {
 
         const priority = document.createElement('h4');
         priority.innerHTML = `Priority level: ${task.priority}`;
-        console.log(task.priority);
 
         const editBtn = document.createElement('button');
         editBtn.innerHTML = 'Edit';
@@ -103,12 +102,11 @@ class TaskListWidget extends HTMLElement {
         const deleteBtn = document.createElement('button');
         deleteBtn.innerHTML = 'X';
         deleteBtn.classList.add('delete-button');
-        deleteBtn.addEventListener('click', () => {
+        deleteBtn.addEventListener('click', async () => {
             taskContainer.remove();
             this.tasks.splice(id, 1);
-            this.updateLocalStorage();
+            await this.updateTasks();
         });
-
         taskContainer.appendChild(checkbox);
         taskContainer.appendChild(titleText);
         taskContainer.appendChild(priority);
@@ -143,7 +141,7 @@ class TaskListWidget extends HTMLElement {
 
         editPriorityInput.value = task.priority;
 
-        saveBtn.addEventListener('click', () => {
+        saveBtn.addEventListener('click', async () => {
             const newTaskText = editTaskInput.value.trim();
             const newPriority = editPriorityInput.value;
             if (newTaskText !== '') {
@@ -160,21 +158,22 @@ class TaskListWidget extends HTMLElement {
      * @param {*} newTaskText - the new task description that was edited in
      * @param {*} newPriority - the new priority of the task that was edited
      */
-    updateTask(id, newTaskText, newPriority) {
+    async updateTask(id, newTaskText, newPriority) {
         this.tasks[id].title = newTaskText;
         this.tasks[id].priority = newPriority;
         this.renderTasks();
-        this.updateLocalStorage();
+        await this.updateTasks();
     }
 
     /**
-     * Update the local storage with the new tasks array as needed
-     * (generally after adding or removing tasks)
-     */
-    updateLocalStorage() {
-        console.log('Update local storage');
-        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    * Updates the tasks to the json file(using the method from the preload.js and main.js)
+    */
+    async updateTasks() {
+        console.log('Update json file Now');
+        await window.api.writeJsonFile({ filePath: this.filePath, data: this.tasks });
+        console.log(this.tasks);
     }
+
 
     /**
      * Add a task to the task list and update the local storage
@@ -186,12 +185,12 @@ class TaskListWidget extends HTMLElement {
         const task = {
             title: taskText,
             is_done: isChecked,
-            priority: taskPriority,
+            priority: parseInt(taskPriority, 10),
         };
 
         this.tasks.push(task);
         this.renderTasks();
-        this.updateLocalStorage();
+        this.updateTasks();
     }
 
     /*
@@ -222,20 +221,6 @@ class TaskListWidget extends HTMLElement {
         });
 
         this.appendChild(tasklistContainer);
-    }
-
-    /**
-     * When a task is checked, update the task status
-     * in the local storage so it is not rendered improperly
-     * @param {*} taskText - the task text
-     */
-    removeTaskFromLocalStorage(taskText) {
-        const index = this.tasks.findIndex((task) => task.text === taskText);
-        if (index !== -1) {
-            this.tasks.splice(index, 1);
-            this.updateLocalStorage();
-            this.renderTasks();
-        }
     }
 }
 

@@ -7,14 +7,13 @@
         "type": "markdown",
         "bookmarked": false
     },
-    
     {
         "id": "2",
         "date": "2024-05-02",
-        "fileName": "data/2.md",
-        "title": "Entry 2",
-        "type": "markdown",
-        "bookmarked": true
+        "fileName": "data/tasklist/2024-05-02.json",
+        "title": "Random Task List",
+        "type": "tasklist",
+        "bookmarked": false
     },
     {
         "id": "3",
