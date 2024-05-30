@@ -1,39 +1,40 @@
-/**
- * updateCellLocalStorage
- *
- * @function
- * @param {string} cell - the namespace and name of the event
- * @param {string} eventToDelete - the id of the event
- * @example
- * updateCellLocalStorage
- * Deletes a designated button from the HTML.
- */
-function updateCellLocalStorage(cell, eventToDelete) {
-    // For documentation on these functions, see `../main.js` <- &&& This is for imported functions
+async function findVersionNumber(title, date) {
+    let string = "(";
+    const regex = new RegExp(`^${title}\\((\\d+)\\)$`);
+    const entries = await window.api.getEntriesOnDate(date);
     
-    // declare 'data'  to take in 
-    const data = localStorage.getItem(cell);
-    const dataArray = data.split('</button> ');
-    if (dataArray.length === 1) {
+    // Find all version numbers
+    const versionNumbers = entries.map(entry => {
+        const match = entry.title.match(regex);
+        return match ? parseInt(match[1], 10) : 0;
+    });
+    
+    // Find the maximum version number
+    const maxVersion = Math.max(...versionNumbers);
 
-    // in the case that there was only the one button we just clear everything
-        console.log('We have one button, so we clear out the cell');
-        localStorage.removeItem(cell);
-        return;
-    }
-    let updatedData = '';
-    const { length } = dataArray;
-    for (let i = 0; i < length; i += 1) {
-        const current = dataArray[i];
-        console.log('This is the value of current', current);
-        if (current === `<button class='entryButton' id=${eventToDelete}>${eventToDelete.split('.')[0]}`) {
-            // we have found the part we want to delete
-            // dont do anything
-        } else {
-            updatedData += `${current}</button>`;
-        }
-    }
-    localStorage.setItem(cell, updatedData);
+    // Increment the highest version number by 1
+    string += (maxVersion + 1);
+    
+    console.log("This is what we are going to append", string);
+    return string + ')';
+}
+
+//convert from xx-xx-xxxx to Month day, year format.
+function formatDate(dateString) {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    // Create a Date object from the input dateString
+    const date = new Date(dateString);
+    
+    // Extract the month, day, and year from the Date object
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+    
+    // Format the date as "Month Day, Year"
+    const formattedDate = `${month} ${day}, ${year}`;
+    
+    return formattedDate;
 }
 
 /**
@@ -56,8 +57,8 @@ function formatButtons(inputArray, id){
     if(inputArray.length > 3){
         console.log("should reduce number of visible buttons");
         //show only 2 buttons and then a ... if we have more than 3 entries
-        let updatedData = "<button id='"+inputArray[0].title+"."+inputArray[0].date+"' class='entryButton'"+inputArray[0].title+"</button>"/
-        + "<button id='"+inputArray[1].title+"."+inputArray[1].date+"' class='entryButton'"+inputArray[1].title+"</button>";//re-attach button tags
+        let updatedData = "<button id='"+inputArray[0].title+"."+inputArray[0].date+"' class='entryButton'>"+inputArray[0].title+"</button>";
+        updatedData += "<button id='"+inputArray[1].title+"."+inputArray[1].date+"' class='entryButton'>"+inputArray[1].title+"</button>";
         updatedData += "<button id ='"+id+"' class = 'extra'>...</button>";
         return updatedData;
     }
@@ -214,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'block';
         // show date on the modals inner html (top left)
         // month/day/year is the desired format
-        text.innerHTML = date.replace(new RegExp('-'), '/');
+        text.innerHTML = formatDate(date);
         if (name != null) {
             text.innerHTML += "<button id='deleteEntryButton'>Delete Entry</button>";// add class here for styling?
             const deleteEntryButton = document.getElementById('deleteEntryButton');
@@ -276,22 +277,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     const entryExists = await window.api.getEntryByTitleAndDate([title.value, date]);
                     console.log(entryExists);
                     if(entryExists !== null){
-                        alert("An entry with this title already exists!");// eslint-disable-line no-alert
+                        title.value += await findVersionNumber(title.value, date);
                     }
-                    else{
-                        try {
-                            //add new entry with unique ID
-                            console.log("We are about to add an entry");
-                            await window.api.addMarkdownEntry({
-                                date: date,
-                                title: title.value,
-                                bookmarked: false,
-                                markdownContent: markdownInput.value,
-                            });
-                        } catch (error) {
-                            console.error('An error occurred:', error);
-                        }
+                    try {
+                        //add new entry with unique ID
+                        console.log("We are about to add an entry");
+                        await window.api.addMarkdownEntry({
+                            date: date,
+                            title: title.value,
+                            bookmarked: false,
+                            markdownContent: markdownInput.value,
+                        });
+                    } catch (error) {
+                        console.error('An error occurred:', error);
                     }
+                    
                 }
                 generateCalendar();
             }
@@ -320,45 +320,57 @@ document.addEventListener('DOMContentLoaded', () => {
      * @returns {void}
      *                  Opens modal window and allows user to view/select full list
      *                  of entries from a given cell. 
-     */    async function openExtraModal(event){
-
+     */    
+    async function openExtraModal(event) {
         const modal = document.getElementById('extraModal');
         const span = document.getElementById('closeExtra');
         const extraButtons = document.getElementById('extraButtons');
-        let [,date] = event.target.id.split(".");
-
-        let entries = await window.api.getEntriesOnDate(date);
-        for(let entry in entries){
-            extraButtons.innerHTML += "<button id='"+entry.title+"."+entry.date+"' class='entryButton'"+entry.title+"</button>"; 
-        }
-
-        modal.style.display='block';
+        const [, date] = event.target.id.split(".");
+    
+        // Clear previous buttons to prevent duplication
+        extraButtons.innerHTML = formatDate(date);
+    
+        // Fetch entries based on date
+        const entries = await window.api.getEntriesOnDate(date);
+    
+        // Create and append buttons
+        entries.forEach(entry => {
+            const button = document.createElement('button');
+            button.id = `${entry.title}.${entry.date}`;
+            button.className = 'entryButton';
+            button.textContent = entry.title;
+            extraButtons.appendChild(button);
+        });
+    
+        modal.style.display = 'block';
         console.log("This is the content that we want to show on our modal:", entries);
-
+    
         // When the user clicks on <span> (x), close the modal
         span.onclick = () => {
             modal.style.display = 'none';
         };
-
+    
         window.onclick = (modalOutsideClick) => {
             if (modalOutsideClick.target === modal) {
                 modal.style.display = 'none';
             }
         };
-
-            //Event listeners for the entry buttons ("Save as Markdown/Task")
-        for (let i = 0; i < entryButtons.length; i += 1) {
-            entryButtons[i].addEventListener('click', (entryButtonClick) => {
-                console.log(`This is the entry button you just clicked:${entryButtons[i].id}this is the index:${i}`); // &&& Keeps logging way too many clicks
-                // this is to prevent the cell under from being clicked after we click a button
+    
+        // Get the newly created buttons
+        const entryButtons = extraButtons.getElementsByClassName('entryButton');
+    
+        // Event listeners for the entry buttons ("Save as Markdown/Task")
+        Array.from(entryButtons).forEach(button => {
+            button.addEventListener('click', (entryButtonClick) => {
+                console.log(`This is the entry button you just clicked: ${button.id}`);
+                // This prevents the cell underneath from being clicked after we click a button
                 entryButtonClick.stopPropagation();
                 modal.style.display = 'none';
                 openModal(entryButtonClick);
             });
+        });
     }
-
-
-    }
+    
     
     /**
     * Listens for mouseover of elements in the calendar.
@@ -382,6 +394,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // When user clicks on specific day cell to open modal window
             target.addEventListener('click', (dayCell) => openModal(dayCell));
+        }
+        else if(target.classList.contains('extra')){
+            const extraButtons = document.getElementsByClassName('extra');
+            //Event listeners for the "extra" buttons on each cell ("...")
+            for(let i = 0; i < extraButtons.length; i+=1){
+                extraButtons[i].addEventListener('click', (extraButtonClick) =>{
+                    console.log(`This is the extra button you just clicked:${extraButtons[i].id}this is the index:${i}`);
+                    openExtraModal(extraButtonClick);
+                    extraButtonClick.stopPropagation();
+                });
+            }
         }
     });
 
@@ -436,17 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (markdownButton) {
                 target.removeChild(markdownButton);
             }
-            
-            //Event listeners for the "extra" buttons on each cell ("...")
-            for(let i = 0; i < extraButtons.length; i+=1){
-                extraButtons[i].addEventListener('click', (extraButtonClick) =>{
-                   console.log(`This is the extra button you just clicked:${extraButtons[i].id}this is the index:${i}`);
-                   extraButtonClick.stopPropagation();
-                   openExtraModal(extraButtonClick);
-                });
-            }
-            
-            
+
         }
     });
 });
