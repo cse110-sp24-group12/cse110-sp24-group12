@@ -255,10 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // close popup
                 modal.style.display = 'none';
                 if(editing){
-                    if(title.value != name){
-                        //the user has updated the title, act accordingly
-                        await window.api.deleteEntryByTitleAndDate([name, date]);
-                    }
+                    //the user has updated the title, act accordingly
+                    await window.api.deleteEntryByTitleAndDate([name, date]);
                     try {
                         //add new entry with unique ID
                         console.log("We are about to add an entry");
