@@ -39,10 +39,12 @@ contextBridge.exposeInMainWorld(
         renderMarkdown: (args) => ipcRenderer.invoke('render-markdown', args),
         getEntryByMonth: (args) => ipcRenderer.invoke('get-entries-for-month', args),
         getEntryById: (args) => ipcRenderer.invoke('get-entry-by-id', args),
+        getEntryByTitleAndDate: (args) => ipcRenderer.invoke('get-entry-by-title-and-date', args),
         addMarkdownEntry: (args) => ipcRenderer.invoke('add-markdown-entry', args),
         updateMarkdownEntry: (args) => ipcRenderer.invoke('update-markdown-entry', args),
         getEntriesOnDate: (args) => ipcRenderer.invoke('get-entries-on-date', args),
         deleteEntryByTitleAndDate: (args) => ipcRenderer.invoke('delete-entry-by-title-and-date', args),
         clearEntries: (args) => ipcRenderer.invoke('clear-entries', args),
+        getMarkDownEntryById: (args) => ipcRenderer.invoke('get-markdown-entry-by-id', args),
     }
 );

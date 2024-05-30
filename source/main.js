@@ -224,8 +224,7 @@ function deleteFile(filePath) {
 ipcMain.handle('delete-entry-by-title-and-date', async (event, arg) => {
     const [name, date] = arg;
     const entries = readEntriesJSONFile();
-    const entryToDel = getEntryByTitleAndDate(name, date);
-    const oldID = entryToDel.id;
+    const oldID = name+"."+date;
     const arrayWithoutElement = entries.filter((entry) => !(entry.title === name && entry.date === date));
     if (arrayWithoutElement.length < entries.length) {
         writeEntriesJSONFile(arrayWithoutElement);
@@ -244,6 +243,18 @@ async function ensureDirectoryExists(dirPath) {
         console.error(`Error ensuring directory exists: ${err}`);
     }
 }
+function deleteDirectoryContents(directoryPath) {
+    fs.readdirSync(directoryPath).forEach(file => {
+        const filePath = path.join(directoryPath, file);
+        if (fs.lstatSync(filePath).isDirectory()) {
+            deleteDirectoryContents(filePath); // Recursively delete subdirectories
+            fs.rmdirSync(filePath); // Remove the subdirectory itself
+        } else {
+            fs.unlinkSync(filePath); // Delete file
+        }
+    });
+}
+
 // Function to clear the contents of a file
 async function clearFileContents(filePath) {
     try {
@@ -269,7 +280,7 @@ ipcMain.handle('clear-entries', async (event) => {
     const dirPath = 'data';
     const filePath = path.join(dirPath, 'entries.json'); // Ensure this points to a file, not a directory
     await ensureDirectoryExists(dirPath);
-    await clearFileContents(filePath);
+    await deleteDirectoryContents(dirPath);
     await createEmptyJsonFile(filePath);
 });
 
@@ -321,6 +332,10 @@ ipcMain.handle('add-markdown-entry', async (event, arg) => {
     entries.push(newEntry);
     fs.writeFileSync(newEntry.fileName, arg.markdownContent, 'utf-8');
     writeEntriesJSONFile(entries);
+});
+
+ipcMain.handle('get-markdown-entry-by-id', async (event, arg) => {
+    return fs.readFileSync(`./data/`+arg+`.md`, 'utf-8');
 });
 
 /**

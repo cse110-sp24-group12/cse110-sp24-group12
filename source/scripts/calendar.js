@@ -49,25 +49,10 @@ function updateCellLocalStorage(cell, eventToDelete) {
  *                  button that will redirect user to a list of all entry buttons for 
  *                  that day, in another modal window. 
  */
-function formatButtons(htmlString, extraId){
-    const dataArray = htmlString.split('</button>');
-    console.log("Should format button display");
-    console.log("length<", dataArray.length);
-    if(dataArray.length > 3){
-        console.log("should reduce number of visible buttons");
-        //show only 2 buttons and then a ... if we have more than 3 entries
-        let updatedData = dataArray[0]+"</button>" + dataArray[1] + "</button>";//re-attach button tags
-        updatedData += "<button id ='"+extraId+"' class = 'extra'>...</button>";
-        return updatedData;
-    }
-    else{
-        return htmlString;
-    }
-}
-
-function formatButtons2(inputArray, id){
+function formatButtons(inputArray, id){
     
     console.log("length,", inputArray.length);
+    console.log(inputArray[0].title);
     if(inputArray.length > 3){
         console.log("should reduce number of visible buttons");
         //show only 2 buttons and then a ... if we have more than 3 entries
@@ -78,8 +63,8 @@ function formatButtons2(inputArray, id){
     }
     else{
         let entryStringButtons = "";
-        for (let entry in inputArray){
-            entryStringButtons += "<button id'" +entry.title+"."+ entry.date+"' class='entryButton'>" + entry.title + "</button>";
+        for (let i = 0; i < inputArray.length; i += 1){
+            entryStringButtons += "<button id='" +inputArray[i].title+"."+ inputArray[i].date+"' class='entryButton'>" + inputArray[i].title + "</button>";
         }
         return entryStringButtons;
     }
@@ -145,28 +130,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 calendarHTML += ' </tr> <tr>';// creates a new row
             }
             let fill;
-            //const memory = localStorage.getItem(`${month + 1}/${day}/${year}`);
-
-            console.log(window.api); // Should log the api object
-            console.log(window.api.getEntriesOnDate); // Should log the function definition
-            console.log(window.api.getEntryById);
-            console.log(window.api.deleteEntryByTitleAndDate);
-
-            const memory = await window.api.getEntriesOnDate(`${month + 1}/${day}/${year}`);
+            const memory = await window.api.getEntriesOnDate(`${month + 1}-${day}-${year}`);
             // check what was stored for that day
             if(memory.length === 0){
                 fill = day;
             }
             else{
-                fill = day + formatButtons2(memory, `extra.${month + 1}/${day}/${year}`);
+                fill = day + formatButtons(memory, `extra.${month + 1}-${day}-${year}`);
             }
-
-            // if (memory === null) {
-            //     fill = day;
-            // } else {
-            //     fill = day + formatButtons(memory, `extra.${month + 1}/${day}/${year}`);
-            // }
-            calendarHTML += `<td id='${month + 1}/${day}/${year}' class='mouseOut standardCell'  >${fill}</td> `;
+            calendarHTML += `<td id='${month + 1}-${day}-${year}' class='mouseOut standardCell'  >${fill}</td> `;
             count += 1;
         }
         calendarHTML += '</tr></tbody>';
@@ -189,7 +161,8 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     async function openModal(event) {
         console.log('you opened the modal');// test to see if we're clicking through our buttons
-
+        console.log("This is what you clicked on:", event);
+        console.log("This is the target of what you clicked on:", event.target);
         console.log('this is the id of what you clicked on', event.target.id);
         console.log('this is the class what you clicked on:', event.target.classList);
         
@@ -210,8 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(date);
 
         /* *** BRAINSTORM FOR DELETE FUNCTIONALITY ***
-         * event.target.id is either... name4/2/2003 <-this is on clicking on saved event
-         * or it may be 4/2/2003 <-this is clicking on empty cell
+         * event.target.id is either... name.4-2-2003 <-this is on clicking on saved event
+         * or it may be 4-2-2003 <-this is clicking on empty cell
          * therefore possibleName can either be name4 or 4 depending on if we clicked
          * we need to identify if user clicked on a old event, or is creating a new one
          * if they clicked on an old event, we should include new option, delete button
@@ -233,15 +206,15 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // reenter old data
             // we need to make a button
-            //markdownInput.value = localStorage.getItem(event.target.id);
-            markdownInput.value = await window.api.getEntryByTitleAndDate([name, date]);
+            markdownInput.value = await window.api.getMarkDownEntryById(name+"."+date);
             //title.value = event.target.innerHTML;
             title.value = name;
         }
 
         modal.style.display = 'block';
         // show date on the modals inner html (top left)
-        text.innerHTML = date;
+        // month/day/year is the desired format
+        text.innerHTML = date.replace(new RegExp('-'), '/');
         if (name != null) {
             text.innerHTML += "<button id='deleteEntryButton'>Delete Entry</button>";// add class here for styling?
             const deleteEntryButton = document.getElementById('deleteEntryButton');
@@ -272,71 +245,56 @@ document.addEventListener('DOMContentLoaded', () => {
         *                  calls generateCalendar() to update it.  
         */
         saveMarkDown.onclick = async () => {
+            console.log("Save button was just pressed to save entry:", title.value);
             if (title.value === '') {
                 alert('You must add a title!'); // eslint-disable-line no-alert
             } else if (title.value.includes('.') || title.value.includes(' ')) {
                 alert('Cannot use "." symbol or " " (spaces) within title, please update your title.'); // eslint-disable-line no-alert
             } else {
                 // We enter this else if we are ready to close and save
-
                 // close popup
                 modal.style.display = 'none';
-                //let localStorageFill = localStorage.getItem(date);
-
-                // need to use entryStorage to create a string with the correct button fill!
-                // let entryStorage = await window.api.getEntriesOnDate(date);
-                // let fillString = "";
-                // for(let entry in entryStorage){
-                //     fillString += "<button id='"+entry.title+"."+entry.date+"' class='entryButton'>"+entry.title+"</button>";
-                // }
-                // for now this loop to generate string is not needed
-
-
-                //let data = readcellStorageJSON();
-                //console.log(data);
-                //data = JSON.parse(data);
-                if(!editing){
-                    console.log("We commented out this whole section on line 262 of calendar.js");
-                    // if (localStorageFill === null) {
-                    //     localStorageFill = `<button class='entryButton' id=${title.value}.${date}>${title.value}</button>`;
-                    // }
-                    // else if (localStorageFill.includes(`id=${title.value}.${date}`)) {
-                    //     alert('An entry already exists with this name.'); // eslint-disable-line no-alert
-                    // } else {
-                    //     localStorageFill += `<button class='entryButton' \
-                    //   id=${title.value}.${date}>${title.value}</button>`;
-                    // }
-                    // localStorage.setItem(date, localStorageFill);
-                    // localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
-
-                }
-                else{
+                if(editing){
                     if(title.value != name){
                         //the user has updated the title, act accordingly
-                        //localStorage.removeItem(`${name}.${date}`);
-
                         await window.api.deleteEntryByTitleAndDate([name, date]);
-
-
-                        //changeCellStorage(date, name, title.value);
                     }
-
-                    //localStorage.setItem(`${title.value}.${date}`, markdownInput.value);
-                    
+                    try {
+                        //add new entry with unique ID
+                        console.log("We are about to add an entry");
+                        await window.api.addMarkdownEntry({
+                            date: date,
+                            title: title.value,
+                            bookmarked: false,
+                            markdownContent: markdownInput.value,
+                        });
+                    } catch (error) {
+                        console.error('An error occurred:', error);
+                    }                 
                 }
-                try {
-                    //add new entry with unique ID
-                    console.log("We are about to add an entry");
-                    await window.api.addMarkdownEntry({
-                        date: date,
-                        title: title.value,
-                        bookmarked: false,
-                        markdownContent: markdownInput.value,
-                    });
-                } catch (error) {
-                    console.error('An error occurred:', error);
+                else{
+                    //we are not editing, quick check for duplicate entry name
+                    console.log("Attempting to make a brand new entry!");
+                    const entryExists = await window.api.getEntryByTitleAndDate([title.value, date]);
+                    console.log(entryExists);
+                    if(entryExists !== null){
+                        alert("An entry with this title already exists!");// eslint-disable-line no-alert
+                    }
+                    else{
+                        try {
+                            //add new entry with unique ID
+                            console.log("We are about to add an entry");
+                            await window.api.addMarkdownEntry({
+                                date: date,
+                                title: title.value,
+                                bookmarked: false,
+                                markdownContent: markdownInput.value,
+                            });
+                        } catch (error) {
+                            console.error('An error occurred:', error);
+                        }
+                    }
                 }
-                
                 generateCalendar();
             }
         };
@@ -370,7 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const span = document.getElementById('closeExtra');
         const extraButtons = document.getElementById('extraButtons');
         let [,date] = event.target.id.split(".");
-        //extraButtons.innerHTML = localStorage.getItem(date);
 
         let entries = await window.api.getEntriesOnDate(date);
         for(let entry in entries){
@@ -392,14 +349,14 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
             //Event listeners for the entry buttons ("Save as Markdown/Task")
-    for (let i = 0; i < entryButtons.length; i += 1) {
-        entryButtons[i].addEventListener('click', (entryButtonClick) => {
-            console.log(`This is the entry button you just clicked:${entryButtons[i].id}this is the index:${i}`); // &&& Keeps logging way too many clicks
-            // this is to prevent the cell under from being clicked after we click a button
-            entryButtonClick.stopPropagation();
-            modal.style.display = 'none';
-            openModal(entryButtonClick);
-        });
+        for (let i = 0; i < entryButtons.length; i += 1) {
+            entryButtons[i].addEventListener('click', (entryButtonClick) => {
+                console.log(`This is the entry button you just clicked:${entryButtons[i].id}this is the index:${i}`); // &&& Keeps logging way too many clicks
+                // this is to prevent the cell under from being clicked after we click a button
+                entryButtonClick.stopPropagation();
+                modal.style.display = 'none';
+                openModal(entryButtonClick);
+            });
     }
 
 
