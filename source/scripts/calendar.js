@@ -241,7 +241,8 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'block';
         // show date on the modals inner html (top left)
         // month/day/year is the desired format
-        text.innerHTML = formatDate(date);
+        text.innerHTML = "";
+        document.getElementById("displayDate").innerHTML = formatDate(date);
         if (name != null) {
             text.innerHTML += "<button id='deleteEntryButton'>Delete Entry</button>";// add class here for styling?
             const deleteEntryButton = document.getElementById('deleteEntryButton');
@@ -323,6 +324,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 generateCalendar();
             }
+
+            /**
+             * Render the markdown text into the markdown-container
+             * element every 100ms.
+             */
+            setInterval(async () => {
+                const markdownText = markdownInput.value;
+                const rendered = await window.api.renderMarkdown(markdownText);
+                document.getElementById('markdown-container').innerHTML = rendered;
+            }, 100);
         };
 
         /**

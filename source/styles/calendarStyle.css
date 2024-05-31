@@ -2,6 +2,140 @@
   background: linear-gradient(220deg, rgba(255, 255, 255, 0.00) 30.34%, rgba(147, 139, 165, 0.60) 54.76%, rgba(103, 93, 129, 0.60) 68.86%, rgba(40, 26, 77, 0.60) 99.13%);
   background-color: rgb(104, 69, 118);
 } */
+.markdown-main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+}
+.topOfModal{
+  display: flex;
+  gap: 20px;
+}
+
+#markdown-container {
+  border: 3px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+  height: 400px;
+  padding-left: 24px;
+  padding-right: 24px;
+  overflow: scroll;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 400;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p {
+    margin-bottom: 24px;
+    padding: 0;
+  }
+  h1 {
+    font-size: 48px;
+    border-bottom: 1px solid #ccc;
+  }
+  h2 {
+    border-bottom: 1px solid #ccc;
+    font-size: 36px;
+    margin: 24px 0 6px;
+  }
+  h3 {
+    font-size: 24px;
+  }
+  h4 {
+    font-size: 21px;
+  }
+  h5 {
+    font-size: 18px;
+  }
+  a {
+    color: #61bfc1;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    vertical-align: baseline;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  a:visited {
+    color: #466b6c;
+  }
+  ul,
+  ol {
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    line-height: 24px;
+  }
+  li ul,
+  li ul {
+    margin-left: 24px;
+  }
+  p,
+  ul,
+  ol {
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 540px;
+  }
+  pre {
+    padding: 0px 24px;
+    max-width: 800px;
+    white-space: pre-wrap;
+  }
+  code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    line-height: 1.5;
+    font-size: 13px;
+  }
+  aside {
+    display: block;
+    float: right;
+    width: 390px;
+  }
+  blockquote {
+    border-left: 0.5em solid #eee;
+    padding: 0 2em;
+    margin-left: 0;
+    max-width: 476px;
+  }
+  blockquote cite {
+    font-size: 14px;
+    line-height: 20px;
+    color: #bfbfbf;
+  }
+  blockquote cite:before {
+    content: "\2014 \00A0";
+  }
+
+  blockquote p {
+    color: #666;
+    max-width: 460px;
+  }
+  hr {
+    width: 540px;
+    text-align: left;
+    margin: 0 auto 0 0;
+    color: #999;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+  }
+}
 .calendarBox{
   margin-inline: 2%;
   margin-top: 2%;
@@ -10,6 +144,10 @@
   min-width: 100%;
   
 }
+.toggleContent{
+  margin-left: 70%;
+}
+
 .pageTop {
   display: flex;
   /* justify-content: space-between; Distribute items along the main axis */
@@ -86,14 +224,21 @@ th{
 .hovered {
   background-color: #e6e6e6;
 }
+
 textarea[id=markdown] {
-  width: 100%;
+  /* width: 10%;
   height: 80%;
-  padding: 12px 20px;
-  margin: 8px 0;
+  align-self: left;
+  padding-left: 0; */
+  border: 3px solid #ccc;
+  border-radius: 5px;
+  width: 540px;
+  height: 400px;
+  /* padding: 12px 20px; */
+  /* margin: 8px 0;
   box-sizing: border-box;
   text-wrap: wrap;
-  resize: none;
+  resize: none; */
   
 }
 
@@ -120,7 +265,7 @@ textarea[id=markdown] {
   width: 80%; /* Could be more or less, depending on screen size */
   height: 80%;
   scroll-behavior: none;
-  justify-content: center; /* Horizontally center the child elements */
+  justify-content: center; /* Horizontally center the child elements*/
 
 }
 
@@ -155,11 +300,12 @@ textarea[id=markdown] {
   float: right;
   font-size: 28px;
   font-weight: bold;
+  padding-left: 87%;
 }
 /* The Save .save-markdown button */
 .saveButton{
   position: absolute;
-  margin-left: 50%;
+  margin-left: 65%;
   padding: 0px;
 }
 .saveMarkdown{

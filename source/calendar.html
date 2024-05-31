@@ -11,7 +11,7 @@
 
   <div class="pageTop">
     <a class="backLink" href="./index.html">&#8592; Back</a>
-    <button id="clearBtn" class="clearBtn">Press Me to Clear data</button>
+    <button id="clearBtn" class="clearBtn">Clear data</button>
     <select class="monthBox" id="month">
       <option value="0">January</option>
       <option value="1">February</option>
@@ -35,26 +35,26 @@
   </div>
   <!-- The Modal -->
   <div id="myModal" class="modal">
-
     <!-- Modal content -->
     <div class="modalContent">
-      <span id = 'closeModal' class="close">&times;</span>
+      <div class="topOfModal">
+        <p id="displayDate">Month day, year</p>
+        <span id="closeModal" class="close">&times;</span>
+      </div>
+      <div class="titleContainer">
+          <input id="entryTitle" type="text" class="entryTitle" placeholder="Enter your title here">
+          <button>BookMark Button</button>
+      </div>
       <p id="modalTxt">Display Date here</p>
-      <!-- input for title entry -->
-      <label for="entryTitle"></label>
-      <input id="entryTitle" type="text" class="entryTitle" placeholder="enter your title here">
-      <!-- textarea for markdown input -->
-      <label for="markdown"></label>
-      <textarea id="markdown" type="text" placeholder="Enter Markdown Entry Here!"></textarea>
-
-      <!-- buttons to save to markdown or send to -->
+      <div class="markdown-main-container">
+          <textarea id="markdown" class="markdownContainer" placeholder="Enter Markdown Entry Here!"></textarea>
+          <div id="markdown-container"></div>
+      </div>
       <div class="saveButton">
-        <button class="saveMarkdown" type="button" id="save-markdown">Save As Markdown</button>
-        <button class="saveTask" type="button" id="save-task">Save As Task List</button>
+          <button class="saveMarkdown" type="button" id="save-markdown">Save As Markdown</button>
       </div>
     </div>
-
-  </div>
+</div>
 
   <!-- The Extra Modal -->
   <div id="extraModal" class="extraModal">
