@@ -1,7 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import fs from 'fs';
-import { v4 } from 'uuid';
 import markdown from 'markdown-it';
 import hljs from 'highlight.js';
 
@@ -157,10 +156,10 @@ const writeEntriesJSONFile = (entries) => {
 ipcMain.handle('get-entries-on-date', async (event, arg) => {
     const entries = readEntriesJSONFile();
     const filtered = entries.filter((entry) => entry.date === arg);
-    if(filtered.length === 0){
+    if (filtered.length === 0) {
         return [];
     }
-    return filtered
+    return filtered;
 });
 
 // /**
@@ -178,7 +177,6 @@ ipcMain.handle('get-entries-on-date', async (event, arg) => {
 //     }
 //     return null;
 // });
-
 
 /**
  * get-entry-by-title-and-date - Get an entry by its title and date.
@@ -224,11 +222,13 @@ function deleteFile(filePath) {
 ipcMain.handle('delete-entry-by-title-and-date', async (event, arg) => {
     const [name, date] = arg;
     const entries = readEntriesJSONFile();
-    const oldID = name+"."+date;
-    const arrayWithoutElement = entries.filter((entry) => !(entry.title === name && entry.date === date));
+    const oldID = `${name}.${date}`;
+    const arrayWithoutElement = entries.filter(
+        (entry) => !(entry.title === name && entry.date === date),
+    );
     if (arrayWithoutElement.length < entries.length) {
         writeEntriesJSONFile(arrayWithoutElement);
-        deleteFile(`data/${oldID}.md`)
+        deleteFile(`data/${oldID}.md`);
         return true;
     }
     return false;
@@ -244,7 +244,7 @@ async function ensureDirectoryExists(dirPath) {
     }
 }
 function deleteDirectoryContents(directoryPath) {
-    fs.readdirSync(directoryPath).forEach(file => {
+    fs.readdirSync(directoryPath).forEach((file) => {
         const filePath = path.join(directoryPath, file);
         if (fs.lstatSync(filePath).isDirectory()) {
             deleteDirectoryContents(filePath); // Recursively delete subdirectories
@@ -254,17 +254,6 @@ function deleteDirectoryContents(directoryPath) {
         }
     });
 }
-
-// Function to clear the contents of a file
-async function clearFileContents(filePath) {
-    try {
-        await fs.promises.writeFile(filePath, '[]');
-        console.log(`File contents cleared: ${filePath}`);
-    } catch (err) {
-        console.error(`Error clearing file contents: ${err}`);
-    }
-}
-
 // Function to write an empty JSON array to a new file
 async function createEmptyJsonFile(filePath) {
     const emptyArrayContent = '[]';
@@ -276,14 +265,13 @@ async function createEmptyJsonFile(filePath) {
     }
 }
 
-ipcMain.handle('clear-entries', async (event) => {
+ipcMain.handle('clear-entries', async () => {
     const dirPath = 'data';
     const filePath = path.join(dirPath, 'entries.json'); // Ensure this points to a file, not a directory
     await ensureDirectoryExists(dirPath);
     await deleteDirectoryContents(dirPath);
     await createEmptyJsonFile(filePath);
 });
-
 
 /**
  * get-entry-by-id - Get an entry by its id.
@@ -319,7 +307,7 @@ ipcMain.handle('get-entry-by-id', async (event, arg) => {
 ipcMain.handle('add-markdown-entry', async (event, arg) => {
     const entries = readEntriesJSONFile();
     console.log('We just added an entry!');
-    const newId = arg.title+"."+arg.date;//may also use v4() to get random id's
+    const newId = `${arg.title}.${arg.date}`;// may also use v4() to get random id's
     const newEntry = {
         id: newId,
         date: arg.date,
@@ -334,9 +322,7 @@ ipcMain.handle('add-markdown-entry', async (event, arg) => {
     writeEntriesJSONFile(entries);
 });
 
-ipcMain.handle('get-markdown-entry-by-id', async (event, arg) => {
-    return fs.readFileSync(`./data/`+arg+`.md`, 'utf-8');
-});
+ipcMain.handle('get-markdown-entry-by-id', async (event, arg) => fs.readFileSync(`./data/${arg}.md`, 'utf-8'));
 
 /**
  * update-markdown-entry - Update an existing markdown entry.
