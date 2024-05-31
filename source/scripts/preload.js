@@ -46,5 +46,7 @@ contextBridge.exposeInMainWorld(
         deleteEntryByTitleAndDate: (args) => ipcRenderer.invoke('delete-entry-by-title-and-date', args),
         clearEntries: (args) => ipcRenderer.invoke('clear-entries', args),
         getMarkDownEntryById: (args) => ipcRenderer.invoke('get-markdown-entry-by-id', args),
+        writePassword: (args) => ipcRenderer.invoke('write-password', args),
+        readPassword: (args) => ipcRenderer.invoke('read-password', args),
     }
 );
