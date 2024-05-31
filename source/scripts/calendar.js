@@ -325,15 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 generateCalendar();
             }
 
-            /**
-             * Render the markdown text into the markdown-container
-             * element every 100ms.
-             */
-            setInterval(async () => {
-                const markdownText = markdownInput.value;
-                const rendered = await window.api.renderMarkdown(markdownText);
-                document.getElementById('markdown-container').innerHTML = rendered;
-            }, 100);
         };
 
         /**
@@ -349,6 +340,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 modal.style.display = 'none';
             }
         };
+
+        /**
+         * Render the markdown text into the markdown-container
+         * element every 100ms.
+         */
+        setInterval(async () => {
+            const markdownText = markdownInput.value;
+            const rendered = await window.api.renderMarkdown(markdownText);
+            document.getElementById('markdown-container').innerHTML = rendered;
+        }, 100);
     }
 
     // create/update modal to view extended list of entries
