@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /* body{
   background: linear-gradient(220deg, rgba(255, 255, 255, 0.00) 30.34%, rgba(147, 139, 165, 0.60) 54.76%, rgba(103, 93, 129, 0.60) 68.86%, rgba(40, 26, 77, 0.60) 99.13%);
   background-color: rgb(104, 69, 118);
@@ -137,21 +138,40 @@
   }
 }
 .calendarBox{
-  margin-inline: 2%;
-  margin-top: 2%;
+=======
+html{
+  height:100%;
 }
-.entryButton{
-  min-width: 100%;
+body{
+  color: white;
+  font-family: Inter;
+  background-color: #120B1E;
+  background-image: 
+  linear-gradient(220deg, rgba(255, 255, 255, 0.00) 30.34%, rgba(147, 139, 165, 0.60) 54.76%, rgba(103, 93, 129, 0.60) 68.86%, rgba(40, 26, 77, 0.60) 99.13%),
+  radial-gradient(464.91% 342.31% at 39.13% 24.61%, rgba(223, 178, 111, 0.00) 12%, #D5AC57 29.72%),
+  linear-gradient(220deg, rgba(40, 26, 77, 0.30), rgba(40, 26, 77, 0.30));
+}
+.navBar {
+  border-radius: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.00);
+  background: rgba(73, 65, 79, 0.60);
+  box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.25);
+  margin: 1%;
+>>>>>>> Stashed changes
+  margin-inline: 2%;
   
+<<<<<<< Updated upstream
 }
 .toggleContent{
   margin-left: 70%;
 }
 
 .pageTop {
+=======
+>>>>>>> Stashed changes
   display: flex;
-  /* justify-content: space-between; Distribute items along the main axis */
-  /* align-items: center; Center items vertically */
+  justify-content: space-between; /*Distribute items along the main axis */
+  align-items: center; /*Center items vertically*/
   padding: 15px; /* Add padding for spacing */
 }
 .backLink {
@@ -164,7 +184,30 @@
   margin: 0 auto; /* Center the title horizontally */
 
 }
+.calendarBox{
+  /* max-width: 1213px; */
+  margin: 0 auto;
+  margin-bottom: 2%;
+  margin-inline: 15%;
+  padding: 2%;
+  border-radius: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.00);
+  background: rgba(73, 65, 79, 0.60);
+  box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.entryButton{
+  min-width: 100%;
+  background-color: #887244;
+  padding: 2px;  
+  border:none;
+  border-radius: 3px;
+  box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.25);
+}
 
+
+#monthNav{
+  text-align: center;
+}
 .monthBox, .yearBox {
   padding: 10px; /* Add padding */
   border: 1px solid #ccc; /* Add border */
@@ -175,17 +218,17 @@
   text-align: center;
 }
 .mouseIn {
-  border-style: solid;
+  border-style: solid inside;
   border-width: 5px;
-  background-color: #edceff;
+  background-color: #edceff9c;
   padding: 8px;
   height: 80px;
   text-align: start;
   vertical-align: top;
 }
 .mouseOut{
-  border: 1px solid #1b1b1b;
-  background-color: #ececec;
+  border: 1px solid #1b1b1b00;
+  background-color: #ececec00;
   padding: 8px;
   height: 80px;
   text-align: start;
@@ -194,29 +237,27 @@
 table {
   border-collapse: collapse;
   width: 100%;
-  border-color: #ffffff;
   border-width: 1px;
-  border-style: solid;
+  border-style: solid inside #dddddd00;
 }
 th{
-  border: 1px solid #ddd;
-  background-color: #c775b9;
+  /* border: 1px solid #ddd;
+  background-color: #c775b9; */
   padding: 8px;
   height: 40px;
   width: 14%;
   text-align: center;
 }
 .standardCell{
-  border: 1px solid #ddd;
-  /* background-color: #f5f5f5; */
+  /* border: 1px solid #ddd; */
   padding: 8px;
   height: 80px;
   text-align: start;
   vertical-align: top;
 }
-#emptyCell{
-  border: 1px solid #ddd;
-  background-color: #d3d3d3;
+.emptyCell{
+  /* border: 1px solid #ddd;
+  background-color: #d3d3d3; */
   padding: 8px;
   text-align: center;
   vertical-align: top;
@@ -258,10 +299,11 @@ textarea[id=markdown] {
 
 /* Modal Content/Box */
 .modalContent {
-  background-color: #fefefe;
+  background-color: #887244;
   margin: 2% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
+  border-radius: 25px;
   width: 80%; /* Could be more or less, depending on screen size */
   height: 80%;
   scroll-behavior: none;
