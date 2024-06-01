@@ -5,20 +5,25 @@ html{
 body{
   color: white;
   font-family: Inter;
-  background-color: #120B1E;
-  background-image: 
-  linear-gradient(220deg, rgba(255, 255, 255, 0.00) 30.34%, rgba(147, 139, 165, 0.60) 54.76%, rgba(103, 93, 129, 0.60) 68.86%, rgba(40, 26, 77, 0.60) 99.13%),
-  radial-gradient(464.91% 342.31% at 39.13% 24.61%, rgba(223, 178, 111, 0.00) 12%, #D5AC57 29.72%),
-  linear-gradient(220deg, rgba(40, 26, 77, 0.30), rgba(40, 26, 77, 0.30));
+  background-color: var(--background-color);
+  background-image: var(--background-gradient);
+}
+button{
+  color: white;
+  /* background-color:#887244; */
+  background-color: var(--button-primary-color);
+  font-family: Inter;
+  border-style: none;
+  border-radius: 10px;
 }
 
 /* NAVBAR AND CONTENTS */
 #navBar {
   border-radius: 50px;
   min-height: 60px;
-  border: 1px solid rgba(0, 0, 0, 0.00);
-  background: rgba(73, 65, 79, 0.60);
-  box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.25);
+  border: none;
+  background: var(--primary-color);
+  box-shadow: 0px 5px 4px 0px var(--primary-shadow);
   margin: 1%;
   margin-inline: 2%;
   padding-inline: 2%;
@@ -27,8 +32,14 @@ body{
 }
 #navBarLeftAlign{
   flex: 1;
+  height: 100%;
 }
 #navBarRightAlign{
+  flex: 1;
+  height: 100%;
+  text-align: right;
+}
+.navButton{
   flex:1;
 } 
 #backLink {
@@ -36,9 +47,8 @@ body{
   text-decoration: none; 
   padding-right: 50%;
 }
-#centeredTitle {
-  text-align: center; 
-  margin: 0 auto; 
+#helpButton{
+  width: 40px;
 }
 
 /* CALENDAR AND CONTENTS */
@@ -46,20 +56,20 @@ body{
   text-align: center;
 }
 .monthBox, .yearBox {
-  color:white;
+  color: var(--text-color);
   font-family: Inter;
   width: 90px;
   padding: 10px; /* Add padding */
-  border: 1px solid #ccc; /* Add border */
+  border: 1px solid var(--border-color); /* Add border */
   border-radius: 10px;
   border-radius: 5px; /* Add border radius for rounded corners */
-  background-color: #f9f9f900; /* Add background color */
+  background-color: #00000000; /* Add background color */
   margin: 1px; /* Adjust spacing between elements */
   margin-right: 0%;
   text-align: center;
 }
 option{
-  background-color: #887244;
+  background-color: var(--secondary-color);
 }
 .calendarBox{
   /* max-width: 1213px; */
@@ -68,15 +78,15 @@ option{
   margin-inline: 15%;
   padding: 2%;
   border-radius: 25px;
-  border: 1px solid rgba(0, 0, 0, 0.00);
-  background: rgba(73, 65, 79, 0.60);
-  box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.25);
+  border: none;
+  background: var(--primary-color);
+  box-shadow: 0px 5px 4px 0px var(--primary-shadow);
 }
 .mouseIn {
   border-style: solid inside;
   border-width: 5px;
   border-radius: 10px;
-  background-color: #00000020;
+  background-color: var(--background-color-hover);
   padding: 8px;
   height: 80px;
   text-align: start;
@@ -99,8 +109,7 @@ option{
 table {
   border-collapse: collapse;
   width: 100%;
-  border-width: 1px;
-  border-style: solid inside #dddddd00;
+  border: none;
 }
 th{
   padding: 8px;
@@ -119,18 +128,18 @@ th{
   text-align: center;
   vertical-align: top;
 }
-.entryButton{
+.entryButton, .extra{
   color: white;
   font-family: Inter;
   min-width: 100%;
-  background-color: #887244;
+  background-color: var(--secondary-color);
   padding: 2px;  
   border:none;
-  border-radius: 3px;
-  box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  box-shadow: 0px 4px 3px 0px var(--primary-shadow);
 }
-.hovered {
-  background-color: #e6e6e6;
+.entryButton:hover, .extra:hover{
+  background-color: var(--secondary-color-hover);
 }
 
 /* ENTRY MODAL WINDOW */
@@ -153,7 +162,7 @@ textarea[id=markdown] {
   height: 80%;
   align-self: left;
   padding-left: 0; */
-  border: 3px solid #ccc;
+  border: 3px solid var(--border-color);
   border-radius: 5px;
   width: 540px;
   height: 400px;
@@ -164,7 +173,7 @@ textarea[id=markdown] {
   resize: none; */
 }
 #markdown-container {
-  border: 3px solid #ccc;
+  border: 3px solid var(--border-color);
   border-radius: 5px;
   width: 400px;
   height: 400px;
@@ -190,10 +199,10 @@ textarea[id=markdown] {
   }
   h1 {
     font-size: 48px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--border-color);
   }
   h2 {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--border-color);
     font-size: 36px;
     margin: 24px 0 6px;
   }
@@ -207,7 +216,7 @@ textarea[id=markdown] {
     font-size: 18px;
   }
   a {
-    color: #61bfc1;
+    color: var(--link-color);
     margin: 0;
     padding: 0;
     text-decoration: none;
@@ -217,7 +226,7 @@ textarea[id=markdown] {
     text-decoration: underline;
   }
   a:visited {
-    color: #466b6c;
+    color: var(--link-color-visited);
   }
   ul,
   ol {
@@ -254,7 +263,7 @@ textarea[id=markdown] {
     width: 390px;
   }
   blockquote {
-    border-left: 0.5em solid #eee;
+    border-left: 0.5em solid var(--border-color);
     padding: 0 2em;
     margin-left: 0;
     max-width: 476px;
@@ -322,10 +331,10 @@ textarea[id=markdown] {
 
 /* Modal Content/Box */
 .modalContent {
-  background-color: #887244;
+  background-color: var(--secondary-color);
   margin: 2% auto; /* 15% from the top and centered */
   padding: 20px;
-  border: 1px solid #888;
+  border: 1px solid var(--border-color-dark);
   border-radius: 25px;
   width: 80%; /* Could be more or less, depending on screen size */
   height: 80%;
@@ -351,7 +360,7 @@ textarea[id=markdown] {
   background-color: white;
   margin: 2% auto; /* 15% from the top and centered */
   padding: 20px;
-  border: 1px solid #888;
+  border: 1px solid var(--border-color-dark);
   width: 60%; /* Could be more or less, depending on screen size */
   height: 60%;
   scroll-behavior: none;
