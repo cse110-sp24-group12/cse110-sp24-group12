@@ -4,27 +4,47 @@ function init() {
     const alert = document.getElementById('strongPassword');
     const passwordPage = document.getElementById('passwordPage');
     const hint = document.getElementById('hint');
+    const rememberCheckbox = document.getElementById('rememberMe');
     let password;
     let pin;
-    button.addEventListener('click', () => {
-        if (input.value.length < 6) {
-            if (button.textContent === 'Create') {
+    const handleButtonClick = () => {
+        if (button.textContent === 'Next') {
+            if (input.value.length >= 6) {
+                alert.style.color = 'transparent';
+                button.textContent = 'Create';
+                hint.textContent = 'Pin to help you find password';
+                password = input.value;
+                input.value = '';
+            } else {
+                alert.style.color = 'red';
+                alert.textContent = 'Password must be at least 6 characters long.';
+            }
+        } else if (button.textContent === 'Create') {
+            if (input.value.length < 6) {
+                alert.style.color = 'transparent';
+                alert.textContent = '';
                 pin = input.value;
+                rememberMe = false;
                 const data = {
                     password,
                     pin,
+                    rememberMe
                 };
                 window.api.writePassword(JSON.stringify(data));
                 passwordPage.click();
             } else {
                 alert.style.color = 'red';
+                alert.textContent = 'Pin must be 6 characters or less.';
             }
-        } else {
-            alert.style.color = 'transparent';
-            button.textContent = 'Create';
-            hint.textContent = 'Pin to help you find password';
-            password = input.value;
-            input.value = '';
+        }
+    };
+    
+    button.addEventListener('click', handleButtonClick);
+    
+    input.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            handleButtonClick();
         }
     });
 }
