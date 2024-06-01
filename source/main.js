@@ -379,25 +379,19 @@ ipcMain.handle('update-markdown-entry', async (event, arg) => {
 });
 
 const encryptData = (data) => {
-    var ciphertext = CryptoJS.AES.encrypt(data, '12').toString();
+    const ciphertext = CryptoJS.AES.encrypt(data, '12').toString();
     return ciphertext;
+};
 
-}
-
-ipcMain.handle('encrypt-data', async (event,arg) => {
-   return encryptData(arg);
-});
+ipcMain.handle('encrypt-data', async (event, arg) => encryptData(arg));
 
 const decryptData = (data) => {
-    var bytes  = CryptoJS.AES.decrypt(data, '12');
-    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+    const bytes = CryptoJS.AES.decrypt(data, '12');
+    const originalText = bytes.toString(CryptoJS.enc.Utf8);
     return originalText;
+};
 
-}
-
-ipcMain.handle('decrypt-data', async (event,arg) => {
-   return decryptData(arg);
-});
+ipcMain.handle('decrypt-data', async (event, arg) => decryptData(arg));
 
 /**
  * write-password - Writes password and backup pin to the password.json file
