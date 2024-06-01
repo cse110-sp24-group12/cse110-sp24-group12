@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   unit-tests:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install Dependencies
@@ -12,4 +12,4 @@ jobs:
         run: npm install
       - name: Unit Test
         working-directory: ./source
-        run: npm run test
+        run: npm test

@@ -2,7 +2,6 @@ async function init() {
     // check for password
     const button = document.querySelector('button');
     const password = document.getElementById('password');
-    const homePage = document.getElementById('back');
     const createPassword = document.getElementById('createPassword');
     // get password from json file
     const jsonPasswordFile = await window.api.readPassword('');
@@ -15,7 +14,7 @@ async function init() {
     // check if password matches
     button.addEventListener('click', () => {
         if (password.value === jsonPassword.password) {
-            homePage.click();
+            window.api.loadHtmlFile('calendar.html');
         }
     });
 

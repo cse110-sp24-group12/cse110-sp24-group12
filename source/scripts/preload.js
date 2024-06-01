@@ -48,5 +48,6 @@ contextBridge.exposeInMainWorld(
         getMarkDownEntryById: (args) => ipcRenderer.invoke('get-markdown-entry-by-id', args),
         writePassword: (args) => ipcRenderer.invoke('write-password', args),
         readPassword: (args) => ipcRenderer.invoke('read-password', args),
+        loadHtmlFile: (args) => ipcRenderer.invoke('load-html-file', args),
     }
 );
