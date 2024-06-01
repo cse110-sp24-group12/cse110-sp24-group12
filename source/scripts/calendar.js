@@ -103,8 +103,8 @@ function formatButtons(inputArray, id) {
  */
 document.addEventListener('DOMContentLoaded', () => {
     // Set HTMLElements to elements in JS
-    const dashboardButton = document.getElementById('dashboardLink');
-    const helpButton = document.getElementById('helpButton');
+    // const dashboardButton = document.getElementById('dashboardLink');
+    // const helpButton = document.getElementById('helpButton');
 
     const monthSelect = document.getElementById('month');
     const yearInput = document.getElementById('year');
@@ -162,13 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 fill = day + formatButtons(memory, `extra.${month + 1}-${day}-${year}`);
             }
-            if(currentDay === day && (currentMonth) === month && currentYear === year){
-                console.log("Todays date is:", currentMonth+1, currentDay, currentYear);
+            if (currentDay === day && (currentMonth) === month && currentYear === year) {
+                console.log('Todays date is:', currentMonth + 1, currentDay, currentYear);
                 calendarHTML += `<td id='${month + 1}-${day}-${year}' class='mouseOut standardCell today'>${fill}</td>`;
-            }
-            else{
+            } else {
                 calendarHTML += `<td id='${month + 1}-${day}-${year}' class='mouseOut standardCell'>${fill}</td>`;
-
             }
             count += 1;
         }
@@ -189,13 +187,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Focus the element before simulating the click event
         element.focus();
 
-        console.log("We just attempted to click something!!!");
-        console.log("This is the element that we are clicking:", element);
+        console.log('We just attempted to click something!!!');
+        console.log('This is the element that we are clicking:', element);
         // Create a new mouse click event
         const mouseClickEvent = new MouseEvent('click', {
             bubbles: true,
             cancelable: true,
-            view: window
+            view: window,
         });
 
         // Dispatch the mouse click event on the element
@@ -203,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listener to capture keyboard events
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', (event) => {
         // Check if the key pressed is 'Ctrl + N'
         if (event.ctrlKey && event.key === 'n') {
             // Prevent the default behavior of the hotkey (e.g., browser history navigation)
@@ -268,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // clear out all old data
             markdownInput.value = null;
             title.value = null;
-            if(!bookmarked){
+            if (!bookmarked) {
                 bookmarkButton.className = 'bookmark';
             }
         } else {
@@ -277,14 +275,13 @@ document.addEventListener('DOMContentLoaded', () => {
             markdownInput.value = await window.api.getMarkDownEntryById(`${name}.${date}`);
             // title.value = event.target.innerHTML;
             title.value = replaceEntitiesWithQuotes(name);
-            //correctly assign bookmark value
-            let current = await window.api.getEntryByTitleAndDate([name, date]);
+            // correctly assign bookmark value
+            const current = await window.api.getEntryByTitleAndDate([name, date]);
             bookmarked = current.bookmarked;
-            if (bookmarked){
+            if (bookmarked) {
                 bookmarkButton.classList.add('filled');
-            }
-            else{
-                bookmarkButton.className = 'bookmark'
+            } else {
+                bookmarkButton.className = 'bookmark';
             }
         }
 
@@ -313,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         let canToggle = true;
-        bookmarkButton.addEventListener('click', function(event) {
+        bookmarkButton.addEventListener('click', () => {
             if (!canToggle) {
                 return; // Ignore the click if it's within the debounce period
             }
@@ -327,10 +324,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Toggle the filled class
             bookmarkButton.classList.toggle('filled');
             bookmarked = bookmarkButton.classList.contains('filled');
-            
-            console.log("The bookmark was just pressed~ Value of bookmarked:", bookmarked);
-        });
 
+            console.log('The bookmark was just pressed~ Value of bookmarked:', bookmarked);
+        });
 
         /**
         * Listens for click of the saveMarkDown button.
@@ -362,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         await window.api.addMarkdownEntry({
                             date,
                             title: title.value,
-                            bookmarked: bookmarked,
+                            bookmarked,
                             markdownContent: markdownInput.value,
                         });
                     } catch (error) {
@@ -383,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         await window.api.addMarkdownEntry({
                             date,
                             title: title.value,
-                            bookmarked: bookmarked,
+                            bookmarked,
                             markdownContent: markdownInput.value,
                         });
                     } catch (error) {
@@ -474,9 +470,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-    calendarContainer.addEventListener('click', (event) =>{
-        console.log("This is what was just clicked:", event);
-        if(event.target.classList.contains('standardCell')){
+    calendarContainer.addEventListener('click', (event) => {
+        console.log('This is what was just clicked:', event);
+        if (event.target.classList.contains('standardCell')) {
             openModal(event);
         }
     });
@@ -500,7 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
             target.classList.remove('mouseOut');
             target.classList.add('mouseIn');
             // When user clicks on specific day cell to open modal window
-            //target.addEventListener('click', (dayCell) => openModal(dayCell));
+            // target.addEventListener('click', (dayCell) => openModal(dayCell));
         } else if (target.classList.contains('extra')) {
             const extraButtons = document.getElementsByClassName('extra');
             // Event listeners for the "extra" buttons on each cell ("...")
@@ -567,9 +563,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    //Listens for when the dashboard button is clicked, to link to dashboard page
-    dashboardButton.addEventListener('click', (event)=>{
-        //Link to dashboard here
-    });
-
+    // Listens for when the dashboard button is clicked, to link to dashboard page
+    // dashboardButton.addEventListener('click', (event) => {
+    //     // Link to dashboard here
+    // });
 });
