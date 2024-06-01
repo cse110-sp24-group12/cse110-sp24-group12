@@ -4,41 +4,27 @@ function init() {
     const alert = document.getElementById('strongPassword');
     const passwordPage = document.getElementById('passwordPage');
     const hint = document.getElementById('hint');
-    let password;
+    let oldPass;
     let pin;
     let rememberMe;
-    const handleButtonClick = () => {
-        if (button.textContent === 'Next') {
-            if (input.value.length >= 6) {
-                alert.style.color = 'transparent';
-                button.textContent = 'Create';
-                hint.textContent = 'Pin to help you find password';
-                password = input.value;
-                input.value = '';
-            } else {
-                alert.style.color = 'red';
-                alert.textContent = 'Password must be at least 6 characters long.';
-            }
-        } else if (button.textContent === 'Create') {
-            if (input.value.length < 6) {
-                alert.style.color = 'transparent';
-                alert.textContent = '';
-                pin = input.value;
-                rememberMe = false;
-                const newPass = window.api.encryptData(password);
-                console.log(newPass);
-                const data = {
-                    newPass,
-                    pin,
-                    rememberMe,
-                };
-                window.api.writePassword(JSON.stringify(data));
-                passwordPage.click();
-            } else {
-                alert.style.color = 'red';
-                alert.textContent = 'Pin must be 6 characters or less.';
-            }
+    const handleButtonClick = async() => {
+        if (input.value.length >= 6) {
+            alert.style.color = 'transparent';
+            oldPass = input.value;
+            input.value = '';
+        } else {
+            alert.style.color = 'red';
+            alert.textContent = 'Password must be at least 6 characters long.';
         }
+        rememberMe = false;
+        const password = await window.api.encryptData(oldPass);
+        const data = {
+            password,
+            pin,
+            rememberMe,
+        };
+        window.api.writePassword(JSON.stringify(data));
+        passwordPage.click();
     };
 
     button.addEventListener('click', handleButtonClick);

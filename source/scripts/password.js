@@ -22,7 +22,8 @@ async function init() {
 
     // check if password matches
     const handleLogin = async () => {
-        if (password.value === jsonPassword.password) {
+        let newPass = await window.api.decryptData(jsonPassword.password);
+        if (password.value === newPass) {
             homePage.click();
             const rememberMe = rememberCheckbox.checked;
             jsonPassword.rememberMe = rememberMe; // Update the JSON object
