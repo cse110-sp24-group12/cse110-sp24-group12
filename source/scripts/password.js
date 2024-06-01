@@ -2,7 +2,6 @@ async function init() {
     // check for password
     const button = document.querySelector('button');
     const password = document.getElementById('password');
-    const homePage = document.getElementById('back');
     const createPassword = document.getElementById('createPassword');
     const alert = document.getElementById('invalidPassword');
     const rememberCheckbox = document.getElementById('rememberMe');
@@ -17,16 +16,16 @@ async function init() {
     }
 
     if (jsonPassword.rememberMe === true) {
-        homePage.click();
+        window.api.loadHtmlFile('calendar.html');
     }
 
     // check if password matches
     const handleLogin = async () => {
-        let newPass = await window.api.decryptData(jsonPassword.password);
+        const newPass = await window.api.decryptData(jsonPassword.password);
         if (password.value === newPass) {
-            homePage.click();
             const rememberMe = rememberCheckbox.checked;
             jsonPassword.rememberMe = rememberMe; // Update the JSON object
+            window.api.loadHtmlFile('calendar.html');
 
             // Save the updated JSON object back to the file
             await window.api.writePassword(JSON.stringify(jsonPassword));

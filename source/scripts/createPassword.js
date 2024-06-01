@@ -3,11 +3,11 @@ function init() {
     const input = document.getElementById('password');
     const alert = document.getElementById('strongPassword');
     const passwordPage = document.getElementById('passwordPage');
-    const hint = document.getElementById('hint');
+
     let oldPass;
     let pin;
     let rememberMe;
-    const handleButtonClick = async() => {
+    const handleButtonClick = async () => {
         if (input.value.length >= 6) {
             alert.style.color = 'transparent';
             oldPass = input.value;
