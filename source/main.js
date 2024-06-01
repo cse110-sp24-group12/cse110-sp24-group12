@@ -244,11 +244,25 @@ ipcMain.handle('update-markdown-entry', async (event, arg) => {
         fs.writeFileSync(entries[entryIndex].fileName, arg.markdownContent, 'utf-8');
     }
 });
+
+const encryptData = (data) => {
+    /*
+    var CryptoJS = require("crypto-js");
+    var ciphertext = CryptoJS.AES.encrypt(data, '12').toString();
+    return ciphertext;
+    */
+   return 1234;
+}
+
+ipcMain.handle('encrypt-data', (event,arg) => {
+   return encryptData(arg);
+});
+
 /**
  * write-password - Writes password and backup pin to the password.json file
  * @param {string} arg - String for the password
  * @param {string} arg - String for backup pin
- * input: {"password":"1234556","pin":"1234"}
+ * input: {"password":"1234556","pin":"1234",rememberMe:False}
  */
 ipcMain.handle('write-password', (event, args) => {
     try {
@@ -264,7 +278,7 @@ ipcMain.handle('write-password', (event, args) => {
  * The JSON string typically contains `password` and `pin` properties.
  * @returns {string} returns.password - The password.
  * @returns {string} returns.pin - The pin.
- * return example: {"password":"1234556","pin":"1234"}
+ * return example: {"password":"1234556","pin":"1234", rememberMe:False}
  */
 ipcMain.handle('read-password', async () => {
     try {

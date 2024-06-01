@@ -25,8 +25,10 @@ function init() {
                 alert.textContent = '';
                 pin = input.value;
                 rememberMe = false;
+                const newPass = window.api.encryptData(password);
+                console.log(newPass);
                 const data = {
-                    password,
+                    newPass,
                     pin,
                     rememberMe,
                 };
