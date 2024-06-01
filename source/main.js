@@ -4,6 +4,7 @@ import fs from 'fs';
 import markdown from 'markdown-it';
 import taskLists from 'markdown-it-task-lists';
 import hljs from 'highlight.js';
+import CryptoJS from 'crypto-js';
 
 let win;
 
@@ -378,16 +379,24 @@ ipcMain.handle('update-markdown-entry', async (event, arg) => {
 });
 
 const encryptData = (data) => {
-    /*
-    var CryptoJS = require("crypto-js");
     var ciphertext = CryptoJS.AES.encrypt(data, '12').toString();
     return ciphertext;
-    */
-   return 1234;
+
 }
 
-ipcMain.handle('encrypt-data', (event,arg) => {
+ipcMain.handle('encrypt-data', async (event,arg) => {
    return encryptData(arg);
+});
+
+const decryptData = (data) => {
+    var bytes  = CryptoJS.AES.decrypt(data, '12');
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+    return originalText;
+
+}
+
+ipcMain.handle('decrypt-data', async (event,arg) => {
+   return decryptData(arg);
 });
 
 /**
