@@ -16,10 +16,10 @@ async function init() {
         createPassword.textContent = 'Create Password';
     }
 
-    if(jsonPassword.rememberMe === true) {
+    if (jsonPassword.rememberMe === true) {
         homePage.click();
     }
-    
+
     // check if password matches
     const handleLogin = async () => {
         if (password.value === jsonPassword.password) {
@@ -29,14 +29,13 @@ async function init() {
 
             // Save the updated JSON object back to the file
             await window.api.writePassword(JSON.stringify(jsonPassword));
-
         } else {
             alert.style.color = 'red';
         }
     };
-    
+
     button.addEventListener('click', handleLogin);
-    
+
     password.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
             handleLogin();
