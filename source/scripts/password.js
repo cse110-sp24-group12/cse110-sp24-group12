@@ -10,6 +10,12 @@ async function init() {
     const jsonPasswordFile = await window.api.readPassword('');
     const jsonPassword = JSON.parse(jsonPasswordFile);
 
+    if (jsonPasswordFile !== '{}') {
+        createPassword.textContent = '';
+    } else {
+        createPassword.textContent = 'Create Password';
+    }
+
     if(jsonPassword.rememberMe === true) {
         homePage.click();
     }
