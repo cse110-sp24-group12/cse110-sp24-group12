@@ -21,11 +21,11 @@ test.describe('Playwright Testing', () => {
     test('First link should be Calendar', async () => {
         const firstLink = await window.$('a');
         const linkText = await firstLink.textContent();
-        expect(linkText).toBe('Calendar');
+        expect(linkText).toBe('Create Password');
     });
 
-    test('have 5 <a> tags', async () => {
+    test('have 1 <a> tag for create password', async () => {
         const links = await window.$$('a');
-        expect(links).toHaveLength(5);
+        expect(links).toHaveLength(1);
     });
 });
