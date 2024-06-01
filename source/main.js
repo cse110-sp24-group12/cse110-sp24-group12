@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import fs from 'fs';
 import markdown from 'markdown-it';
+import taskLists from 'markdown-it-task-lists';
 import hljs from 'highlight.js';
 
 let win;
@@ -71,6 +72,7 @@ const renderMarkdownHelper = (markdownText) => {
                 return `<pre><code class="hljs">${md.utils.escapeHtml(code)}</code></pre>`;
             },
         });
+        md.use(taskLists)
         return md.render(markdownText);
     } catch (error) {
         console.error(error);
