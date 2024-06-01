@@ -37,4 +37,5 @@ contextBridge.exposeInMainWorld('api', {
   getEntryById: (args) => ipcRenderer.invoke('get-entry-by-id', args),
   addMarkdownEntry: (args) => ipcRenderer.invoke('add-markdown-entry', args),
   updateMarkdownEntry: (args) => ipcRenderer.invoke('update-markdown-entry', args),
+  loadHtmlFile: (args) => ipcRenderer.invoke('load-html-file', args),
 });
