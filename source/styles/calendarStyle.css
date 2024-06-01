@@ -11,6 +11,14 @@ body{
   radial-gradient(464.91% 342.31% at 39.13% 24.61%, rgba(223, 178, 111, 0.00) 12%, #D5AC57 29.72%),
   linear-gradient(220deg, rgba(40, 26, 77, 0.30), rgba(40, 26, 77, 0.30));
 }
+button{
+  color: white;
+  /* background-color:#887244; */
+  background-color:#1e7394;
+  font-family: Inter;
+  border-style: none;
+  border-radius: 10px;
+}
 
 /* NAVBAR AND CONTENTS */
 #navBar {
@@ -27,18 +35,28 @@ body{
 }
 #navBarLeftAlign{
   flex: 1;
+  height: 100%;
 }
 #navBarRightAlign{
-  flex:1;
-} 
-#backLink {
-  font-size: 20px; 
-  text-decoration: none; 
-  padding-right: 50%;
+  flex: 1;
+  height: 100%;
+  text-align: right;
 }
-#centeredTitle {
-  text-align: center; 
-  margin: 0 auto; 
+.navButton{
+  flex:1;
+  height: 40px;
+  border-radius: 25px;
+}
+#dashboardLink{
+  /* background-color: green; */
+}
+#threeLines{
+  width: 20%;
+  height: auto;
+  margin-right: 5px;
+}
+#helpButton{
+  width: 40px;
 }
 
 /* CALENDAR AND CONTENTS */
@@ -113,15 +131,20 @@ th{
   text-align: center;
   vertical-align: top;
 }
-.entryButton{
+.entryButton, .extra{
   color: white;
   font-family: Inter;
   min-width: 100%;
   background-color: #887244;
   padding: 2px;  
-  border:none;
-  border-radius: 3px;
+  border:solid;
+  border-width: 2px;
+  border-color:rgba(73, 65, 79, 1);
+  border-radius: 5px;
   box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.25);
+}
+.entryButton:hover, .extra:hover{
+  background-color: #745e2f;
 }
 .hovered {
   background-color: #e6e6e6;

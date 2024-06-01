@@ -103,11 +103,15 @@ function formatButtons(inputArray, id) {
  */
 document.addEventListener('DOMContentLoaded', () => {
     // Set HTMLElements to elements in JS
+    const dashboardButton = document.getElementById('dashboardLink');
+    const helpButton = document.getElementById('helpButton');
+
     const monthSelect = document.getElementById('month');
     const yearInput = document.getElementById('year');
     const calendarContainer = document.getElementById('calendar');
     const clearDataButton = document.getElementById('clearBtn');
     const entryButtons = document.getElementsByClassName('entryButton');
+
     // Set current month and year as initial values
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth(); // Month is zero-based
@@ -489,4 +493,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    //Listens for when the dashboard button is clicked, to link to dashboard page
+    dashboardButton.addEventListener('click', (event)=>{
+        //Link to dashboard here
+    });
+
 });
