@@ -72,7 +72,7 @@ const renderMarkdownHelper = (markdownText) => {
                 return `<pre><code class="hljs">${md.utils.escapeHtml(code)}</code></pre>`;
             },
         });
-        md.use(taskLists)
+        md.use(taskLists);
         return md.render(markdownText);
     } catch (error) {
         console.error(error);
