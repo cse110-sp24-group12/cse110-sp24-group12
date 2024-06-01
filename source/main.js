@@ -23,7 +23,7 @@ const createWindow = () => {
         resizable: true,
     });
 
-    win.loadFile('index.html');
+    win.loadFile('password.html');
     win.maximize();
 };
 
@@ -79,6 +79,21 @@ const renderMarkdownHelper = (markdownText) => {
         return '';
     }
 };
+
+/**
+ * load-html-file - Load an HTML file into the main window.
+ * @param {string} arg - The path to the HTML file. It should have a .html extension.
+ * @returns {void}
+ */
+ipcMain.handle('load-html-file', async (event, arg) => {
+    const regex = /\.html$/i;
+
+    if (regex.test(arg)) {
+        win.loadFile(arg);
+    } else {
+        console.error('Can\'t Load HTML File: The file must have an .html extension.');
+    }
+});
 
 /**
  * render-markdown - Render the markdown text from a file into HTML.
