@@ -1,9 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import fs from 'fs';
-import { v4 } from 'uuid';
-
 import markdown from 'markdown-it';
+import taskLists from 'markdown-it-task-lists';
 import hljs from 'highlight.js';
 
 let win;
@@ -23,7 +22,7 @@ const createWindow = () => {
         resizable: true,
     });
 
-    win.loadFile('index.html');
+    win.loadFile('password.html');
     win.maximize();
 };
 
@@ -73,12 +72,28 @@ const renderMarkdownHelper = (markdownText) => {
                 return `<pre><code class="hljs">${md.utils.escapeHtml(code)}</code></pre>`;
             },
         });
+        md.use(taskLists);
         return md.render(markdownText);
     } catch (error) {
         console.error(error);
         return '';
     }
 };
+
+/**
+ * load-html-file - Load an HTML file into the main window.
+ * @param {string} arg - The path to the HTML file. It should have a .html extension.
+ * @returns {void}
+ */
+ipcMain.handle('load-html-file', async (event, arg) => {
+    const regex = /\.html$/i;
+
+    if (regex.test(arg)) {
+        win.loadFile(arg);
+    } else {
+        console.error('Can\'t Load HTML File: The file must have an .html extension.');
+    }
+});
 
 /**
  * render-markdown - Render the markdown text from a file into HTML.
@@ -148,16 +163,131 @@ const writeEntriesJSONFile = (entries) => {
     }
 };
 
-/**
- * get-entries-for-month - Get all the entries for a given month.
- * @param {string} arg - The year and month to get the entries for.
- * @returns {array} The entries for the given month.
- * @example
- * const entries = await window.api.getEntriesForMonth('2022-01');
- */
-ipcMain.handle('get-entries-for-month', async (event, arg) => {
+// /**
+//  * get-entries-on-date - Get an array of entries by their date.
+//  * @param {string} arg - The date of the entry.
+//  * @returns {object} The entry with the given date or null if the entry doesn't exist.
+//  * @example
+//  * const entry = await window.api.getAllEntryByDate('1');
+//  */
+ipcMain.handle('get-entries-on-date', async (event, arg) => {
     const entries = readEntriesJSONFile();
-    return entries.filter((entry) => entry.date.startsWith(arg));
+    const filtered = entries.filter((entry) => entry.date === arg);
+    if (filtered.length === 0) {
+        return [];
+    }
+    return filtered;
+});
+
+// /**
+//  * get-entry-by-id - Get an entry by its id.
+//  * @param {string} arg - The id of the entry.
+//  * @returns {object} The entry with the given id or null if the entry doesn't exist.
+//  * @example
+//  * const entry = await window.api.getEntryById('1');
+//  */
+// ipcMain.handle('get-entry-by-id', async (event, arg) => {
+//     const entries = readEntriesJSONFile();
+//     const filtered = entries.filter((entry) => entry.id === arg);
+//     if (filtered.length > 0) {
+//         return filtered[0];
+//     }
+//     return null;
+// });
+
+/**
+ * get-entry-by-title-and-date - Get an entry by its title and date.
+ * @param {array} arg - An array with the title and date in that order [title, date]
+ * @returns {object|null} The entry with the given title and date or null if it doesnt exist
+ * @example
+ * const entry = await window.api.getEntryByTitleAndDate('1');
+ */
+ipcMain.handle('get-entry-by-title-and-date', async (event, arg) => {
+    const [name, date] = arg;
+    const entries = readEntriesJSONFile();
+    const filtered = entries.filter((entry) => entry.title === name && entry.date === date);
+    if (filtered.length > 0) {
+        return filtered[0];
+    }
+    return null;
+});
+
+// Function to delete a file
+function deleteFile(filePath) {
+    // Check if the file exists
+    if (fs.existsSync(filePath)) {
+        // Delete the file
+        fs.unlink(filePath, (err) => {
+            if (err) {
+                console.error(`Error deleting file: ${err}`);
+            } else {
+                console.log(`File deleted successfully: ${filePath}`);
+            }
+        });
+    } else {
+        console.log(`File not found: ${filePath}`);
+    }
+}
+
+/**
+ * delete-entry-by-title-and-date - delete an entry by its title and date.
+ * @param {array} arg - An array with the title and date in that order [title, date]
+ * @returns {object} true if we were able to delete it, false if it failed
+ * @example
+ * const entry = await window.api.deleteEntryByTitleAndDate(name, date);
+ */
+ipcMain.handle('delete-entry-by-title-and-date', async (event, arg) => {
+    const [name, date] = arg;
+    const entries = readEntriesJSONFile();
+    const oldID = `${name}.${date}`;
+    const arrayWithoutElement = entries.filter(
+        (entry) => !(entry.title === name && entry.date === date),
+    );
+    if (arrayWithoutElement.length < entries.length) {
+        writeEntriesJSONFile(arrayWithoutElement);
+        deleteFile(`data/${oldID}.md`);
+        return true;
+    }
+    return false;
+});
+
+// Function to ensure the directory exists
+async function ensureDirectoryExists(dirPath) {
+    try {
+        await fs.promises.mkdir(dirPath, { recursive: true });
+        console.log(`Directory ensured: ${dirPath}`);
+    } catch (err) {
+        console.error(`Error ensuring directory exists: ${err}`);
+    }
+}
+function deleteDirectoryContents(directoryPath) {
+    fs.readdirSync(directoryPath).forEach((file) => {
+        const filePath = path.join(directoryPath, file);
+        if (fs.lstatSync(filePath).isDirectory()) {
+            deleteDirectoryContents(filePath); // Recursively delete subdirectories
+            fs.rmdirSync(filePath); // Remove the subdirectory itself
+        } else {
+            fs.unlinkSync(filePath); // Delete file
+        }
+    });
+}
+// Function to write an empty JSON array to a new file
+async function createEmptyJsonFile(filePath) {
+    const emptyArrayContent = '[]';
+    try {
+        await fs.promises.writeFile(filePath, emptyArrayContent);
+        console.log(`File created and written to successfully: ${filePath}`);
+    } catch (err) {
+        console.error(`Error writing to file: ${err}`);
+    }
+}
+
+ipcMain.handle('clear-entries', async () => {
+    const dirPath = 'data';
+    const filePath = path.join(dirPath, 'entries.json'); // Ensure this points to a file, not a directory
+    await ensureDirectoryExists(dirPath);
+    await deleteDirectoryContents(dirPath);
+    await createEmptyJsonFile(filePath);
 });
 
 /**
@@ -193,8 +323,8 @@ ipcMain.handle('get-entry-by-id', async (event, arg) => {
  */
 ipcMain.handle('add-markdown-entry', async (event, arg) => {
     const entries = readEntriesJSONFile();
-
-    const newId = v4();
+    console.log('We just added an entry!');
+    const newId = `${arg.title}.${arg.date}`;// may also use v4() to get random id's
     const newEntry = {
         id: newId,
         date: arg.date,
@@ -208,6 +338,8 @@ ipcMain.handle('add-markdown-entry', async (event, arg) => {
     fs.writeFileSync(newEntry.fileName, arg.markdownContent, 'utf-8');
     writeEntriesJSONFile(entries);
 });
+
+ipcMain.handle('get-markdown-entry-by-id', async (event, arg) => fs.readFileSync(`./data/${arg}.md`, 'utf-8'));
 
 /**
  * update-markdown-entry - Update an existing markdown entry.
