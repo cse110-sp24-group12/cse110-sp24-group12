@@ -4,6 +4,7 @@ import fs from 'fs';
 import markdown from 'markdown-it';
 import taskLists from 'markdown-it-task-lists';
 import hljs from 'highlight.js';
+import CryptoJS from 'crypto-js';
 
 let win;
 
@@ -376,11 +377,27 @@ ipcMain.handle('update-markdown-entry', async (event, arg) => {
         fs.writeFileSync(entries[entryIndex].fileName, arg.markdownContent, 'utf-8');
     }
 });
+
+const encryptData = (data) => {
+    const ciphertext = CryptoJS.AES.encrypt(data, '12').toString();
+    return ciphertext;
+};
+
+ipcMain.handle('encrypt-data', async (event, arg) => encryptData(arg));
+
+const decryptData = (data) => {
+    const bytes = CryptoJS.AES.decrypt(data, '12');
+    const originalText = bytes.toString(CryptoJS.enc.Utf8);
+    return originalText;
+};
+
+ipcMain.handle('decrypt-data', async (event, arg) => decryptData(arg));
+
 /**
  * write-password - Writes password and backup pin to the password.json file
  * @param {string} arg - String for the password
  * @param {string} arg - String for backup pin
- * input: {"password":"1234556","pin":"1234"}
+ * input: {"password":"1234556","pin":"1234",rememberMe:False}
  */
 ipcMain.handle('write-password', (event, args) => {
     try {
@@ -396,7 +413,7 @@ ipcMain.handle('write-password', (event, args) => {
  * The JSON string typically contains `password` and `pin` properties.
  * @returns {string} returns.password - The password.
  * @returns {string} returns.pin - The pin.
- * return example: {"password":"1234556","pin":"1234"}
+ * return example: {"password":"1234556","pin":"1234", rememberMe:False}
  */
 ipcMain.handle('read-password', async () => {
     try {

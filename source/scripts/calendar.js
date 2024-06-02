@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set HTMLElements to elements in JS
     // const dashboardButton = document.getElementById('dashboardLink');
     // const helpButton = document.getElementById('helpButton');
+
     const yearInput = document.getElementById('year');
     const calendarContainer = document.getElementById('calendar');
     const clearDataButton = document.getElementById('clearBtn');
@@ -200,7 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dispatch the mouse click event on the element
         element.dispatchEvent(mouseClickEvent);
     }
-
 
     /**
      * openModal - will open up a modal window with text box and title box
@@ -474,6 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
             openModal(event);
         }
     });
+  
     /**
     * Listens for mouseover of elements in the calendar.
     *
@@ -606,8 +607,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
-
 
     // Listens for when the dashboard button is clicked, to link to dashboard page
     // dashboardButton.addEventListener('click', (event) => {
