@@ -472,7 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     calendarContainer.addEventListener('click', (event) => {
         console.log('This is what was just clicked:', event);
-        if(event.target.classList.contains('standardCell') || event.target.classList.contains('entryButton')){
+        if (event.target.classList.contains('standardCell') || event.target.classList.contains('entryButton')) {
             openModal(event);
         }
     });
