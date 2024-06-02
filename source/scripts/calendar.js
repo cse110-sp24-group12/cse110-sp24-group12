@@ -121,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set initial values for month and year inputs
     monthSelect.value = currentMonth.toString();
     yearInput.value = currentYear.toString();
-    
 
     /**
      * generateCalendar - generate the Calendar by inserting HTML into main.
@@ -295,13 +294,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 generateCalendar();
             });
         }
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' || event.key === 'Esc') {
+        document.addEventListener('keydown', (pressedKey) => {
+            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
                 // Call a function or execute an action when the Esc key is pressed
                 modal.style.display = 'none';
             }
         });
-        
+
         // When the user clicks on <span> (x), close the modal
         span.onclick = () => {
             modal.style.display = 'none';
@@ -474,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
             openModal(event);
         }
     });
-  
+
     /**
     * Listens for mouseover of elements in the calendar.
     *
@@ -511,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event listener to capture keyboard events
     document.addEventListener('keydown', (event) => {
-        console.log("A key was pressed down!");
+        console.log('A key was pressed down!');
         // Check if the key pressed is 'Ctrl + N'
         if ((event.ctrlKey || event.metaKey) && event.key === 'n') {
             // Prevent the default behavior of the hotkey (e.g., browser history navigation)
@@ -520,37 +519,34 @@ document.addEventListener('DOMContentLoaded', () => {
             simulateMouseClick(document.getElementsByClassName('today')[0]);
         }
         // Check if arrow key was pressed, will change month based on this
-        if(event.key === 'ArrowRight' && document.getElementById('myModal').style.display === 'none'){
-            //change month to the next month
-            console.log("We should increase month");
-            if(monthSelect.value < 11){
-                monthSelect.value =  parseInt(monthSelect.value, 10) + 1;
+        if (event.key === 'ArrowRight' && document.getElementById('myModal').style.display === 'none') {
+            // change month to the next month
+            console.log('We should increase month');
+            if (monthSelect.value < 11) {
+                monthSelect.value = parseInt(monthSelect.value, 10) + 1;
                 generateCalendar();
                 console.log(monthSelect.value);
-            }
-            else{
+            } else {
                 monthSelect.value = 0;
                 yearInput.value = parseInt(yearInput.value, 10) + 1;
             }
         }
         // Check if arrow key was pressed, will change month based on this
-        if(event.key === 'ArrowLeft' && document.getElementById('myModal').style.display === 'none'){
-            //change month to the next month
-            console.log("We should decrease month");
-            if(monthSelect.value > 0){
+        if (event.key === 'ArrowLeft' && document.getElementById('myModal').style.display === 'none') {
+            // change month to the next month
+            console.log('We should decrease month');
+            if (monthSelect.value > 0) {
                 monthSelect.value -= 1;
                 generateCalendar();
                 console.log(monthSelect.value);
-            }
-            else{
+            } else {
                 monthSelect.value = 11;
                 yearInput.value = parseInt(yearInput.value, 10) - 1;
             }
-
         }
-        //ctrl d or cmd d 
-        if((event.ctrlKey || event.metaKey) && event.key === 'd'){
-            //simulate pressing the dashboardLink button
+        // ctrl d or cmd d
+        if ((event.ctrlKey || event.metaKey) && event.key === 'd') {
+            // simulate pressing the dashboardLink button
             simulateMouseClick(document.getElementById('dashboardLink'));
         }
     });
