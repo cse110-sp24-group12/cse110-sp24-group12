@@ -53,7 +53,7 @@ class TaskListWidget extends HTMLElement {
                 this.filePath = entry.fileName;
                 this.tasks = JSON.parse(tasks);
                 console.log(this.tasks);
-                console.log("Finish reading tasks");
+                console.log('Finish reading tasks');
                 this.renderTasks();
             } catch (error) {
                 console.log(entryId);
@@ -95,28 +95,28 @@ class TaskListWidget extends HTMLElement {
 
         // Here is the priority part
         const priority = document.createElement('img');
-        //priority.innerHTML = ` : ${task.priority}`;
-        //console.log(task.priority)
+        // priority.innerHTML = ` : ${task.priority}`;
+        // console.log(task.priority)
         priority.style.marginRight = '10px';
         switch (task.priority) {
-            case 4:
-                priority.src = './images/priorityLevel4.png';
-                priority.alt = 'Critical';
-                break;
-            case 3:
-                priority.src = './images/priorityLevel3.png';
-                priority.alt = 'High';
-                break;
-            case 2:
-                priority.src = './images/priorityLevel2.png';
-                priority.alt = 'Medium';
-                break;
-            case 1:
-                priority.src = './images/priorityLevel1.png';
-                priority.alt = 'Low';
-                break;
-            default:
-                console.log("Image error")
+        case 4:
+            priority.src = './images/priorityLevel4.png';
+            priority.alt = 'Critical';
+            break;
+        case 3:
+            priority.src = './images/priorityLevel3.png';
+            priority.alt = 'High';
+            break;
+        case 2:
+            priority.src = './images/priorityLevel2.png';
+            priority.alt = 'Medium';
+            break;
+        case 1:
+            priority.src = './images/priorityLevel1.png';
+            priority.alt = 'Low';
+            break;
+        default:
+            console.log('Image error');
         }
 
         // Here is the edit button pack
@@ -155,7 +155,7 @@ class TaskListWidget extends HTMLElement {
         const priorityInput = document.getElementById('priorityInput');
 
         priorityInput.addEventListener('change', function () {
-            if (this.value === "") {
+            if (this.value === '') {
                 this.style.color = '#888'; // Placeholder color
             } else {
                 this.style.color = '#000'; // Selected option color
@@ -163,7 +163,7 @@ class TaskListWidget extends HTMLElement {
         });
 
         // Initial check to set the correct color
-        if (priorityInput.value === "") {
+        if (priorityInput.value === '') {
             priorityInput.style.color = '#888'; // Placeholder color
         } else {
             priorityInput.style.color = '#000'; // Selected option color
@@ -228,7 +228,6 @@ class TaskListWidget extends HTMLElement {
         console.log(this.tasks);
     }
 
-
     /**
      * Add a task to the task list and update the local storage
      * @param {*} taskText - the description of the task that is being added
@@ -269,7 +268,7 @@ class TaskListWidget extends HTMLElement {
             if (taskText !== '') {
                 this.addTaskToList(taskText, taskPriority, false);
                 taskInput.value = '';
-                priorityInput.value = "";
+                priorityInput.value = '';
                 priorityInput.style.color = '#888';
             } else {
                 alert('Please enter a task.');

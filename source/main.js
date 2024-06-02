@@ -64,7 +64,7 @@ const renderMarkdownHelper = (markdownText) => {
                 if (lang && hljs.getLanguage(lang)) {
                     try {
                         return `<pre><code class="hljs">${hljs.highlight(code, { language: lang, ignoreIllegals: true }).value
-                            }</code></pre>`;
+                        }</code></pre>`;
                     } catch (error) {
                         console.error(error);
                     }
