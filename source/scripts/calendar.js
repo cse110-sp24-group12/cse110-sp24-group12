@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('myModal');
         const span = document.getElementById('closeModal');
         const text = document.getElementById('modalTxt');
-        const saveMarkDown = document.getElementById('save-markdown');
+        const saveMarkDown = document.getElementById('saveMarkdown');
         const markdownInput = document.getElementById('markdown');
         const title = document.getElementById('entryTitle');
         const bookmarkButton = document.getElementById('bookmarkButton');
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         text.innerHTML = '';
         document.getElementById('displayDate').innerHTML = formatDate(date);
         if (name != null) {
-            text.innerHTML += "<button id='deleteEntryButton'>Delete Entry</button>";// add class here for styling?
+            text.innerHTML += "<button id='deleteEntryButton' class='modalButton' >Delete Entry</button>";// add class here for styling?
             const deleteEntryButton = document.getElementById('deleteEntryButton');
             deleteEntryButton.addEventListener('click', async () => {
             // should add a confirm choice to make sure it wasnt misclick
@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
         *
         * @type {HTMLElement} - the target of the event, being the save button
         * @listens onclick
-        *                  When a user clicks the "Save as Markdown" button,
+        *                  When a user clicks the "Save Entry" button,
         *                  the popup closees, adds the new entry to storage, and
         *                  calls generateCalendar() to update it.
         */
