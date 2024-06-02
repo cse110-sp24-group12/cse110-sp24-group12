@@ -106,11 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // const dashboardButton = document.getElementById('dashboardLink');
     // const helpButton = document.getElementById('helpButton');
 
-    const monthSelect = document.getElementById('month');
     const yearInput = document.getElementById('year');
     const calendarContainer = document.getElementById('calendar');
     const clearDataButton = document.getElementById('clearBtn');
     const entryButtons = document.getElementsByClassName('entryButton');
+    const monthSelect = document.getElementById('month');
+    monthSelect.focus();
 
     // Set current month and year as initial values
     const currentDate = new Date();
@@ -199,17 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dispatch the mouse click event on the element
         element.dispatchEvent(mouseClickEvent);
     }
-
-    // Event listener to capture keyboard events
-    document.addEventListener('keydown', (event) => {
-        // Check if the key pressed is 'Ctrl + N'
-        if (event.ctrlKey && event.key === 'n') {
-            // Prevent the default behavior of the hotkey (e.g., browser history navigation)
-            event.preventDefault();
-            // Call the function to execute the action
-            simulateMouseClick(document.getElementsByClassName('today')[0]);
-        }
-    });
 
     /**
      * openModal - will open up a modal window with text box and title box
@@ -304,6 +294,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 generateCalendar();
             });
         }
+        document.addEventListener('keydown', (pressedKey) => {
+            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
+                // Call a function or execute an action when the Esc key is pressed
+                modal.style.display = 'none';
+            }
+        });
+
         // When the user clicks on <span> (x), close the modal
         span.onclick = () => {
             modal.style.display = 'none';
@@ -476,6 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
             openModal(event);
         }
     });
+
     /**
     * Listens for mouseover of elements in the calendar.
     *
@@ -507,6 +505,49 @@ document.addEventListener('DOMContentLoaded', () => {
                     extraButtonClick.stopPropagation();
                 });
             }
+        }
+    });
+
+    // Event listener to capture keyboard events
+    document.addEventListener('keydown', (event) => {
+        console.log('A key was pressed down!');
+        // Check if the key pressed is 'Ctrl + N'
+        if ((event.ctrlKey || event.metaKey) && event.key === 'n') {
+            // Prevent the default behavior of the hotkey (e.g., browser history navigation)
+            event.preventDefault();
+            // Call the function to execute the action
+            simulateMouseClick(document.getElementsByClassName('today')[0]);
+        }
+        // Check if arrow key was pressed, will change month based on this
+        if (event.key === 'ArrowRight' && document.getElementById('myModal').style.display === 'none') {
+            // change month to the next month
+            console.log('We should increase month');
+            if (monthSelect.value < 11) {
+                monthSelect.value = parseInt(monthSelect.value, 10) + 1;
+                generateCalendar();
+                console.log(monthSelect.value);
+            } else {
+                monthSelect.value = 0;
+                yearInput.value = parseInt(yearInput.value, 10) + 1;
+            }
+        }
+        // Check if arrow key was pressed, will change month based on this
+        if (event.key === 'ArrowLeft' && document.getElementById('myModal').style.display === 'none') {
+            // change month to the next month
+            console.log('We should decrease month');
+            if (monthSelect.value > 0) {
+                monthSelect.value -= 1;
+                generateCalendar();
+                console.log(monthSelect.value);
+            } else {
+                monthSelect.value = 11;
+                yearInput.value = parseInt(yearInput.value, 10) - 1;
+            }
+        }
+        // ctrl d or cmd d
+        if ((event.ctrlKey || event.metaKey) && event.key === 'd') {
+            // simulate pressing the dashboardLink button
+            simulateMouseClick(document.getElementById('dashboardLink'));
         }
     });
 
