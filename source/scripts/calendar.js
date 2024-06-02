@@ -605,7 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Listens for when the dashboard button is clicked, to link to dashboard page
-    dashboardButton.addEventListener('click', (event) => {
+    dashboardButton.addEventListener('click', () => {
         // Link to dashboard here
         window.api.loadHtmlFile('dashboard.html');
     });
