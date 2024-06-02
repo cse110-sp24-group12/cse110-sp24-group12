@@ -42,33 +42,33 @@
   <!-- The Modal -->
   <div id="myModal" class="modal">
     <!-- Modal content -->
-    <div class="modalContent">
-      <div class="topOfModal">
+    <div class="modalContent" >
+      <div id="topOfModal" class="modalBar">
         <p id="displayDate">Month day, year</p>
         <span id="closeModal" class="close">&times;</span>
       </div>
-      <div class="titleContainer">
-          <input id="entryTitle" type="text" class="entryTitle" placeholder="Enter your title here">
-          <button id="bookmarkButton" class="bookmark"></button>
+      <div id="modalTxt" class="modalBar" ></div>
+      <div id="titleContainer" class="modalBar" >
+          <input id="entryTitle" type="text" class="titleElement" placeholder="Enter your title here">
+          <button id="bookmarkButton" class="modalButton titleElement" ></button>
       </div>
-      <p id="modalTxt">Display Date here</p>
-      <div class="markdown-main-container">
+      <div id="markdown-main-container" class="modalBar" >
           <textarea id="markdown" class="markdownContainer" placeholder="Enter Markdown Entry Here!"></textarea>
           <div id="markdown-container"></div>
       </div>
-      <div class="saveButtonBox">
-          <button class="saveMarkdown" type="button" id="save-markdown">Save Entry</button>
+      <div id="saveButtonBox" class="modalBar" >
+          <button id="saveMarkdown" type="button" class="modalButton">Save Entry</button>
       </div>
     </div>
 </div>
 
   <!-- The Extra Modal -->
-  <div id="extraModal" class="extraModal">
+  <div id="extraModal" class="modal">
 
     <!-- Modal content -->
-    <div class="extraModalContent">
-      <span id = 'closeExtra' class="close">&times;</span>
-      <div id = 'extraButtons'></div>
+    <div id="extraModalContent" class="modalContent">
+      <span id='closeExtra' class="close">&times;</span>
+      <div id='extraButtons'></div>
       </div>
     </div>
 
