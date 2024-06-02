@@ -24,8 +24,8 @@ test.describe('Playwright Testing', () => {
         expect(linkText).toBe('Create Password');
     });
 
-    test('have 1 <a> tag for create password', async () => {
+    test('have 2 <a> tag for create password', async () => {
         const links = await window.$$('a');
-        expect(links).toHaveLength(1);
+        expect(links).toHaveLength(2);
     });
 });
