@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "id": "test.6-12-2024",
+        "date": "6-12-2024",
+        "fileName": "data/test.6-12-2024.md",
+        "title": "test",
+        "type": "markdown",
+        "bookmarked": true
+    }
+]
