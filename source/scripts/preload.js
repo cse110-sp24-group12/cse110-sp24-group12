@@ -49,5 +49,7 @@ contextBridge.exposeInMainWorld(
         writePassword: (args) => ipcRenderer.invoke('write-password', args),
         readPassword: (args) => ipcRenderer.invoke('read-password', args),
         loadHtmlFile: (args) => ipcRenderer.invoke('load-html-file', args),
+        encryptData: (arg) => ipcRenderer.invoke('encrypt-data', arg),
+        decryptData: (arg) => ipcRenderer.invoke('decrypt-data', arg),
     }
 );
