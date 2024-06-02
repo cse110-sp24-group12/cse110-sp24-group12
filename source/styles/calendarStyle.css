@@ -49,11 +49,14 @@ input{
   flex:1;
   height: 40px;
   border-radius: 20px;
-  font-weight:4px;
+  font-size: 18px;
 } 
 #threeLines{
   margin-right: 3px;
   width: 20%;
+}
+#fireSprite{
+  height: 50%;
 }
 #helpButton{
   width: 40px;
