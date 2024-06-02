@@ -1,3 +1,11 @@
+const dateConversion = (date) => {
+    const parts = date.split('-');
+    const month = parseInt(parts[1]);
+    const day = parseInt(parts[2]);
+    const year = parseInt(parts[0]);
+    return `${month}-${day}-${year}`;
+}
+
 (async () => {
     try {
         // Define the path to the JSON file
@@ -13,7 +21,7 @@
 
         const container = document.getElementById('graph-container');
         const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        const startDate = new Date('2024-05-01');
+        const startDate = new Date();
         const monthIndex = startDate.getMonth();
 
         // Loop through the days of May
@@ -21,8 +29,9 @@
             // Calculate the date for the current day
             const currentDate = new Date(startDate.getTime() + (i * 24 * 60 * 60 * 1000));
 
+            const comparisonDate = dateConversion(currentDate.toISOString().split('T')[0]);
             // Check if the day exists in the entries
-            const matchingEntries = entries.filter(entry => entry.date === currentDate.toISOString().split('T')[0]);
+            const matchingEntries = entries.filter(entry => entry.date === comparisonDate);
             const entryCount = matchingEntries.length;
 
             // Create a day square
