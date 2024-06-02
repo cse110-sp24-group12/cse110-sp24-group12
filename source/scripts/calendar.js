@@ -103,7 +103,7 @@ function formatButtons(inputArray, id) {
  */
 document.addEventListener('DOMContentLoaded', () => {
     // Set HTMLElements to elements in JS
-    // const dashboardButton = document.getElementById('dashboardLink');
+    const dashboardButton = document.getElementById('dashboardLink');
     // const helpButton = document.getElementById('helpButton');
 
     const yearInput = document.getElementById('year');
@@ -605,7 +605,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Listens for when the dashboard button is clicked, to link to dashboard page
-    // dashboardButton.addEventListener('click', (event) => {
-    //     // Link to dashboard here
-    // });
+    dashboardButton.addEventListener('click', () => {
+        // Link to dashboard here
+        window.api.loadHtmlFile('dashboard.html');
+    });
 });
