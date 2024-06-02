@@ -1,4 +1,3 @@
-
 (async () => {
     try {
         // Define the path to the JSON file
@@ -6,9 +5,11 @@
 
         // Read the JSON file
         const data = await window.api.readFile(jsonPath);
+        console.log('Raw data:', data);  // Debugging statement
 
         // Parse the JSON data
         const entries = JSON.parse(data);
+        console.log('Parsed entries:', entries);  // Debugging statement
 
         const container = document.getElementById('graph-container');
         const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -43,35 +44,40 @@
             container.appendChild(square);
         }
 
-        // Function to check entries for a given week range
-        function checkEntriesForWeek(startOfWeek, endOfWeek) {
-            let weekHasEntries = false;
-            entries.forEach(entry => {
-                const entryDate = new Date(entry.date);
-                if (entryDate >= startOfWeek && entryDate <= endOfWeek) {
-                    weekHasEntries = true;
-                }
-            });
-            return weekHasEntries;
-        }
+        // Function to calculate consecutive day streak
+        function calculateConsecutiveDayStreak(entries) {
+            if (entries.length === 0) return 0;
 
-        // Function to calculate current streak for the past 4 weeks
-        function calculateCurrentStreak(startDate) {
-            let currentStreak = 0;
-            for (let i = 0; i < 5; i++) {
-                const endOfWeek = new Date(startDate.getTime() - (i * 7 * 24 * 60 * 60 * 1000));
-                const startOfWeek = new Date(endOfWeek.getTime() - (6 * 24 * 60 * 60 * 1000));
-                if (checkEntriesForWeek(startOfWeek, endOfWeek)) {
+            // Sort entries by date
+            entries.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            let maxStreak = 0;
+            let currentStreak = 1;
+
+            for (let i = 1; i < entries.length; i++) {
+                const prevDate = new Date(entries[i - 1].date);
+                const currDate = new Date(entries[i].date);
+                const diffInDays = (currDate - prevDate) / (1000 * 60 * 60 * 24);
+
+                if (diffInDays === 1) {
                     currentStreak++;
                 } else {
-                    break;
+                    if (currentStreak > maxStreak) {
+                        maxStreak = currentStreak;
+                    }
+                    currentStreak = 1;
                 }
             }
-            return currentStreak;
+
+            // Check last streak
+            if (currentStreak > maxStreak) {
+                maxStreak = currentStreak;
+            }
+
+            return maxStreak;
         }
 
-        const today = new Date();
-        const currentStreak = calculateCurrentStreak(today);
+        const currentStreak = calculateConsecutiveDayStreak(entries);
         console.log('Calculated current streak:', currentStreak);  // Debugging statement
 
         // Update streak image based on the current streak length
@@ -85,25 +91,21 @@
 function updateStreakImage(streakLength) {
     const streakImage = document.getElementById('streakImage');
     let imagePath = '';
-    if(streakLength ==1){
-        imagePath = 'images/1is.png'
+    if (streakLength < 7) {
+        streakImage.style.display = 'none';
+        
+    } else if (streakLength < 14) {
+        imagePath = 'images/1is.png';
+    } else if (streakLength < 21) {
+        imagePath = 'images/2is.png';
+    } else if (streakLength < 28) {
+        imagePath = 'images/3is.png';
+    } else if (streakLength < 35) {
+        imagePath = 'images/4is.png';
+    } else {
+        imagePath = 'images/5is.png';
     }
-    else if(streakLength ==2){
-        imagePath = 'images/2is.png'
-    }
-    else if(streakLength ==3){
-        imagePath = 'images/3is.png'
-    }
-    else if(streakLength ==4){
-        imagePath = 'images/4is.png'
-    }
-    else {
-        imagePath = 'images/5is.png'
-    }
-
-  
 
     console.log('Setting image path to:', imagePath);  // Debugging statement
     streakImage.src = imagePath;
 }
-
