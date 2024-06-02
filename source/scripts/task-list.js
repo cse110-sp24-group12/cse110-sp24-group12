@@ -22,7 +22,7 @@ class TaskListWidget extends HTMLElement {
                         </div>
                         <div>
                             <select id="priorityInput">
-                                <option value="0">Select one</option>
+                                <option value="" disabled selected hidden>Priority Level</option>
                                 <option value="4">critical</option>
                                 <option value="3">high</option>
                                 <option value="2">medium</option>
@@ -36,6 +36,7 @@ class TaskListWidget extends HTMLElement {
                         <!-- Tasks will be added dynamically here -->
                     </div>
                 </div>`;
+        this.handlePlaceholder();
     }
 
     /**
@@ -71,10 +72,12 @@ class TaskListWidget extends HTMLElement {
      * @param {*} id - the id of the task(using like the index)
      */
     addTask(task, container, id) {
+        // create the container to store the whole stuff
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-item');
         taskContainer.style.marginBottom = '10px';
 
+        // Here is the checkbox part
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.checked = task.is_done || false;
@@ -84,14 +87,39 @@ class TaskListWidget extends HTMLElement {
             await this.updateTasks();
         });
 
+        // Here is the label part(task tittle)
         const titleText = document.createElement('label');
         titleText.innerHTML = task.title;
         titleText.setAttribute('for', `task${id}`);
         titleText.style.marginLeft = '10px';
 
-        const priority = document.createElement('h4');
-        priority.innerHTML = `Priority level: ${task.priority}`;
+        // Here is the priority part
+        const priority = document.createElement('img');
+        //priority.innerHTML = ` : ${task.priority}`;
+        //console.log(task.priority)
+        priority.style.marginRight = '10px';
+        switch (task.priority) {
+            case 4:
+                priority.src = './images/priorityLevel4.png';
+                priority.alt = 'Critical';
+                break;
+            case 3:
+                priority.src = './images/priorityLevel3.png';
+                priority.alt = 'High';
+                break;
+            case 2:
+                priority.src = './images/priorityLevel2.png';
+                priority.alt = 'Medium';
+                break;
+            case 1:
+                priority.src = './images/priorityLevel1.png';
+                priority.alt = 'Low';
+                break;
+            default:
+                console.log("Image error")
+        }
 
+        // Here is the edit button pack
         const editBtn = document.createElement('button');
         editBtn.innerHTML = 'Edit';
         editBtn.classList.add('edit-button');
@@ -99,6 +127,7 @@ class TaskListWidget extends HTMLElement {
             this.editForm(task, taskContainer, id);
         });
 
+        // Here is the delete button part
         const deleteBtn = document.createElement('button');
         deleteBtn.innerHTML = 'X';
         deleteBtn.classList.add('delete-button');
@@ -107,13 +136,38 @@ class TaskListWidget extends HTMLElement {
             this.tasks.splice(id, 1);
             await this.updateTasks();
         });
+
+        // Add the whole stuff to  the container
         taskContainer.appendChild(checkbox);
         taskContainer.appendChild(titleText);
         taskContainer.appendChild(priority);
         taskContainer.appendChild(editBtn);
         taskContainer.appendChild(deleteBtn);
 
+        // add a task list container to the whole container
         container.appendChild(taskContainer);
+    }
+
+    /**
+     * Handle the placeholder for priority level
+     */
+    handlePlaceholder() {
+        const priorityInput = document.getElementById('priorityInput');
+
+        priorityInput.addEventListener('change', function () {
+            if (this.value === "") {
+                this.style.color = '#888'; // Placeholder color
+            } else {
+                this.style.color = '#000'; // Selected option color
+            }
+        });
+
+        // Initial check to set the correct color
+        if (priorityInput.value === "") {
+            priorityInput.style.color = '#888'; // Placeholder color
+        } else {
+            priorityInput.style.color = '#000'; // Selected option color
+        }
     }
 
     /**
@@ -215,12 +269,16 @@ class TaskListWidget extends HTMLElement {
             if (taskText !== '') {
                 this.addTaskToList(taskText, taskPriority, false);
                 taskInput.value = '';
+                priorityInput.value = "";
+                priorityInput.style.color = '#888';
             } else {
                 alert('Please enter a task.');
             }
         });
 
         this.appendChild(tasklistContainer);
+
+        this.handlePlaceholder();
     }
 }
 

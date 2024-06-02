@@ -52,7 +52,7 @@ body {
 #taskInput {
     padding: 10px;
     margin-bottom: 10px;
-    border-radius: 15px;
+    border-radius: 12px;
     /* Rounded corners */
     border: 1px solid #ccc;
     /* Optional: Add a border */
@@ -65,17 +65,35 @@ body {
 #priorityInput {
     padding: 10px;
     margin-bottom: 10px;
-    border-radius: 15px;
+    border-radius: 12px;
     /* Rounded corners */
     border: 1px solid #ccc;
-    /* Optional: Add a border */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    /* Optional: Add an inset shadow for better appearance */
+    /* Border */
     font-size: 16px;
-    width: 100%;
+    width: 140%;
     max-width: 450px;
-    padding-left: 10px;
-    padding-right: 90px;
+    color: #888;
+    /* Default placeholder color */
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+#priorityInput:focus {
+    outline: none;
+    border-color: #666;
+    /* Change border color on focus */
+}
+
+#priorityInput option[disabled] {
+    color: #888;
+    /* Placeholder color */
+}
+
+#priorityInput option:not([disabled]) {
+    color: #000;
+    /* Normal options color */
 }
 
 #addBtn {
@@ -150,7 +168,9 @@ body {
 
 }
 
-h4 {
+.task-item img {
+    width: 20px;
+    height: 20px;
     margin-left: auto;
     margin-right: 10px;
 }
