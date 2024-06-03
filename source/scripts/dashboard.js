@@ -116,3 +116,15 @@ function updateStreakImage(streakLength) {
         console.error('An error occurred while reading the JSON file:', err);
     }
 })();
+
+const modal = document.getElementById('myModal');
+const img = document.getElementById('triggerPopup');
+const span = document.getElementsByClassName('close')[0];
+const container = document.querySelector('.container');
+
+// Listens for when the dashboard button is clicked, to link to dashboard page
+const dashboardButton = document.getElementById('dashboardLink');
+dashboardButton.addEventListener('click', () => {
+    // Link to dashboard here
+    window.api.loadHtmlFile('calendar.html');
+});

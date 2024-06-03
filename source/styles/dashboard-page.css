@@ -193,3 +193,62 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.help-section {
+    display: block; 
+    font-family: Inter;
+}
+
+.help-section b {
+    display: block;
+    font-size: 40px; 
+    padding-right: 40px;
+    margin-bottom: 10px; 
+    font-family: Inter;
+}
+
+.helpBox {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    mix-blend-mode: overlay;
+}
+
+/* NAVBAR AND CONTENTS */
+#navBar {
+    border-radius: 50px;
+    min-height: 60px;
+    border: none;
+    background: var(--primary-color);
+    box-shadow: 0px 5px 4px 0px var(--primary-shadow);
+    margin: 1%;
+    margin-inline: 2%;
+    padding-inline: 2%;
+    align-items: center;
+    display:flex;
+  }
+  #navBarLeftAlign{
+    flex: 1;
+    height: 100%;
+  }
+  #navBarRightAlign{
+    flex: 1;
+    height: 100%;
+    text-align: right;
+  }
+  .navButton{
+    flex:1;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 18px;
+  } 
+  #threeLines{
+    margin-right: 3px;
+    width: 20%;
+  }
+  #fireSprite{
+    height: 50%;
+  }
+  #helpButton{
+    width: 40px;
+  }
