@@ -103,14 +103,15 @@ function formatButtons(inputArray, id) {
  */
 document.addEventListener('DOMContentLoaded', () => {
     // Set HTMLElements to elements in JS
-    // const dashboardButton = document.getElementById('dashboardLink');
+    const dashboardButton = document.getElementById('dashboardLink');
     // const helpButton = document.getElementById('helpButton');
 
-    const monthSelect = document.getElementById('month');
     const yearInput = document.getElementById('year');
     const calendarContainer = document.getElementById('calendar');
     const clearDataButton = document.getElementById('clearBtn');
     const entryButtons = document.getElementsByClassName('entryButton');
+    const monthSelect = document.getElementById('month');
+    monthSelect.focus();
 
     // Set current month and year as initial values
     const currentDate = new Date();
@@ -200,17 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
         element.dispatchEvent(mouseClickEvent);
     }
 
-    // Event listener to capture keyboard events
-    document.addEventListener('keydown', (event) => {
-        // Check if the key pressed is 'Ctrl + N'
-        if (event.ctrlKey && event.key === 'n') {
-            // Prevent the default behavior of the hotkey (e.g., browser history navigation)
-            event.preventDefault();
-            // Call the function to execute the action
-            simulateMouseClick(document.getElementsByClassName('today')[0]);
-        }
-    });
-
     /**
      * openModal - will open up a modal window with text box and title box
      * @function
@@ -257,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('myModal');
         const span = document.getElementById('closeModal');
         const text = document.getElementById('modalTxt');
-        const saveMarkDown = document.getElementById('save-markdown');
+        const saveMarkDown = document.getElementById('saveMarkdown');
         const markdownInput = document.getElementById('markdown');
         const title = document.getElementById('entryTitle');
         const bookmarkButton = document.getElementById('bookmarkButton');
@@ -291,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         text.innerHTML = '';
         document.getElementById('displayDate').innerHTML = formatDate(date);
         if (name != null) {
-            text.innerHTML += "<button id='deleteEntryButton'>Delete Entry</button>";// add class here for styling?
+            text.innerHTML += "<button id='deleteEntryButton' class='modalButton' >Delete Entry</button>";// add class here for styling?
             const deleteEntryButton = document.getElementById('deleteEntryButton');
             deleteEntryButton.addEventListener('click', async () => {
             // should add a confirm choice to make sure it wasnt misclick
@@ -304,6 +294,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 generateCalendar();
             });
         }
+        document.addEventListener('keydown', (pressedKey) => {
+            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
+                // Call a function or execute an action when the Esc key is pressed
+                modal.style.display = 'none';
+            }
+        });
+
         // When the user clicks on <span> (x), close the modal
         span.onclick = () => {
             modal.style.display = 'none';
@@ -333,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
         *
         * @type {HTMLElement} - the target of the event, being the save button
         * @listens onclick
-        *                  When a user clicks the "Save as Markdown" button,
+        *                  When a user clicks the "Save Entry" button,
         *                  the popup closees, adds the new entry to storage, and
         *                  calls generateCalendar() to update it.
         */
@@ -472,10 +469,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     calendarContainer.addEventListener('click', (event) => {
         console.log('This is what was just clicked:', event);
-        if (event.target.classList.contains('standardCell')) {
+        if (event.target.classList.contains('standardCell') || event.target.classList.contains('entryButton')) {
             openModal(event);
         }
     });
+
     /**
     * Listens for mouseover of elements in the calendar.
     *
@@ -507,6 +505,49 @@ document.addEventListener('DOMContentLoaded', () => {
                     extraButtonClick.stopPropagation();
                 });
             }
+        }
+    });
+
+    // Event listener to capture keyboard events
+    document.addEventListener('keydown', (event) => {
+        console.log('A key was pressed down!');
+        // Check if the key pressed is 'Ctrl + N'
+        if ((event.ctrlKey || event.metaKey) && event.key === 'n') {
+            // Prevent the default behavior of the hotkey (e.g., browser history navigation)
+            event.preventDefault();
+            // Call the function to execute the action
+            simulateMouseClick(document.getElementsByClassName('today')[0]);
+        }
+        // Check if arrow key was pressed, will change month based on this
+        if (event.key === 'ArrowRight' && document.getElementById('myModal').style.display === 'none') {
+            // change month to the next month
+            console.log('We should increase month');
+            if (monthSelect.value < 11) {
+                monthSelect.value = parseInt(monthSelect.value, 10) + 1;
+                generateCalendar();
+                console.log(monthSelect.value);
+            } else {
+                monthSelect.value = 0;
+                yearInput.value = parseInt(yearInput.value, 10) + 1;
+            }
+        }
+        // Check if arrow key was pressed, will change month based on this
+        if (event.key === 'ArrowLeft' && document.getElementById('myModal').style.display === 'none') {
+            // change month to the next month
+            console.log('We should decrease month');
+            if (monthSelect.value > 0) {
+                monthSelect.value -= 1;
+                generateCalendar();
+                console.log(monthSelect.value);
+            } else {
+                monthSelect.value = 11;
+                yearInput.value = parseInt(yearInput.value, 10) - 1;
+            }
+        }
+        // ctrl d or cmd d
+        if ((event.ctrlKey || event.metaKey) && event.key === 'd') {
+            // simulate pressing the dashboardLink button
+            simulateMouseClick(document.getElementById('dashboardLink'));
         }
     });
 
@@ -564,7 +605,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Listens for when the dashboard button is clicked, to link to dashboard page
-    // dashboardButton.addEventListener('click', (event) => {
-    //     // Link to dashboard here
-    // });
+    dashboardButton.addEventListener('click', () => {
+        // Link to dashboard here
+        window.api.loadHtmlFile('dashboard.html');
+    });
 });

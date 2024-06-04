@@ -15,12 +15,12 @@ function init() {
             rememberMe = false;
             const password = await window.api.encryptData(oldPass);
             const data = {
-            password,
-            pin,
-            rememberMe,
-        };
-        window.api.writePassword(JSON.stringify(data));
-        passwordPage.click();
+                password,
+                pin,
+                rememberMe,
+            };
+            window.api.writePassword(JSON.stringify(data));
+            passwordPage.click();
         } else {
             alert.style.color = 'red';
             alert.textContent = 'Password must be at least 6 characters long.';

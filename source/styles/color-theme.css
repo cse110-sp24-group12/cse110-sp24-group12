@@ -3,6 +3,7 @@
 /* Primary Colors */
 :root {
     --primary-color: rgba(73, 65, 79, 0.60);
+    --primary-color-hover: rgba(50, 44, 56, 0.6);
     --secondary-color: #887244; /* Gold color */
     --secondary-color-hover: #745e2f;
 }
