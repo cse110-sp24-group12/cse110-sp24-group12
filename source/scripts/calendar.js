@@ -104,6 +104,7 @@ function formatButtons(inputArray, id) {
 document.addEventListener('DOMContentLoaded', () => {
     // Set HTMLElements to elements in JS
     const dashboardButton = document.getElementById('dashboardLink');
+    const taskListButton = document.getElementById('taskListBtn');
     // const helpButton = document.getElementById('helpButton');
 
     const yearInput = document.getElementById('year');
@@ -608,5 +609,10 @@ document.addEventListener('DOMContentLoaded', () => {
     dashboardButton.addEventListener('click', () => {
         // Link to dashboard here
         window.api.loadHtmlFile('dashboard.html');
+    });
+
+    taskListButton.addEventListener('click', () => {
+        // Link to task list here
+        window.api.loadHtmlFile('task-list.html');
     });
 });
