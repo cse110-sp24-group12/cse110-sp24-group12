@@ -171,6 +171,9 @@ h1, h2 {
 h2{
     font-size: small;
 }
+h7{
+    text-align: right;
+}
 .inactive {
     background-color: white;
 }
@@ -185,11 +188,7 @@ h2{
     background-color: #0a6a34; /* Darker green for more contributions */
 }
 
-#bookmarked-notes ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+
 #bookmarked-notes li {
     background: #fff;
     padding: 10px;
@@ -289,9 +288,14 @@ a:hover {
     width: 30px;
     height: 30px;
     vertical-align: middle;
-    margin-right: 10px;
 }
-
+.cross-icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+    float: right;
+}
 .entry {
     display: flex;
     align-items: center;
@@ -308,8 +312,15 @@ a:hover {
     display: flex;
     flex-direction: column;
     color:#000;
-    
+
 }
+
+.entry-details {
+    display: flex;
+    justify-content: space-between; /* Distribute items with space between */
+}
+
+    
 .bookmarked-entries-container {
     background-color: #49414F;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -327,12 +338,13 @@ a:hover {
     font-size: 16px;
     margin: 0;
     color: #ccc;  /* Adjust color as needed */
+    text-align: left;
 }
 
 .entry-date {
     font-size: 14px;
     color: #ccc;
-    margin: 0;
+    margin-left: 1000px;
     text-align: right;
 }
 
@@ -361,7 +373,7 @@ a:hover {
     top: 77px;
     right: 50px;
     mix-blend-mode:normal;
-
+    
 }
 .modal {
     display: none; /* Hidden by default */
@@ -376,6 +388,7 @@ a:hover {
 .help-section {
     display: block; 
     font-family: Inter;
+    background-color: #49414F;
 }
 
 .section p {
@@ -393,17 +406,19 @@ a:hover {
 .help-section b {
     display: block;
     font-size: 40px; 
+    color:white;
     padding-right: 40px;
-    margin-bottom: 10px; 
     font-family: Inter;
 }
 
 .section ul li.indented {
+    color:white;
     position: relative;
     left: 20px; 
 }
 
 .section {
+    color:white;
     padding-left: 20px;
 }
 .close {

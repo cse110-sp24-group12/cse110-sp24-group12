@@ -70,9 +70,9 @@
                 entryElement.innerHTML = `
                     <img src="images/filledBookmark.png" alt="Bookmark" class="bookmark-icon">
                     <div class="entry-details">
-                        <p class="entry-title">${entry.title}</p>
-                        <p class="entry-date">${new Date(entry.date).toLocaleDateString()}</p>
+                        <p class="entry-title">${entry.title}<h7>${new Date(entry.date).toLocaleDateString()}</h7></p>
                     </div>
+                    <img src="images/cross.png" alt="crossButton" class="cross-icon">
                 `;
                 bookmarkedContainer.appendChild(entryElement);
                 
