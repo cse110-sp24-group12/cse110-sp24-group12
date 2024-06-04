@@ -46,7 +46,7 @@ body {
 .containerbig4 {
     background: #49414F;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0);
-    border-radius: 25px;
+    border-radius: 30px;
     width: 1275px;
     height: 300px;
     align-self: center;
@@ -70,7 +70,6 @@ body {
 }
 .containerbig6 {
     background: #49414F;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     width: 1275px;
     height: 300px;
     align-self: center;

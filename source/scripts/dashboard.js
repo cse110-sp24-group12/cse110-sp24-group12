@@ -4,59 +4,15 @@
         const jsonPath = 'data/entries.json';
 
         // Read the JSON file
-        const data = await window.api.readFile(jsonPath);
+        let data = await window.api.readFile(jsonPath);
         console.log('Raw data:', data);  // Debugging statement
 
         // Parse the JSON data
-        const entries = JSON.parse(data);
+        let entries = JSON.parse(data);
         console.log('Parsed entries:', entries);  // Debugging statement
 
-        const container = document.getElementById('graph-container');
-        const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        const startDate = new Date('2024-05-01');
-        const monthIndex = startDate.getMonth();
-
-        // Loop through the days of May
-        for (let i = 0; i < daysInMonth[monthIndex - 1]; i++) {
-            // Calculate the date for the current day
-            const currentDate = new Date(startDate.getTime() + (i * 24 * 60 * 60 * 1000));
-
-            // Check if the day exists in the entries
-            const matchingEntries = entries.filter(entry => entry.date === currentDate.toISOString().split('T')[0]);
-            const entryCount = matchingEntries.length;
-
-            // Create a day square
-            const square = document.createElement('div');
-            square.classList.add('square');
-            if (entryCount > 0) {
-                if (entryCount >= 3) {
-                    square.classList.add('most-active');
-                } else if (entryCount === 2) {
-                    square.classList.add('more-active');
-                } else {
-                    square.classList.add('active');
-                }
-            } else {
-                square.classList.add('inactive');
-            }
-
-            // Append the square to the container
-            container.appendChild(square);
-        }
-
-        const currentStreak = calculateConsecutiveDayStreak(entries);
-        console.log('Calculated current streak:', currentStreak);  // Debugging statement
-
-        // Update the streak number in the navbar
-        const streakElement = document.getElementById('streakNumber');
-        if (streakElement) {
-            streakElement.textContent = currentStreak;
-        } else {
-            console.error('Element with id "streakNumber" not found.');
-        }
-
-        // Update streak image based on the current streak length
-        updateStreakImage(currentStreak);
+        renderGraph(entries);
+        updateStreak(entries);
 
         // Display bookmarked entries
         const bookmarkedContainer = document.getElementById('bookmarked-entries-container');
@@ -73,10 +29,25 @@
                     </div>
                     <div class="entry-date-delete">
                         <p class="entry-date">${new Date(entry.date).toLocaleDateString()}</p>
-                        <button class="delete-button"><img src="images/cross.png" alt="Delete" class="cross-icon"></button>
+                        <button class="delete-button" data-id="${entry.id}"><img src="images/cross.png" alt="Delete" class="cross-icon"></button>
                     </div>
                 `;
                 bookmarkedContainer.appendChild(entryElement);
+
+                // Add event listener for delete button
+                entryElement.querySelector('.delete-button').addEventListener('click', async (event) => {
+                    const entryId = event.target.closest('.delete-button').getAttribute('data-id');
+                    console.log('Delete entry with ID:', entryId);
+                    // Remove the entry from the entries array
+                    entries = entries.filter(entry => entry.id !== entryId);
+                    // Update the JSON file
+                    await window.api.writeFile(jsonPath, JSON.stringify(entries, null, 2));
+                    // Remove the entry element from the DOM
+                    bookmarkedContainer.removeChild(entryElement);
+                    // Recalculate streak and update UI
+                    updateStreak(entries);
+                    renderGraph(entries);
+                });
             });
         } else {
             console.error('Element with id "bookmarked-entries" not found.');
@@ -85,6 +56,58 @@
         console.error('An error occurred while reading the JSON file:', err);
     }
 })();
+
+function renderGraph(entries) {
+    const container = document.getElementById('graph-container');
+    container.innerHTML = ''; // Clear previous graph
+    const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const startDate = new Date('2024-05-01');
+    const monthIndex = startDate.getMonth();
+
+    // Loop through the days of May
+    for (let i = 0; i < daysInMonth[monthIndex - 1]; i++) {
+        // Calculate the date for the current day
+        const currentDate = new Date(startDate.getTime() + (i * 24 * 60 * 60 * 1000));
+
+        // Check if the day exists in the entries
+        const matchingEntries = entries.filter(entry => entry.date === currentDate.toISOString().split('T')[0]);
+        const entryCount = matchingEntries.length;
+
+        // Create a day square
+        const square = document.createElement('div');
+        square.classList.add('square');
+        if (entryCount > 0) {
+            if (entryCount >= 3) {
+                square.classList.add('most-active');
+            } else if (entryCount === 2) {
+                square.classList.add('more-active');
+            } else {
+                square.classList.add('active');
+            }
+        } else {
+            square.classList.add('inactive');
+        }
+
+        // Append the square to the container
+        container.appendChild(square);
+    }
+}
+
+function updateStreak(entries) {
+    const currentStreak = calculateConsecutiveDayStreak(entries);
+    console.log('Calculated current streak:', currentStreak);  // Debugging statement
+
+    // Update the streak number in the navbar
+    const streakElement = document.getElementById('streakNumber');
+    if (streakElement) {
+        streakElement.textContent = currentStreak;
+    } else {
+        console.error('Element with id "streakNumber" not found.');
+    }
+
+    // Update streak image based on the current streak length
+    updateStreakImage(currentStreak);
+}
 
 // Function to calculate consecutive day streak from today
 function calculateConsecutiveDayStreak(entries) {
@@ -144,10 +167,11 @@ function updateStreakImage(streakLength) {
     console.log('Setting image path to:', imagePath);  // Debugging statement
     streakImage.src = imagePath;
 }
+
 const modal = document.getElementById('myModal');
 const img = document.getElementById('triggerPopup');
 const span = document.getElementsByClassName('close')[0];
-const container = document.querySelector('.container');
+const container = document.querySelector('.container-wrapper');
 
 // Listens for when the dashboard button is clicked, to link to dashboard page
 const dashboardButton = document.getElementById('dashboardLink');
@@ -157,19 +181,22 @@ dashboardButton.addEventListener('click', () => {
 });
 img.onclick = () => {
     modal.style.display = 'block';
-    container.style.display = 'none';
+  //  container.style.visibility = 'hidden';
 };
 span.onclick = () => {
     modal.style.display = 'none';
-    container.style.display = 'flex';
+    container.style.visibility = 'visible';
+    // Re-render graph and streaks after closing help modal
+    renderGraph(entries);
+    updateStreak(entries);
 };
 
 window.onclick = (event) => {
     if (event.target === modal) {
         modal.style.display = 'none';
-        container.style.display = 'flex';
+        container.style.visibility = 'visible';
+        // Re-render graph and streaks after closing help modal
+        renderGraph(entries);
+        updateStreak(entries);
     }
 };
-deleteButton.onclick=(event) => {
-    deleteButton.entry.delete();
-}
