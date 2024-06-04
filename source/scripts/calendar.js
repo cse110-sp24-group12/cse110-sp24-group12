@@ -271,10 +271,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // correctly assign bookmark value
             const current = await window.api.getEntryByTitleAndDate([name, date]);
             bookmarked = current.bookmarked;
+            bookmarkButton.classList.add('bookmark');
             if (bookmarked) {
                 bookmarkButton.classList.add('filled');
-            } else {
-                bookmarkButton.className = 'bookmark';
             }
         }
 
