@@ -58,6 +58,8 @@ body {
     margin-left: 75px;
     justify-content: center;
     padding-bottom: 40px;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 .containerbig5{
 
@@ -230,17 +232,20 @@ a:hover {
   #navBarLeftAlign{
     flex: 1;
     height: 100%;
+    margin-bottom: 10px;
   }
   #navBarRightAlign{
     flex: 1;
     height: 100%;
     text-align: right;
+    margin-bottom: 10px;
   }
   .navButton{
     flex:1;
     height: 40px;
     border-radius: 20px;
     font-size: 18px;
+    background-color: #D5AC57;
   } 
   #threeLines{
     margin-right: 3px;
@@ -252,3 +257,72 @@ a:hover {
   #helpButton{
     width: 40px;
   }
+  #streakImage {
+    width: auto;  /* Adjust size as needed */
+    height: 50px;
+    display: block;
+    margin: 0;
+    margin-left: 20px;
+}
+.bookmark-icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.entry {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-left:20px;
+    margin-right:100px;
+    margin-bottom: 5px;
+    background-color: #fff;  /* Background color for each entry */
+    border-radius: 5px;  /* Rounded corners for each entry */
+    border: 1px solid #555;  /* Border for each entry */
+}
+
+.entry-details {
+    display: flex;
+    flex-direction: column;
+    color:#000;
+    
+}
+.bookmarked-entries-container {
+    background-color: #49414F;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+    width: 1275px;
+    max-height: 400px;
+    align-self: center;
+    margin-left: 75px;
+    justify-content: center;
+    padding-bottom: 40px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px;
+}
+.entry-title {
+    font-size: 16px;
+    margin: 0;
+    color: #ccc;  /* Adjust color as needed */
+}
+
+.entry-date {
+    font-size: 14px;
+    color: #ccc;
+    margin: 0;
+    text-align: right;
+}
+
+#bookmarked-entries {
+    padding: 10px;
+    color:#fff;
+    margin-top: 20px;
+    max-height: 300px; /* Increase height for better scroll functionality */
+    overflow-y: auto;
+}
+
+.my-heading {
+    color: #fff;  /* Adjust color as needed */
+}
