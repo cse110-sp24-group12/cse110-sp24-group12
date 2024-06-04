@@ -70,11 +70,12 @@ body {
 }
 .containerbig6 {
     background: #49414F;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     width: 1275px;
     height: 300px;
     align-self: center;
     justify-content: center;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     max-height: 300px;
     overflow-y: scroll;
     margin-top: 20px;
@@ -246,6 +247,13 @@ h5 {
     font-size: 18px;
     background-color: #D5AC57;
 }
+.delete-button {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 18px;  /* Adjust size as needed */
+}
 #threeLines {
     margin-right: 3px;
     width: 25%;
@@ -271,6 +279,7 @@ h5 {
     width: 30px;
     height: 30px;
     vertical-align: middle;
+    margin-right: 10px;
 }
 .cross-icon {
     width: 30px;
@@ -284,17 +293,19 @@ h5 {
     align-items: center;
     padding: 10px;
     margin-left: 20px;
-    margin-right: 100px;
+    margin-right: 20px;
     margin-bottom: 5px;
-    background-color: #fff; /* Background color for each entry */
-    border-radius: 5px; /* Rounded corners for each entry */
-    border: 1px solid #555; /* Border for each entry */
+    background-color: #fff;  /* Background color for each entry */
+    border-radius: 5px;  /* Rounded corners for each entry */
+    border: 1px solid #555;  /* Border for each entry */
+    justify-content: space-between;
 }
 .entry-details {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Distribute items with space between */
-    }
+    color: #000;
+    flex-grow: 1;  /* This allows the details to take up remaining space */
+}
 .bookmarked-entries-container {
     background-color: #49414F;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -311,14 +322,19 @@ h5 {
 .entry-title {
     font-size: 16px;
     margin: 0;
-    color: #ccc; /* Adjust color as needed */
-    text-align: left;
+    color: #000;  /* Adjust color as needed */
 }
 .entry-date {
     font-size: 14px;
-    color: #ccc;
-    margin-left: 1000px;
+    color: #000;
+    margin-right: 10px;  /* Space between date and delete button */
     text-align: right;
+}
+.entry-date-delete {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;  /* This prevents shrinking of the date and delete button */
 }
 #bookmarked-entries {
     padding: 10px;

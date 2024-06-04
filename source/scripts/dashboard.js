@@ -64,18 +64,19 @@
             const bookmarkedEntries = entries.filter(entry => entry.bookmarked);
 
             bookmarkedEntries.forEach(entry => {
-                
                 const entryElement = document.createElement('div');
                 entryElement.classList.add('entry');
                 entryElement.innerHTML = `
                     <img src="images/filledBookmark.png" alt="Bookmark" class="bookmark-icon">
                     <div class="entry-details">
-                        <p class="entry-title">${entry.title}<h7>${new Date(entry.date).toLocaleDateString()}</h7></p>
+                        <p class="entry-title">${entry.title}</p>
                     </div>
-                    <img src="images/cross.png" alt="crossButton" class="cross-icon">
+                    <div class="entry-date-delete">
+                        <p class="entry-date">${new Date(entry.date).toLocaleDateString()}</p>
+                        <button class="delete-button"><img src="images/cross.png" alt="Delete" class="cross-icon"></button>
+                    </div>
                 `;
                 bookmarkedContainer.appendChild(entryElement);
-                
             });
         } else {
             console.error('Element with id "bookmarked-entries" not found.');
@@ -134,7 +135,7 @@ function updateStreakImage(streakLength) {
         imagePath = 'images/3is.png';
     } else if (streakLength < 35) {
         imagePath = 'images/4is.png';
-    }  else if (streakLength < 60) {
+    } else if (streakLength < 60) {
         imagePath = 'images/6is.png';
     } else {
         imagePath = 'images/7is.png';
@@ -169,3 +170,6 @@ window.onclick = (event) => {
         container.style.display = 'flex';
     }
 };
+deleteButton.onclick=(event) => {
+    deleteButton.entry.delete();
+}
