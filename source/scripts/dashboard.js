@@ -6,39 +6,6 @@ const dateConversion = (date) => {
     return `${month}-${day}-${year}`;
 };
 
-// Function to calculate consecutive day streak
-function calculateConsecutiveDayStreak(entries) {
-    if (entries.length === 0) return 0;
-
-    // Sort entries by date
-    entries.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    let maxStreak = 0;
-    let currentStreak = 1;
-
-    for (let i = 1; i < entries.length; i += 1) {
-        const prevDate = new Date(entries[i - 1].date);
-        const currDate = new Date(entries[i].date);
-        const diffInDays = (currDate - prevDate) / (1000 * 60 * 60 * 24);
-
-        if (diffInDays === 1) {
-            currentStreak += 1;
-        } else {
-            if (currentStreak > maxStreak) {
-                maxStreak = currentStreak;
-            }
-            currentStreak = 1;
-        }
-    }
-
-    // Check last streak
-    if (currentStreak > maxStreak) {
-        maxStreak = currentStreak;
-    }
-
-    return maxStreak;
-}
-
 function updateStreakImage(streakLength) {
     const streakImage = document.getElementById('streakImage');
     let imagePath = '';
