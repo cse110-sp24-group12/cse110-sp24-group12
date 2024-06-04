@@ -7,9 +7,9 @@
     "test": "npx playwright test",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
-    "lint": "npx eslint .",
-    "lint-fix": "npx eslint . --fix"
+    "generate-docs": "node_modules/.bin/jsdoc --configure configs/.jsdoc.json --verbose",
+    "lint": "npx eslint --config configs/.eslintrc.json --ignore-path configs/.eslintignore .",
+    "lint-fix": "npx eslint --config configs/.eslintrc.json --ignore-path configs/.eslintignore . --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
