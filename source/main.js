@@ -173,7 +173,8 @@ const writeEntriesJSONFile = (entries) => {
 //  */
 ipcMain.handle('get-entries-on-date', async (event, arg) => {
     const entries = readEntriesJSONFile();
-    const filtered = entries.filter((entry) => entry.date === arg);
+    let filtered = [];
+    filtered = entries.filter((entry) => entry.date === arg);
     if (filtered.length === 0) {
         return [];
     }

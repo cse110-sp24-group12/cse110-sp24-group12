@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dispatch the mouse click event on the element
         element.dispatchEvent(mouseClickEvent);
     }
-
+let currentKeydownListener = null;
     /**
      * openModal - will open up a modal window with text box and title box
      * @function
@@ -294,12 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 generateCalendar();
             });
         }
-        document.addEventListener('keydown', (pressedKey) => {
-            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
-                // Call a function or execute an action when the Esc key is pressed
-                modal.style.display = 'none';
-            }
-        });
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = () => {
@@ -334,8 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
         *                  the popup closees, adds the new entry to storage, and
         *                  calls generateCalendar() to update it.
         */
-        saveMarkDown.onclick = async () => {
+        async function handleSaveMarkdown() {
             console.log('Save button was just pressed to save entry:', title.value);
+            console.log('This is the date that we are adding an entry for:', date);
             title.value.replace(/ /g, '_');
             title.value = replaceQuotesWithEntities(title.value);
             if (title.value === '') {
@@ -353,9 +348,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         // add new entry with unique ID
                         console.log('We are about to add an entry');
                         await window.api.addMarkdownEntry({
-                            date,
+                            date: date,
                             title: title.value,
-                            bookmarked,
+                            bookmarked: bookmarked,
                             markdownContent: markdownInput.value,
                         });
                     } catch (error) {
@@ -374,9 +369,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         // add new entry with unique ID
                         console.log('We are about to add an entry');
                         await window.api.addMarkdownEntry({
-                            date,
+                            date: date,
                             title: title.value,
-                            bookmarked,
+                            bookmarked: bookmarked,
                             markdownContent: markdownInput.value,
                         });
                     } catch (error) {
@@ -386,6 +381,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 generateCalendar();
             }
         };
+
+        saveMarkDown.onclick = handleSaveMarkdown;
+
+        if (currentKeydownListener) {
+            document.removeEventListener('keydown', currentKeydownListener);
+        }
+    
+        currentKeydownListener = (pressedKey) => {
+            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
+                modal.style.display = 'none';
+                document.removeEventListener('keydown', currentKeydownListener);
+            }
+    
+            if ((pressedKey.key === 'Enter' && (pressedKey.ctrlKey || pressedKey.metaKey)) && modal.style.display === 'block') {
+                handleSaveMarkdown();
+                document.removeEventListener('keydown', currentKeydownListener);
+            }
+        };
+    
+        document.addEventListener('keydown', currentKeydownListener);
 
         /**
         * Listens for click outside of modal window, closes if detected
@@ -424,18 +439,19 @@ document.addEventListener('DOMContentLoaded', () => {
     async function openExtraModal(event) {
         const modal = document.getElementById('extraModal');
         const span = document.getElementById('closeExtra');
-        const extraButtons = document.getElementById('extraButtons');
+        let extraButtons = document.getElementById('extraButtons');
+        const todayDate = document.getElementById('date');
         const [, date] = event.target.id.split('.');
 
-        // Clear previous buttons to prevent duplication
-        extraButtons.innerHTML = formatDate(date);
-
         // Fetch entries based on date
-        const entries = await window.api.getEntriesOnDate(date);
-
-        // Create and append buttons
+        let entries = '';
+        entries = await window.api.getEntriesOnDate(date);
+        console.log('This is the content that we want to show on our modal:', entries);
+        todayDate.innerText = formatDate(date);
+        todayDate.style.color = 'black';
+        extraButtons.innerHTML = '';
         entries.forEach((entry) => {
-            const button = document.createElement('button');
+            let button = document.createElement('button');
             button.id = `${entry.title}.${entry.date}`;
             button.className = 'entryButton';
             button.textContent = entry.title;
@@ -443,12 +459,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         modal.style.display = 'block';
-        console.log('This is the content that we want to show on our modal:', entries);
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = () => {
             modal.style.display = 'none';
         };
+
+        document.addEventListener('keydown', (pressedKey) => {
+            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
+                // Call a function or execute an action when the Esc key is pressed
+                modal.style.display = 'none';
+            }
+        });
 
         window.onclick = (modalOutsideClick) => {
             if (modalOutsideClick.target === modal) {
@@ -469,6 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     calendarContainer.addEventListener('click', (event) => {
         console.log('This is what was just clicked:', event);
+        console.log('This is the target of what you just clicked', event.target);
         if (event.target.classList.contains('standardCell') || event.target.classList.contains('entryButton')) {
             openModal(event);
         }
@@ -493,8 +516,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Hovered over a standardCell');// show that we hovered over a standardCell
             target.classList.remove('mouseOut');
             target.classList.add('mouseIn');
-            // When user clicks on specific day cell to open modal window
-            // target.addEventListener('click', (dayCell) => openModal(dayCell));
         } else if (target.classList.contains('extra')) {
             const extraButtons = document.getElementsByClassName('extra');
             // Event listeners for the "extra" buttons on each cell ("...")
