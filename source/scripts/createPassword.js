@@ -12,19 +12,19 @@ function init() {
             alert.style.color = 'transparent';
             oldPass = input.value;
             input.value = '';
+            rememberMe = false;
+            const password = await window.api.encryptData(oldPass);
+            const data = {
+                password,
+                pin,
+                rememberMe,
+            };
+            window.api.writePassword(JSON.stringify(data));
+            passwordPage.click();
         } else {
             alert.style.color = 'red';
             alert.textContent = 'Password must be at least 6 characters long.';
         }
-        rememberMe = false;
-        const password = await window.api.encryptData(oldPass);
-        const data = {
-            password,
-            pin,
-            rememberMe,
-        };
-        window.api.writePassword(JSON.stringify(data));
-        passwordPage.click();
     };
 
     button.addEventListener('click', handleButtonClick);
