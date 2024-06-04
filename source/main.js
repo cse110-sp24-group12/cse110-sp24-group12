@@ -63,8 +63,7 @@ const renderMarkdownHelper = (markdownText) => {
             highlight: (code, lang) => {
                 if (lang && hljs.getLanguage(lang)) {
                     try {
-                        return `<pre><code class="hljs">${
-                            hljs.highlight(code, { language: lang, ignoreIllegals: true }).value
+                        return `<pre><code class="hljs">${hljs.highlight(code, { language: lang, ignoreIllegals: true }).value
                         }</code></pre>`;
                     } catch (error) {
                         console.error(error);
@@ -138,6 +137,27 @@ ipcMain.handle('write-file', async (event, arg) => {
     } catch (error) {
         console.error(error);
     }
+});
+
+/**
+ * write-file - Write the content to a file.
+ * @param {object} arg - The file path and the data to write.
+ * @param {string} arg.filePath - The path to the file to write.
+ * @param {string} arg.data - The content to write to json file.
+ * @returns {void}
+ */
+ipcMain.handle('write-json-file', async (event, arg) => {
+    const { filePath, data } = arg;
+    return new Promise((resolve, reject) => {
+        fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8', (err) => {
+            if (err) {
+                console.error('Error writing JSON file:', err);
+                reject(err);
+            } else {
+                resolve('JSON file has been saved.');
+            }
+        });
+    });
 });
 
 /**
