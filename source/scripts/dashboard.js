@@ -6,107 +6,6 @@ const dateConversion = (date) => {
     return `${month}-${day}-${year}`;
 };
 
-function updateStreakImage(streakLength) {
-    const streakImage = document.getElementById('streakImage');
-    let imagePath = '';
-    if (streakLength < 7) {
-        streakImage.style.display = 'none';
-    } else if (streakLength < 14) {
-        imagePath = 'images/1is.png';
-    } else if (streakLength < 21) {
-        imagePath = 'images/2is.png';
-    } else if (streakLength < 28) {
-        imagePath = 'images/3is.png';
-    } else if (streakLength < 35) {
-        imagePath = 'images/4is.png';
-    } else {
-        imagePath = 'images/5is.png';
-    }
-
-    console.log('Setting image path to:', imagePath); // Debugging statement
-    streakImage.src = imagePath;
-}
-
-(async () => {
-    try {
-        // Define the path to the JSON file
-        // Define the path to the JSON file
-        const jsonPath = 'data/entries.json';
-
-        // Read the JSON file
-        let data = await window.api.readFile(jsonPath);
-        console.log('Raw data:', data);  // Debugging statement
-
-        // Parse the JSON data
-        let entries = JSON.parse(data);
-        console.log('Parsed entries:', entries);  // Debugging statement
-
-        // Initial render for the current month
-        const currentMonth = new Date().getMonth() + 1;
-        renderGraph(entries, currentMonth);
-        updateStreak(entries);
-
-        // Populate the month dropdown
-        const monthDropdown = document.getElementById('monthDropdown');
-        for (let i = 1; i <= 12; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.text = new Date(2024, i - 1).toLocaleString('default', { month: 'long' });
-            monthDropdown.appendChild(option);
-        }
-        monthDropdown.value = currentMonth;
-
-        // Event listener for month change
-        monthDropdown.addEventListener('change', (event) => {
-            const selectedMonth = parseInt(event.target.value, 10);
-            renderGraph(entries, selectedMonth);
-        });
-
-        // Display bookmarked entries
-        const bookmarkedContainer = document.getElementById('bookmarked-entries-container');
-        if (bookmarkedContainer) {
-            const bookmarkedEntries = entries.filter(entry => entry.bookmarked);
-
-            bookmarkedEntries.forEach(entry => {
-                const entryElement = document.createElement('div');
-                entryElement.classList.add('entry');
-                entryElement.innerHTML = `
-                    <img src="images/filledBookmark.png" alt="Bookmark" class="bookmark-icon">
-                    <div class="entry-details">
-                        <p class="entry-title">${entry.title}</p>
-                    </div>
-                    <div class="entry-date-delete">
-                        <p class="entry-date">${new Date(entry.date).toLocaleDateString()}</p>
-                        <button class="delete-button" data-id="${entry.id}"><img src="images/cross.png" alt="Delete" class="cross-icon"></button>
-                    </div>
-                `;
-                bookmarkedContainer.appendChild(entryElement);
-
-                // Add event listener for delete button
-                entryElement.querySelector('.delete-button').addEventListener('click', async (event) => {
-                    const entryId = event.target.closest('.delete-button').getAttribute('data-id');
-                    console.log('Delete entry with ID:', entryId);
-                    // Remove the entry from the entries array
-                    entries = entries.filter(entry => entry.id !== entryId);
-                    // Update the JSON file
-                    await window.api.writeFile(jsonPath, JSON.stringify(entries, null, 2));
-                    // Remove the entry element from the DOM
-                    bookmarkedContainer.removeChild(entryElement);
-                    // Recalculate streak and update UI
-                    const selectedMonth = parseInt(document.getElementById('monthDropdown').value, 10);
-                    renderGraph(entries, selectedMonth);
-                    updateStreak(entries);
-                    
-                });
-            });
-        } else {
-            console.error('Element with id "bookmarked-entries" not found.');
-        }
-    } catch (err) {
-        console.error('An error occurred while reading the JSON file:', err);
-    }
-})();
-
 function renderGraph(entries, month) {
     const container = document.getElementById('graph-container');
     container.innerHTML = ''; // Clear previous graph
@@ -115,14 +14,14 @@ function renderGraph(entries, month) {
     const monthIndex = startDate.getMonth();
 
     // Loop through the days of the selected month
-    for (let i = 0; i < daysInMonth[monthIndex]; i++) {
+    for (let i = 0; i < daysInMonth[monthIndex]; i += 1) {
         // Calculate the date for the current day
         const currentDate = new Date(startDate.getTime() + (i * 24 * 60 * 60 * 1000));
 
         const currentDateConverted = dateConversion(currentDate.toISOString().split('T')[0]);
 
         // Check if the day exists in the entries
-        const matchingEntries = entries.filter(entry => entry.date === currentDateConverted);
+        const matchingEntries = entries.filter((entry) => entry.date === currentDateConverted);
         const entryCount = matchingEntries.length;
 
         // Create a day square
@@ -145,28 +44,13 @@ function renderGraph(entries, month) {
     }
 }
 
-function updateStreak(entries) {
-    const currentStreak = calculateConsecutiveDayStreak(entries);
-    console.log('Calculated current streak:', currentStreak);  // Debugging statement
-
-    // Update the streak number in the navbar
-    const streakElement = document.getElementById('streakNumber');
-    if (streakElement) {
-        streakElement.textContent = currentStreak;
-    } else {
-        console.error('Element with id "streakNumber" not found.');
-    }
-
-    // Update streak image based on the current streak length
-    updateStreakImage(currentStreak);
-}
-
 // Function to calculate consecutive day streak from today
 function calculateConsecutiveDayStreak(entries) {
     if (entries.length === 0) return 0;
 
-    // Normalize entry dates to the start of the day, increase by one day, and convert to Set for O(1) lookups
-    const entryDates = new Set(entries.map(entry => {
+    // Normalize entry dates to the start of the day, increase by one day,
+    // and convert to Set for O(1) lookups
+    const entryDates = new Set(entries.map((entry) => {
         const date = new Date(entry.date);
         date.setDate(date.getDate() + 1); // Increase the date by one day
         date.setHours(0, 0, 0, 0);
@@ -174,7 +58,7 @@ function calculateConsecutiveDayStreak(entries) {
     }));
 
     let currentStreak = 0;
-    let today = new Date();
+    const today = new Date();
     today.setHours(0, 0, 0, 0); // Normalize to the start of the day
 
     console.log('Entry dates:', [...entryDates]); // Debugging statement
@@ -184,7 +68,7 @@ function calculateConsecutiveDayStreak(entries) {
         const todayStr = today.toISOString().split('T')[0];
         console.log(`Checking date: ${todayStr}`); // Debugging statement
         if (entryDates.has(todayStr)) {
-            currentStreak++;
+            currentStreak += 1;
             console.log(`Streak incremented to: ${currentStreak}`); // Debugging statement
         } else {
             console.log('No entry found. Breaking the loop.'); // Debugging statement
@@ -216,9 +100,106 @@ function updateStreakImage(streakLength) {
         imagePath = 'images/7is.png';
     }
 
-    console.log('Setting image path to:', imagePath);  // Debugging statement
+    console.log('Setting image path to:', imagePath); // Debugging statement
     streakImage.src = imagePath;
 }
+
+function updateStreak(entries) {
+    const currentStreak = calculateConsecutiveDayStreak(entries);
+    console.log('Calculated current streak:', currentStreak); // Debugging statement
+
+    // Update the streak number in the navbar
+    const streakElement = document.getElementById('streakNumber');
+    if (streakElement) {
+        streakElement.textContent = currentStreak;
+    } else {
+        console.error('Element with id "streakNumber" not found.');
+    }
+
+    // Update streak image based on the current streak length
+    updateStreakImage(currentStreak);
+}
+
+let entries;
+
+(async () => {
+    try {
+        // Define the path to the JSON file
+        // Define the path to the JSON file
+        const jsonPath = 'data/entries.json';
+
+        // Read the JSON file
+        const data = await window.api.readFile(jsonPath);
+        console.log('Raw data:', data); // Debugging statement
+
+        // Parse the JSON data
+        entries = JSON.parse(data);
+        console.log('Parsed entries:', entries); // Debugging statement
+
+        // Initial render for the current month
+        const currentMonth = new Date().getMonth() + 1;
+        renderGraph(entries, currentMonth);
+        updateStreak(entries);
+
+        // Populate the month dropdown
+        const monthDropdown = document.getElementById('monthDropdown');
+        for (let i = 1; i <= 12; i += 1) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.text = new Date(2024, i - 1).toLocaleString('default', { month: 'long' });
+            monthDropdown.appendChild(option);
+        }
+        monthDropdown.value = currentMonth;
+
+        // Event listener for month change
+        monthDropdown.addEventListener('change', (event) => {
+            const selectedMonth = parseInt(event.target.value, 10);
+            renderGraph(entries, selectedMonth);
+        });
+
+        // Display bookmarked entries
+        const bookmarkedContainer = document.getElementById('bookmarked-entries-container');
+        if (bookmarkedContainer) {
+            const bookmarkedEntries = entries.filter((entry) => entry.bookmarked);
+
+            bookmarkedEntries.forEach((entry) => {
+                const entryElement = document.createElement('div');
+                entryElement.classList.add('entry');
+                entryElement.innerHTML = `
+                    <img src="images/filledBookmark.png" alt="Bookmark" class="bookmark-icon">
+                    <div class="entry-details">
+                        <p class="entry-title">${entry.title}</p>
+                    </div>
+                    <div class="entry-date-delete">
+                        <p class="entry-date">${new Date(entry.date).toLocaleDateString()}</p>
+                        <button class="delete-button" data-id="${entry.id}"><img src="images/cross.png" alt="Delete" class="cross-icon"></button>
+                    </div>
+                `;
+                bookmarkedContainer.appendChild(entryElement);
+
+                // Add event listener for delete button
+                entryElement.querySelector('.delete-button').addEventListener('click', async (event) => {
+                    const entryId = event.target.closest('.delete-button').getAttribute('data-id');
+                    console.log('Delete entry with ID:', entryId);
+                    // Remove the entry from the entries array
+                    entries = entries.filter((ent) => ent.id !== entryId);
+                    // Update the JSON file
+                    await window.api.writeFile(jsonPath, JSON.stringify(entries, null, 2));
+                    // Remove the entry element from the DOM
+                    bookmarkedContainer.removeChild(entryElement);
+                    // Recalculate streak and update UI
+                    const selectedMonth = parseInt(document.getElementById('monthDropdown').value, 10);
+                    renderGraph(entries, selectedMonth);
+                    updateStreak(entries);
+                });
+            });
+        } else {
+            console.error('Element with id "bookmarked-entries" not found.');
+        }
+    } catch (err) {
+        console.error('An error occurred while reading the JSON file:', err);
+    }
+})();
 
 const modal = document.getElementById('myModal');
 const img = document.getElementById('triggerPopup');
@@ -233,7 +214,7 @@ dashboardButton.addEventListener('click', () => {
 });
 img.onclick = () => {
     modal.style.display = 'block';
-   // container.style.visibility = 'hidden';
+    // container.style.visibility = 'hidden';
 };
 span.onclick = () => {
     modal.style.display = 'none';
