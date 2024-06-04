@@ -13,7 +13,6 @@ class TaskListWidget extends HTMLElement {
      */
     init() {
         this.innerHTML = `
-            <h1 id="tasklist-title">Task List</h1>
                 <div class="container">
                     
                     <div class="inputContainer">
