@@ -54,7 +54,7 @@
         } else {
             console.error('Element with id "streakNumber" not found.');
         }
-        
+
         // Update streak image based on the current streak length
         updateStreakImage(currentStreak);
 
@@ -134,10 +134,38 @@ function updateStreakImage(streakLength) {
         imagePath = 'images/3is.png';
     } else if (streakLength < 35) {
         imagePath = 'images/4is.png';
+    }  else if (streakLength < 60) {
+        imagePath = 'images/6is.png';
     } else {
-        imagePath = 'images/5is.png';
+        imagePath = 'images/7is.png';
     }
 
     console.log('Setting image path to:', imagePath);  // Debugging statement
     streakImage.src = imagePath;
 }
+const modal = document.getElementById('myModal');
+const img = document.getElementById('triggerPopup');
+const span = document.getElementsByClassName('close')[0];
+const container = document.querySelector('.container');
+
+// Listens for when the dashboard button is clicked, to link to dashboard page
+const dashboardButton = document.getElementById('dashboardLink');
+dashboardButton.addEventListener('click', () => {
+    // Link to dashboard here
+    window.api.loadHtmlFile('calendar.html');
+});
+img.onclick = () => {
+    modal.style.display = 'block';
+    container.style.display = 'none';
+};
+span.onclick = () => {
+    modal.style.display = 'none';
+    container.style.display = 'flex';
+};
+
+window.onclick = (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+        container.style.display = 'flex';
+    }
+};

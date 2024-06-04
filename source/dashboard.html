@@ -14,13 +14,35 @@
                     <div id="navBar">
                         <div id="navBarLeftAlign">
                             <button id="dashboardLink" class="navButton">
-                                <img id="threeLines" src="../source/images/dashboard-lines-icon.png"><span id="streakNumber"></span><img id="fireSprite" src="../source/images/fireSprite.png">
+                                <img id="threeLines" src="../source/images/dashboard-lines-icon.png"><span id="streakNumber" class ="streakNumber"></span><img id="fireSprite" src="../source/images/fireSprite.png">
                             </button>
-                            <button id="clearBtn" class="navButton">Clear data</button>
                         </div>
-                        <div id="navBarRightAlign">
-                            <button id="helpButton" class="navButton">?</button>
-                        </div>
+                        <div class="helpBox">
+                            <img src="images/questionMark.png" alt="helpBox" class="clickable-image" id="triggerPopup">
+                            <div id="myModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <div class="help-section">
+                                        <b>Help</b>
+                                        <div class="section">
+                                            <p>Calendar</p>
+                                            <ul>
+                                                <li>to add an entry, click on the desired day</li>
+                                                <li class="indented">alternative: [ ctrl + _ ]</li>
+                                                <li>change the calendar view by clicking the dropdown menu and filling in the respective year</li>
+                                            </ul>
+                                        </div>
+                                        <div class="section">
+                                            <p>Dashboard</p>
+                                            <ul>
+                                                <li>View recent activity</li>
+                                                <li>View streaks</li>
+                                                <li>Bookmarked entries</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
                 <br>
@@ -47,7 +69,8 @@
                     <div id="bookmarked-entries">
                         <h3 class="my-heading"><span class="tabwithsmallline"></span>List of Entries</h3>
                     </div>
-                    <div id="bookmarked-entries-container">
+                    <div class="containerbig6">
+                    <div id="bookmarked-entries-container"></div>
                         </div>
                 </div>
                 <a href="./index.html">Back</a>
