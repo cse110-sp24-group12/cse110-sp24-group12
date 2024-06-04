@@ -11,8 +11,26 @@
         let entries = JSON.parse(data);
         console.log('Parsed entries:', entries);  // Debugging statement
 
-        renderGraph(entries);
+        // Initial render for the current month
+        const currentMonth = new Date().getMonth() + 1;
+        renderGraph(entries, currentMonth);
         updateStreak(entries);
+
+        // Populate the month dropdown
+        const monthDropdown = document.getElementById('monthDropdown');
+        for (let i = 1; i <= 12; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.text = new Date(2024, i - 1).toLocaleString('default', { month: 'long' });
+            monthDropdown.appendChild(option);
+        }
+        monthDropdown.value = currentMonth;
+
+        // Event listener for month change
+        monthDropdown.addEventListener('change', (event) => {
+            const selectedMonth = parseInt(event.target.value, 10);
+            renderGraph(entries, selectedMonth);
+        });
 
         // Display bookmarked entries
         const bookmarkedContainer = document.getElementById('bookmarked-entries-container');
@@ -45,8 +63,10 @@
                     // Remove the entry element from the DOM
                     bookmarkedContainer.removeChild(entryElement);
                     // Recalculate streak and update UI
+                    const selectedMonth = parseInt(document.getElementById('monthDropdown').value, 10);
+                    renderGraph(entries, selectedMonth);
                     updateStreak(entries);
-                    renderGraph(entries);
+                    
                 });
             });
         } else {
@@ -57,15 +77,15 @@
     }
 })();
 
-function renderGraph(entries) {
+function renderGraph(entries, month) {
     const container = document.getElementById('graph-container');
     container.innerHTML = ''; // Clear previous graph
-    const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    const startDate = new Date('2024-05-01');
+    const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const startDate = new Date(`2024-${month.toString().padStart(2, '0')}-01`);
     const monthIndex = startDate.getMonth();
 
-    // Loop through the days of May
-    for (let i = 0; i < daysInMonth[monthIndex - 1]; i++) {
+    // Loop through the days of the selected month
+    for (let i = 0; i < daysInMonth[monthIndex]; i++) {
         // Calculate the date for the current day
         const currentDate = new Date(startDate.getTime() + (i * 24 * 60 * 60 * 1000));
 
@@ -181,13 +201,14 @@ dashboardButton.addEventListener('click', () => {
 });
 img.onclick = () => {
     modal.style.display = 'block';
-  //  container.style.visibility = 'hidden';
+   // container.style.visibility = 'hidden';
 };
 span.onclick = () => {
     modal.style.display = 'none';
     container.style.visibility = 'visible';
     // Re-render graph and streaks after closing help modal
-    renderGraph(entries);
+    const selectedMonth = parseInt(document.getElementById('monthDropdown').value, 10);
+    renderGraph(entries, selectedMonth);
     updateStreak(entries);
 };
 
@@ -196,7 +217,8 @@ window.onclick = (event) => {
         modal.style.display = 'none';
         container.style.visibility = 'visible';
         // Re-render graph and streaks after closing help modal
-        renderGraph(entries);
+        const selectedMonth = parseInt(document.getElementById('monthDropdown').value, 10);
+        renderGraph(entries, selectedMonth);
         updateStreak(entries);
     }
 };
