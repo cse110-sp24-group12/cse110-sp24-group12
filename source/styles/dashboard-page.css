@@ -60,6 +60,7 @@ body {
     padding-bottom: 40px;
     max-height: 400px;
     overflow-y: scroll;
+    margin-top: 20px;
 }
 .containerbig5{
 
@@ -252,7 +253,7 @@ a:hover {
     width: 20%;
   }
   #fireSprite{
-    height: 50%;
+    height: 100%;
   }
   #helpButton{
     width: 40px;

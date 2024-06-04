@@ -47,6 +47,14 @@
         const currentStreak = calculateConsecutiveDayStreak(entries);
         console.log('Calculated current streak:', currentStreak);  // Debugging statement
 
+        // Update the streak number in the navbar
+        const streakElement = document.getElementById('streakNumber');
+        if (streakElement) {
+            streakElement.textContent = currentStreak;
+        } else {
+            console.error('Element with id "streakNumber" not found.');
+        }
+        
         // Update streak image based on the current streak length
         updateStreakImage(currentStreak);
 
