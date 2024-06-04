@@ -152,8 +152,10 @@ function renderGraph(entries, month) {
         // Calculate the date for the current day
         const currentDate = new Date(startDate.getTime() + (i * 24 * 60 * 60 * 1000));
 
+        const currentDateConverted = dateConversion(currentDate.toISOString().split('T')[0]);
+
         // Check if the day exists in the entries
-        const matchingEntries = entries.filter(entry => entry.date === currentDate.toISOString().split('T')[0]);
+        const matchingEntries = entries.filter(entry => entry.date === currentDateConverted);
         const entryCount = matchingEntries.length;
 
         // Create a day square
