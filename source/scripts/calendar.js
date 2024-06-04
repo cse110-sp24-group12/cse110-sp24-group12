@@ -158,18 +158,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             let fill;
             const memory = results[day - 1];
-            // check what was stored for that day
-            if (memory.length === 0) {
-                fill = day;
-            } else {
-                fill = day + formatButtons(memory, `extra.${month + 1}-${day}-${year}`);
-            }
+
             if (currentDay === day && (currentMonth) === month && currentYear === year) {
-                console.log('Todays date is:', currentMonth + 1, currentDay, currentYear);
-                calendarHTML += `<td id='${month + 1}-${day}-${year}' class='mouseOut standardCell today'>${fill}</td>`;
+                fill = `<span class='today'>${day}</span>`;
             } else {
-                calendarHTML += `<td id='${month + 1}-${day}-${year}' class='mouseOut standardCell'>${fill}</td>`;
+                fill = `${day}`;
             }
+
+            // check what was stored for that day
+            if (memory.length !== 0) {
+                fill += formatButtons(memory, `extra.${month + 1}-${day}-${year}`);
+            }
+
+            calendarHTML += `<td id='${month + 1}-${day}-${year}' class='mouseOut standardCell'>${fill}</td>`;
+            
             count += 1;
         }
 
@@ -468,6 +470,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    async function openTaskListModal(event) {
+        const modal = document.getElementById('taskListModal');
+       
+        modal.style.display = 'block';   
+
+        document.addEventListener('keydown', (pressedKey) => {
+            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
+                // Call a function or execute an action when the Esc key is pressed
+                modal.style.display = 'none';
+            }
+        });
+    };
+
     calendarContainer.addEventListener('click', (event) => {
         console.log('This is what was just clicked:', event);
         if (event.target.classList.contains('standardCell') || event.target.classList.contains('entryButton')) {
@@ -613,6 +629,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     taskListButton.addEventListener('click', () => {
         // Link to task list here
-        window.api.loadHtmlFile('task-list.html');
+        openTaskListModal();
     });
 });

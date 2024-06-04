@@ -8,22 +8,6 @@
     font-weight: 150;
 }
 
-* {
-    font-family: arial;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    /* Align items at the top */
-    height: 100vh;
-    margin: 0;
-    background-color: #887244;
-    padding-top: 20px;
-}
-
 .container {
     margin-top: 1px;
     text-align: center;
@@ -191,13 +175,4 @@ body {
 
 .task-item .edit-button:hover {
     background-color: #8a1c0b;
-}
-
-/* Rest of your styles */
-
-main {
-    margin-top: 100px;
-    /* Adjust margin top to accommodate header height */
-    padding-top: 20px;
-    /* Add padding to create space between header and todo list */
 }
