@@ -109,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const yearInput = document.getElementById('year');
     const calendarContainer = document.getElementById('calendar');
-    const clearDataButton = document.getElementById('clearBtn');
     const entryButtons = document.getElementsByClassName('entryButton');
     const monthSelect = document.getElementById('month');
     monthSelect.focus();
@@ -565,14 +564,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // simulate pressing the dashboardLink button
             simulateMouseClick(document.getElementById('dashboardLink'));
         }
-    });
-
-    // Event listener for the click of clear data button,
-    clearDataButton.addEventListener('click', async () => {
-        // localStorage.clear();
-        await window.api.clearEntries();
-
-        generateCalendar();
     });
 
     // Event listeners for the entry buttons ("Save as Markdown/Task")
