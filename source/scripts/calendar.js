@@ -465,6 +465,13 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.style.display = 'none';
         };
 
+        // User can close out of extraModal window using esc key
+        document.addEventListener('keydown', (pressedKey)=>{
+            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
+                modal.style.display = 'none';
+            }
+        });
+
         window.onclick = (modalOutsideClick) => {
             if (modalOutsideClick.target === modal) {
                 modal.style.display = 'none';
