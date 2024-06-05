@@ -94,6 +94,11 @@ function formatButtons(inputArray, id) {
     return entryStringButtons;
 }
 
+/**
+ * updates the streak count on the calendar page
+ * @function
+ * @returns {void}
+ */
 async function updateStreakCount() {
     const jsonPath = 'data/entries.json';
     const data = await window.api.readFile(jsonPath);
