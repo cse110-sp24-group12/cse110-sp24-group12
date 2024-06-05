@@ -63,7 +63,7 @@ Bio: Hi! My name is Ramtin Tajbakhsh and Iâ€™m a third-year CS major at UCSD. Iâ
 
 <img src="headshots/eban.WEBP" alt="Profile Picture" width="200">
 
-Role: Developer
+Role: Developer/Designer
 
 GitHub Account: [Eban](https://github.com/Eban-Covarrubias)
 
@@ -133,7 +133,7 @@ Bio: Hi! My name is Wen Hsin Chang and I am a second-year transfer student at UC
 
 <img src="headshots/sophia.jpeg" alt="Profile Picture" width="200">
 
-Role: Developer
+Role: Designer/Developer/Meeting Note-taker
 
 GitHub Account: [Sophia](https://github.com/sadsoap)
 
