@@ -1,61 +1,112 @@
-title {
-    text-decoration: underline;
-}
-
-h1 {
-    color: rgb(46, 9, 128);
+#tasklist-title {
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 20px;
+    font-weight: 150;
 }
 
 * {
     font-family: arial;
-    color: rgb(20, 5, 110);
 }
 
 body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    /* Align items at the top */
     height: 100vh;
     margin: 0;
-    background-color: rgb(198, 222, 245);
+    background-color: #887244;
+    padding-top: 20px;
 }
 
 .container {
+    margin-top: 1px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 800px;
+    /* Adjust max-width as needed */
+    width: 90%;
+    margin: 0 auto;
+    /* Center the container horizontally */
 }
 
 .inputContainer {
     width: 100%;
+    max-width: 600px;
+    display: grid;
+    /* Use CSS Grid for the container */
+    grid-template-columns: 3fr 1fr auto;
+    /* Define the column sizes */
+    align-items: center;
+    /* Align items vertically center */
+    gap: 50px;
 }
 
 #taskInput {
-    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
+    border-radius: 12px;
+    /* Rounded corners */
+    border: 1px solid #ccc;
+    /* Optional: Add a border */
+    font-size: 16px;
+    width: 100%;
+    /* Use relative width */
+    max-width: 400px;
 }
 
 #priorityInput {
-    width: 20%;
-    padding: 5px;
+    padding: 10px;
     margin-bottom: 10px;
+    border-radius: 12px;
+    /* Rounded corners */
+    border: 1px solid #ccc;
+    /* Border */
+    font-size: 16px;
+    width: 140%;
+    max-width: 450px;
+    color: #888;
+    /* Default placeholder color */
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
+#priorityInput:focus {
+    outline: none;
+    border-color: #666;
+    /* Change border color on focus */
+}
 
-#addBtn,
-.removeBtn {
-    padding: 10px 20px;
-    background-color: #f39243e0;
-    color: white;
+#priorityInput option[disabled] {
+    color: #888;
+    /* Placeholder color */
+}
+
+#priorityInput option:not([disabled]) {
+    color: #000;
+    /* Normal options color */
+}
+
+#addBtn {
+    padding: 10px;
     border: none;
     cursor: pointer;
-}
-
-#task_list_ul {
-    padding: 0px;
+    border-radius: 15px;
+    /* Rounded corners */
+    font-size: 16px;
+    /* Optional: Adjust font size */
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 100px;
 }
 
 #taskList {
@@ -63,137 +114,86 @@ body {
     padding: 0;
 }
 
-.taskItem {
-    margin-bottom: 5px;
-}
-
-input:checked+label {
-    text-decoration: line-through;
-    color: rgb(46, 9, 128);
-}
-
-input+label {
-    margin-right: 50px;
-}
-
-input:checked~h4 {
-    color: rgb(46, 9, 128);
-}
-
-.list-widget {
-    /* text-align:center; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 10px;
-    width: 100%;
-
-    max-height: 400px;
-    min-width: 600px;
-    overflow-y: scroll;
-}
-
 .task-item {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    height: 40px;
     gap: 10px;
-    width: 90%;
-    /*Added a border to the tasks*/
-    border: 2px solid black;
+    width: 100%;
+    max-width: 600px;
     padding: 7px;
-    border-radius: 100px;
+    border-radius: 20px;
     overflow-wrap: break-word;
     transition-duration: 150ms;
     cursor: pointer;
-    margin-left: 10px;
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: large;
 }
 
-
-/*Added a hover effect to the task items*/
-
-.task-item:hover {
-    background-color: rgb(187, 199, 233);
-}
-
-.list-widget {
-    /*text-align:center;*/
+.task-item .checkbox-container {
     display: flex;
-    flex-direction: column;
-    width: 500px;
+    align-items: center;
+    gap: 10px;
 }
 
-.delete-button {
-    background-color: red;
-    color: white;
+
+.task-item .priority-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 20px;
+}
+
+.task-item .delete-button,
+.task-item .edit-button {
+    padding: 10px;
     border: none;
-    padding: 5px;
     border-radius: 10px;
-    margin-right: 5px;
     cursor: pointer;
     transition-duration: 150ms;
-
-    &:hover {
-        background-color: #8a1c0b;
-    }
+    margin-right: 10px;
 }
 
-h4 {
+/* Optional: Adjust styling for delete and edit buttons */
+.task-item .delete-button {
+    background-color: #BA1212;
+    font-size: large;
+    font-weight: bolder;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+
+.task-item img {
+    width: 20px;
+    height: 20px;
     margin-left: auto;
     margin-right: 10px;
 }
 
-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    padding: 20px;
-    background-color: #fff6c3;
-    /* Example background color */
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #fff6c3;
-    /* Example background color */
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-
-.edit-button {
-    background-color: rgb(126, 154, 245);
+.task-item .edit-button {
+    background-color: #49414F;
     color: white;
-    border: none;
-    padding: 5px;
-    border-radius: 10px;
-    margin-right: 5px;
-    cursor: pointer;
-    transition-duration: 150ms;
-
-    &:hover {
-        background-color: #8a1c0b;
-    }
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: large;
+    margin-right: 10px;
 }
 
-#google_translate_element {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 1000;
-    /* Ensure it appears above other content */
+/* Adjust hover effects if needed */
+.task-item .delete-button:hover {
+    background-color: #8a1c0b;
 }
+
+.task-item .edit-button:hover {
+    background-color: #8a1c0b;
+}
+
+/* Rest of your styles */
 
 main {
     margin-top: 100px;

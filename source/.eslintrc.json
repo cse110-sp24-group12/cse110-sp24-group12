@@ -6,6 +6,9 @@
     },
     "rules": {
         "indent": ["error", 4],
-        "no-console": "off"
+        "no-console": "off",
+        "class-methods-use-this": "off",
+        "no-unused-vars": "warn",
+        "no-undef": "warn"
     }
 }

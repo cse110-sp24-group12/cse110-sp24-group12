@@ -1,188 +1,418 @@
-/* body{
-  background: linear-gradient(220deg, rgba(255, 255, 255, 0.00) 30.34%, rgba(147, 139, 165, 0.60) 54.76%, rgba(103, 93, 129, 0.60) 68.86%, rgba(40, 26, 77, 0.60) 99.13%);
-  background-color: rgb(104, 69, 118);
-} */
-.calendarBox{
+/* DOCUMENT AND MAIN COMPONENTS */
+html{
+  height:fit-content;
+  scrollbar-color: #00000082 #ffffff11;
+}
+body{
+  color: white;
+  font-family: Inter;
+  background-color: var(--background-color);
+  background-image: var(--background-gradient);
+}
+button{
+  color: white;
+  background-color: var(--button-primary-color);
+  font-family: Inter;
+  border-style: none;
+  border-radius: 10px;
+}
+button:hover{
+  background-color: var(--secondary-color-hover);
+}
+input{
+  font-family: Inter;
+}
+
+/* NAVBAR AND CONTENTS */
+#navBar {
+  border-radius: 50px;
+  min-height: 60px;
+  border: none;
+  background: var(--primary-color);
+  box-shadow: 0px 5px 4px 0px var(--primary-shadow);
+  margin: 1%;
   margin-inline: 2%;
-  margin-top: 2%;
+  padding-inline: 2%;
+  align-items: center;
+  display:flex;
 }
-.entryButton{
-  min-width: 100%;
-  
+#navBarLeftAlign{
+  flex: 1;
+  height: 100%;
 }
-.pageTop {
-  display: flex;
-  /* justify-content: space-between; Distribute items along the main axis */
-  /* align-items: center; Center items vertically */
-  padding: 15px; /* Add padding for spacing */
+#navBarRightAlign{
+  flex: 1;
+  height: 100%;
+  text-align: right;
 }
-.backLink {
-  font-size: 20px; /* Adjust font size as needed */
-  text-decoration: none; /* Remove underline */
-  padding-right: 30%;
+.navButton{
+  flex:1;
+  height: 40px;
+  border-radius: 20px;
+  font-size: 18px;
+} 
+#threeLines{
+  margin-right: 3px;
+  width: 20%;
 }
-.centeredTitle {
-  text-align: center; /* Center the text horizontally */
-  margin: 0 auto; /* Center the title horizontally */
-
+#fireSprite{
+  height: 50%;
 }
-
+#helpButton{
+  width: 40px;
+}
+/* CALENDAR AND CONTENTS */
+#monthNav{
+  text-align: center;
+}
 .monthBox, .yearBox {
+  color: var(--text-color);
+  font-family: Inter;
+  width: 90px;
   padding: 10px; /* Add padding */
-  border: 1px solid #ccc; /* Add border */
+  border: 1px solid var(--border-color); /* Add border */
+  border-radius: 10px;
   border-radius: 5px; /* Add border radius for rounded corners */
-  background-color: #f9f9f9; /* Add background color */
+  background-color: #00000000; /* Add background color */
   margin: 1px; /* Adjust spacing between elements */
   margin-right: 0%;
   text-align: center;
 }
+option{
+  background-color: var(--secondary-color);
+}
+.calendarBox{
+  /* max-width: 1213px; */
+  margin: 0 auto;
+  margin-bottom: 2%;
+  margin-inline: 15%;
+  height: 70%;
+  padding: 2%;
+  border-radius: 25px;
+  border: none;
+  background: var(--primary-color);
+  box-shadow: 0px 5px 4px 0px var(--primary-shadow);
+}
 .mouseIn {
-  border-style: solid;
+  border-style: solid inside;
   border-width: 5px;
-  background-color: #edceff;
+  border-radius: 10px;
+  background-color: var(--background-color-hover);
   padding: 8px;
   height: 80px;
   text-align: start;
   vertical-align: top;
 }
 .mouseOut{
-  border: 1px solid #1b1b1b;
-  background-color: #ececec;
+  border-style: solid inside;
+  border-width: 5px;
+  border-radius: 10px;
+  background-color: #ececec00;
   padding: 8px;
   height: 80px;
   text-align: start;
   vertical-align: top;
 }
+.today{
+  color: #f2c76bc1;
+  font-weight: bold;
+}
 table {
   border-collapse: collapse;
   width: 100%;
-  border-color: #ffffff;
-  border-width: 1px;
-  border-style: solid;
+  border: none;
 }
 th{
-  border: 1px solid #ddd;
-  background-color: #c775b9;
   padding: 8px;
   height: 40px;
   width: 14%;
   text-align: center;
 }
 .standardCell{
-  border: 1px solid #ddd;
-  /* background-color: #f5f5f5; */
   padding: 8px;
   height: 80px;
   text-align: start;
   vertical-align: top;
 }
-#emptyCell{
-  border: 1px solid #ddd;
-  background-color: #d3d3d3;
+.emptyCell{
   padding: 8px;
   text-align: center;
   vertical-align: top;
 }
-.hovered {
-  background-color: #e6e6e6;
+.entryButton, .extra{
+  margin: 1px;
+  color: white;
+  font-family: Inter;
+  min-width: 100%;
+  background-color: var(--secondary-color);
+  padding: 2px;  
+  border:none;
+  border-radius: 5px;
+  box-shadow: 0px 4px 3px 0px var(--primary-shadow);
 }
-textarea[id=markdown] {
-  width: 100%;
-  height: 80%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  text-wrap: wrap;
-  resize: none;
-  
-}
+/* .entryButton:hover, .extra:hover{
+  //delete this
+} */
 
+/* MODAL WINDOWS */
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  position: fixed; 
+  z-index: 1; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
 }
-
-/* Modal Content/Box */
 .modalContent {
-  background-color: #fefefe;
-  margin: 2% auto; /* 15% from the top and centered */
+  background-color: var(--secondary-color);
+  margin: 2% auto;
   padding: 20px;
-  border: 1px solid #888;
+  border: 0px solid var(--border-color-dark);
+  border-radius: 25px;
   width: 80%; /* Could be more or less, depending on screen size */
   height: 80%;
-  scroll-behavior: none;
-  justify-content: center; /* Horizontally center the child elements */
-
+  overflow-y: scroll;
+  scrollbar-width: none;
+  justify-content: center; /* Horizontally center the child elements*/
 }
-
-.extraModal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.extraModalContent {
-  background-color: white;
-  margin: 2% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 60%; /* Could be more or less, depending on screen size */
-  height: 60%;
-  scroll-behavior: none;
-  justify-content: center; /* Horizontally center the child elements */
-}
-
-
 /* The Close Button */
 .close {
-  color: #aaa;
+  color: #fff;
   float: right;
   font-size: 28px;
   font-weight: bold;
+  padding-left: 87%;
 }
-/* The Save .save-markdown button */
-.saveButton{
-  position: absolute;
-  margin-left: 50%;
-  padding: 0px;
-}
-.saveMarkdown{
-  position: relative;
-  /* //margin-left: 10%; */
-  top: 0;
-
-  /* Optional: Add padding or margin */
-  align-self: center; 
-  padding: 10px;
-}
-.saveTask{
-  position: relative;
-  /* margin-right: 0%; */
-  /* right: 0; */
-  /* Optional: Add padding or margin */
-  align-self: center;
-  padding: 10px;
-}
-
 .close:hover,
 .close:focus {
-  color: black;
+  color: var(--primary-color);
   text-decoration: none;
   cursor: pointer;
+}
+.modalButton{
+  background-color: var(--primary-color);
+  height: 30px;
+  border-radius: 20px;
+  padding-inline: 15px;
+}
+.modalButton:hover{
+  background-color: var(--primary-color-hover);
+}
+
+/* ENTRY MODAL WINDOW */
+.modalBar{
+  padding: 5px;
+  padding-inline: 0px;
+}
+#topOfModal{
+  display: flex;
+  gap: 20px;
+}
+#titleContainer{
+  align-items: center;
+  display: flex;
+}
+.titleElement{
+  height: 30px;
+}
+#entryTitle{
+  width: 40%;
+  padding-inline: 10px;
+  border: 3px none var(--border-color);
+  border-radius: 10px;
+}
+.bookmark {
+  width: 30px;
+  height: 30px;
+  background: url('../images/unfilledBookmark.png');
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  margin-inline: 10px;
+}
+.bookmark.filled {
+  background-image: url('../images/filledBookmark.png');
+}
+/* .toggleContent{
+  margin-left: 70%;
+} */
+#markdown-main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+  height: 60%;
+  width: 100%;
+}
+textarea[id=markdown] {
+  border: 3px solid var(--border-color);
+  border-radius: 10px;
+  width: 100%;
+  min-height: 95%;
+  max-height: 95%;
+  scrollbar-width:thin;
+  padding-inline: 10px;
+  padding-top: 10px;
+}
+/* The Save .save-markdown button */
+#saveButtonBox{
+  text-align: right;
+}
+#saveMarkdown{
+  flex: 1;
+  margin-right: 5%;
+}
+#markdown-container {
+  background-color: white;
+  color: black;
+
+  border: 3px solid var(--border-color);
+  border-radius: 10px;
+  width: 100%;
+  height: 98%;
+  padding-inline: 24px;
+  overflow: scroll;
+  scrollbar-width:thin;
+  
+
+  /* MARKDOWN-CONTAINER: TEXT AND IMAGE ELEMENTS */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 400;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p {
+    margin-bottom: 24px;
+    padding: 0;
+  }
+  h1 {
+    font-size: 48px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  h2 {
+    border-bottom: 1px solid var(--border-color);
+    font-size: 36px;
+    margin: 24px 0 6px;
+  }
+  h3 {
+    font-size: 24px;
+  }
+  h4 {
+    font-size: 21px;
+  }
+  h5 {
+    font-size: 18px;
+  }
+  a {
+    color: var(--link-color);
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    vertical-align: baseline;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  a:visited {
+    color: var(--link-color-visited);
+  }
+  ul,
+  ol {
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    line-height: 24px;
+  }
+  li ul,
+  li ul {
+    margin-left: 24px;
+  }
+  p,
+  ul,
+  ol {
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 540px;
+  }
+  pre {
+    padding: 0px 24px;
+    max-width: 800px;
+    white-space: pre-wrap;
+  }
+  code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    line-height: 1.5;
+    font-size: 13px;
+    background-color: #ddd;
+    border-radius: 3px;
+    padding-inline:3px;
+  }
+  aside {
+    display: block;
+    float: right;
+    width: 390px;
+  }
+  blockquote {
+    border-left: 0.5em solid var(--border-color);
+    padding: 0 2em;
+    margin-left: 0;
+    max-width: 476px;
+  }
+  blockquote cite {
+    font-size: 14px;
+    line-height: 20px;
+    color: #bfbfbf;
+  }
+  blockquote cite:before {
+    content: "\2014 \00A0";
+  }
+
+  blockquote p {
+    color: #666;
+    max-width: 460px;
+  }
+  hr {
+    width: 540px;
+    text-align: left;
+    margin: 0 auto 0 0;
+    color: #999;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+/* EXTRA MODAL */
+#extraModalContent {
+  color: var(--primary-color);
+  font-weight:bold;
+  background-color: white;
+  width: 30%;
+  height: 40%;
+  margin-top: 10%;
+
+  .close {
+    color: var(--secondary-color);
+  }
+  .close:hover,
+  .close:focus {
+    color: var(--secondary-color-hover);
+  }
 }
