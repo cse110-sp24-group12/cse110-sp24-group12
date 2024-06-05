@@ -531,7 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Prevent the default behavior of the hotkey (e.g., browser history navigation)
             event.preventDefault();
             // Call the function to execute the action
-            simulateMouseClick(document.getElementsByClassName('today')[0]);
+            simulateMouseClick(document.getElementsByClassName('today')[0].parentElement);
         }
         // Check if arrow key was pressed, will change month based on this
         if (event.key === 'ArrowRight' && document.getElementById('myModal').style.display === 'none') {
@@ -563,6 +563,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if ((event.ctrlKey || event.metaKey) && event.key === 'd') {
             // simulate pressing the dashboardLink button
             simulateMouseClick(document.getElementById('dashboardLink'));
+        }
+
+        if ((event.ctrlKey || event.metaKey) && event.key === 't') {
+            // simulate pressing the taskListBtn button
+            simulateMouseClick(document.getElementById('taskListBtn'));
         }
     });
 
