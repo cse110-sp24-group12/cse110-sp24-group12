@@ -8,18 +8,18 @@ function init() {
     let pin;
     let rememberMe;
     const handleButtonClick = async () => {
-        if (input.value.length >= 6) {
+        if (input.value.length >= 6) { // input validation for password length
             alert.style.color = 'transparent';
             oldPass = input.value;
             input.value = '';
             rememberMe = false;
-            const password = await window.api.encryptData(oldPass);
+            const password = await window.api.encryptData(oldPass); // encrypts password
             const data = {
                 password,
                 pin,
                 rememberMe,
             };
-            window.api.writePassword(JSON.stringify(data));
+            window.api.writePassword(JSON.stringify(data)); // writes password to json file
             passwordPage.click();
         } else {
             alert.style.color = 'red';
