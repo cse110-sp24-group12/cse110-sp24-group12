@@ -411,7 +411,8 @@ const encryptData = (data) => {
 };
 
 /**
- * encrypt-data - calls encryptData function and passes in raw password and returns output from encryptData function
+ * encrypt-data - calls encryptData function and passes in raw password
+ * and returns output from encryptData function
  * @param {string} arg - String for the Unencrypted password
  * @returns {string} encrypted password
  * input: {"password":"123456"}
@@ -419,7 +420,8 @@ const encryptData = (data) => {
 ipcMain.handle('encrypt-data', async (event, arg) => encryptData(arg));
 
 /**
- * decryptData - takes in encrypted password and decrypts it and returns decrypted result using CryptoJS
+ * decryptData - takes in encrypted password and decrypts it
+ * and returns decrypted result using CryptoJS
  * @param {string} arg - String for the encrypted password
  * @returns {string} decrypted password
  * input: {"password":"HGSGDHDSjhedwdjwdwd"}
@@ -430,9 +432,9 @@ const decryptData = (data) => {
     return originalText;
 };
 
-
 /**
- * decrypt-data - calls decryptData function and passes in encrypted password and returns output from decryptData function
+ * decrypt-data - calls decryptData function and passes in encrypted password
+ * and returns output from decryptData function
  * @param {string} arg - String for the encrypted password
  * @returns {string} decrypted password
  * input: {"password":"HGSGDHDSjhedwdjwdwd"}

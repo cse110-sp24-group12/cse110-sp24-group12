@@ -8,12 +8,12 @@ function init() {
     let pin;
     let rememberMe;
     const handleButtonClick = async () => {
-        if (input.value.length >= 6) {      // input validation for password length
+        if (input.value.length >= 6) { // input validation for password length
             alert.style.color = 'transparent';
             oldPass = input.value;
             input.value = '';
             rememberMe = false;
-            const password = await window.api.encryptData(oldPass); // encrypts password 
+            const password = await window.api.encryptData(oldPass); // encrypts password
             const data = {
                 password,
                 pin,
