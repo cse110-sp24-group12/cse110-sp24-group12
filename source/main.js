@@ -398,19 +398,47 @@ ipcMain.handle('update-markdown-entry', async (event, arg) => {
     }
 });
 
+/**
+ * encryptData - takes in raw password and encrypts password using CryptoJS
+ * @param {string} arg - String for the Unencrypted password
+ * @returns {string} encrypted password
+ * input: {"password":"123456"}
+ * output: {"password":"HGSGDHDSjhedwdjwdwd"}
+ */
 const encryptData = (data) => {
     const ciphertext = CryptoJS.AES.encrypt(data, '12').toString();
     return ciphertext;
 };
 
+/**
+ * encrypt-data - calls encryptData function and passes in raw password
+ * and returns output from encryptData function
+ * @param {string} arg - String for the Unencrypted password
+ * @returns {string} encrypted password
+ * input: {"password":"123456"}
+ */
 ipcMain.handle('encrypt-data', async (event, arg) => encryptData(arg));
 
+/**
+ * decryptData - takes in encrypted password and decrypts it
+ * and returns decrypted result using CryptoJS
+ * @param {string} arg - String for the encrypted password
+ * @returns {string} decrypted password
+ * input: {"password":"HGSGDHDSjhedwdjwdwd"}
+ */
 const decryptData = (data) => {
     const bytes = CryptoJS.AES.decrypt(data, '12');
     const originalText = bytes.toString(CryptoJS.enc.Utf8);
     return originalText;
 };
 
+/**
+ * decrypt-data - calls decryptData function and passes in encrypted password
+ * and returns output from decryptData function
+ * @param {string} arg - String for the encrypted password
+ * @returns {string} decrypted password
+ * input: {"password":"HGSGDHDSjhedwdjwdwd"}
+ */
 ipcMain.handle('decrypt-data', async (event, arg) => decryptData(arg));
 
 /**

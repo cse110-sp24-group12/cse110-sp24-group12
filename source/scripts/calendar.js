@@ -429,11 +429,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const extraButtons = document.getElementById('extraButtons');
         const [, date] = event.target.id.split('.');
 
-        // Clear previous buttons to prevent duplication
-        extraButtons.innerHTML = formatDate(date);
-
         // Fetch entries based on date
         const entries = await window.api.getEntriesOnDate(date);
+
+        // Clear previous buttons to prevent duplication
+        extraButtons.innerHTML = formatDate(date);
 
         // Create and append buttons
         entries.forEach((entry) => {
