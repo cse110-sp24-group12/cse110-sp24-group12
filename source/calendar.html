@@ -15,7 +15,9 @@
   <div id="navBar">
     <div id="navBarLeftAlign">
       <button id="dashboardLink" class="navButton">
-        <img id="threeLines" src="../source/images/dashboard-lines-icon.png">[Streak #]<img id="fireSprite" src="../source/images/fireSprite.png">
+        <img id="threeLines" src="../source/images/dashboard-lines-icon.png">
+        <span id="streakCount">[Streak #]</span>
+        <img id="fireSprite" src="../source/images/fireSprite.png">
       </button>
 
       <button id="taskListBtn" class="navButton">Task List</button>
@@ -90,6 +92,7 @@
 
   <script src="main.js"></script>
   <script type="module" src="scripts/task-list.js"></script>
+  <script type="text/javascript" src="scripts/calculateStreakHelper.js"></script>
   <script type="module" src="scripts/calendar.js"></script>
   <!-- Note that type=module is required to call functions from other files -->
 </body>

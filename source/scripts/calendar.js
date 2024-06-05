@@ -94,6 +94,14 @@ function formatButtons(inputArray, id) {
     return entryStringButtons;
 }
 
+async function updateStreakCount() {
+    const jsonPath = 'data/entries.json';
+    const data = await window.api.readFile(jsonPath);
+    const entries = JSON.parse(data);
+    const streak = calculateConsecutiveDayStreak(entries);
+    document.getElementById('streakCount').innerHTML = streak;
+}
+
 /**
  * Listen for DOMContentLoaded
  *
@@ -176,6 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         calendarHTML += '</tr></tbody>';
         calendarContainer.innerHTML = calendarHTML;
+
+        updateStreakCount();
     }
 
     // update calendar anytime user changes the month or year
