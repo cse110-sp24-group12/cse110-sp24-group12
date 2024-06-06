@@ -1,7 +1,7 @@
 import { test, expect, _electron as electron } from '@playwright/test';
 import fs from 'fs';
 
-test.describe('Playwright Testing', () => {
+test.describe('Calendar E2E Tests', () => {
     let window, electronApp;
 
     test.beforeAll(async () => {
