@@ -12,16 +12,16 @@
 <body>
     <div class="background-layer1">
         <div class="background-layer2">
-            <div class="background-layer3">
+            <div class="background-layer3 main-layout">
                 <div class="containerbig2">
                     <div id="navBar">
                         <div id="navBarLeftAlign">
                             <button id="dashboardLink" class="navButton">
                                 <img id="threeLines" src="../source/images/dashboard-lines-icon.png"><span id="streakNumber" class="streakNumber"></span><img id="fireSprite" src="../source/images/fireSprite.png">
                             </button>
+                            <img src="images/questionMark.png" alt="helpBox" class="clickable-image" id="triggerPopup">
                         </div>
                         <div class="helpBox">
-                            <img src="images/questionMark.png" alt="helpBox" class="clickable-image" id="triggerPopup">
                             <div id="myModal" class="modal">
                                 <div class="modal-content">
                                     <span class="close">&times;</span>
@@ -49,14 +49,16 @@
                         </div>
                     </div>
                 </div>
-                <br>
+                
                 <div class="container-wrapper">
                     <div class="containerbig">
                         <h3 class="my-heading">
                             <span class="tabwithsmallline"></span>Overview of <select id="monthDropdown" class="month-dropdown"></select> 2024
                         </h3>
-                        <div class="whitecontainer">
-                            <div class="container" id="graph-container"></div>
+                        <div class="heatmap-container">
+                            <div class="whitecontainer">
+                                <div class="container" id="graph-container"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="containerbig5">
