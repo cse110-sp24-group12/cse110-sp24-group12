@@ -410,13 +410,18 @@ h5 {
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
+    border-radius: 10px;
     width: 80%; /* Could be more or less, depending on screen size */
 }
 
 .help-section {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
     font-family: Inter;
     background-color: #49414F;
+    border-radius: 10px;
 }
 .section p {
     margin: 0 0 5px 0;
