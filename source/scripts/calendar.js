@@ -218,6 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
         element.dispatchEvent(mouseClickEvent);
     }
 
+    // this is to remove the cmd enter keydown listener to fix duplicate save bug
+    let keydownListener = null;
     /**
      * openModal - will open up a modal window with text box and title box
      * @function
@@ -310,47 +312,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 generateCalendar();
             });
         }
-        document.addEventListener('keydown', (pressedKey) => {
-            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
-                // Call a function or execute an action when the Esc key is pressed
-                modal.style.display = 'none';
-            }
-        });
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = () => {
-            modal.style.display = 'none';
-        };
-
-        let canToggle = true;
-        bookmarkButton.addEventListener('click', () => {
-            if (!canToggle) {
-                return; // Ignore the click if it's within the debounce period
-            }
-
-            // Disable further clicks for 100ms
-            canToggle = false;
-            setTimeout(() => {
-                canToggle = true;
-            }, 100);
-
-            // Toggle the filled class
-            bookmarkButton.classList.toggle('filled');
-            bookmarked = bookmarkButton.classList.contains('filled');
-
-            console.log('The bookmark was just pressed~ Value of bookmarked:', bookmarked);
-        });
-
-        /**
-        * Listens for click of the saveMarkDown button.
-        *
-        * @type {HTMLElement} - the target of the event, being the save button
-        * @listens onclick
-        *                  When a user clicks the "Save Entry" button,
-        *                  the popup closees, adds the new entry to storage, and
-        *                  calls generateCalendar() to update it.
-        */
-        saveMarkDown.onclick = async () => {
+        // Function for saving entry, will be when pressing save button, or keyboard shortcut
+        async function saveMarkdownHelper() {
             console.log('Save button was just pressed to save entry:', title.value);
             title.value.replace(/ /g, '_');
             title.value = replaceQuotesWithEntities(title.value);
@@ -401,8 +364,59 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 generateCalendar();
             }
+        }
+
+        // Remove any existing keydown listener
+        if (keydownListener !== null) {
+            document.removeEventListener('keydown', keydownListener);
+        }
+
+        // Define and add a new keydown listener
+        keydownListener = (pressedKey) => {
+            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
+                modal.style.display = 'none';
+            }
+            if ((pressedKey.metaKey || pressedKey.ctrlKey) && pressedKey.key === 'Enter') {
+                console.log('Cmd/Ctrl + Enter was pressed!');
+                saveMarkdownHelper();
+            }
+        };
+        document.addEventListener('keydown', keydownListener);
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = () => {
+            modal.style.display = 'none';
         };
 
+        let canToggle = true;
+        bookmarkButton.addEventListener('click', () => {
+            if (!canToggle) {
+                return; // Ignore the click if it's within the debounce period
+            }
+
+            // Disable further clicks for 100ms
+            canToggle = false;
+            setTimeout(() => {
+                canToggle = true;
+            }, 100);
+
+            // Toggle the filled class
+            bookmarkButton.classList.toggle('filled');
+            bookmarked = bookmarkButton.classList.contains('filled');
+
+            console.log('The bookmark was just pressed~ Value of bookmarked:', bookmarked);
+        });
+
+        /**
+        * Listens for click of the saveMarkDown button.
+        *
+        * @type {HTMLElement} - the target of the event, being the save button
+        * @listens onclick
+        *                  When a user clicks the "Save Entry" button,
+        *                  the popup closees, adds the new entry to storage, and
+        *                  calls generateCalendar() to update it.
+        */
+        saveMarkDown.onclick = saveMarkdownHelper;
         /**
         * Listens for click outside of modal window, closes if detected
         *
@@ -465,6 +479,13 @@ document.addEventListener('DOMContentLoaded', () => {
         span.onclick = () => {
             modal.style.display = 'none';
         };
+
+        // User can close out of extraModal window using esc key
+        document.addEventListener('keydown', (pressedKey) => {
+            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
+                modal.style.display = 'none';
+            }
+        });
 
         window.onclick = (modalOutsideClick) => {
             if (modalOutsideClick.target === modal) {
