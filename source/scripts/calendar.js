@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             calendarHTML += `<td id='${month + 1}-${day}-${year}' class='mouseOut standardCell'>${fill}</td>`;
-            
+
             count += 1;
         }
 
@@ -507,8 +507,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function openTaskListModal(event) {
         const modal = document.getElementById('taskListModal');
-       
-        modal.style.display = 'block';   
+
+        modal.style.display = 'block';
 
         document.addEventListener('keydown', (pressedKey) => {
             if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 modal.style.display = 'none';
             }
         });
-    };
+    }
 
     calendarContainer.addEventListener('click', (event) => {
         console.log('This is what was just clicked:', event);

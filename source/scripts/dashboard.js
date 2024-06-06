@@ -166,10 +166,10 @@ let entries;
                     event.stopPropagation();
                     // Remove the entry from the entries array
                     entries = entries.filter((ent) => ent.id !== entry.id);
-                    
+
                     // // Remove the entry element from the DOM
                     bookmarkedContainer.removeChild(entryElement);
-                    
+
                     // Delete the entry from the database
                     await window.api.deleteEntryByTitleAndDate([entry.title, entry.date]);
 

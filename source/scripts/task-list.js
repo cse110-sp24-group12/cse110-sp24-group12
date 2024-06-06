@@ -114,7 +114,7 @@ class TaskListWidget extends HTMLElement {
             priority.alt = 'Low';
             break;
         default:
-            console.log('Image error', task.priority, typeof(task.priority));
+            console.log('Image error', task.priority, typeof (task.priority));
         }
 
         // Here is the edit button pack
