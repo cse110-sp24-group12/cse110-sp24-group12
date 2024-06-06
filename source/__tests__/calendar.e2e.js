@@ -1,7 +1,7 @@
 import { test, expect, _electron as electron } from '@playwright/test';
 import fs from 'fs';
 
-test.describe('Playwright Testing', () => {
+test.describe('Calendar E2E Tests', () => {
     let window, electronApp;
 
     test.beforeAll(async () => {
@@ -33,9 +33,8 @@ test.describe('Playwright Testing', () => {
 
     test('Add entry to today', async () => {
         const today = new Date();
-        const formattedDate = `${today.getMonth() + 1}-${today.getDate()}-${today.getFullYear()}`;
         
-        const dayElement = await window.$(`td.today`);
+        const dayElement = await window.$(`td:has(span.today)`);
         await dayElement.click();
         await window.waitForTimeout(50);
 
