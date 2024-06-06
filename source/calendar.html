@@ -7,17 +7,21 @@
   <link rel="stylesheet" type="text/css" href="styles/color-theme.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
   <link rel="stylesheet" type="text/css" href="styles/color-theme.css" />
+  <link rel="stylesheet" type="text/css" href="styles/markdown.css" />
   <link rel="stylesheet" type="text/css" href="styles/calendarStyle.css" />
+  <link rel="stylesheet" type="text/css" href="styles/task-list-style.css" />
 </head>
 
 <body>
   <div id="navBar">
     <div id="navBarLeftAlign">
       <button id="dashboardLink" class="navButton">
-        <img id="threeLines" src="../source/images/dashboard-lines-icon.png">[Streak #]<img id="fireSprite" src="../source/images/fireSprite.png">
+        <img id="threeLines" src="../source/images/dashboard-lines-icon.png">
+        <span id="streakCount">[Streak #]</span>
+        <img id="fireSprite" src="../source/images/fireSprite.png">
       </button>
 
-      <button id="clearBtn" class="navButton">Clear data</button>
+      <button id="taskListBtn" class="navButton">Task List</button>
     </div>
     <div id="navBarRightAlign">
       <button id="helpButton" class="navButton">?</button>
@@ -78,11 +82,19 @@
     </div>
 
   </div>
+
+  <div id="taskListModal" class="modal">
+    <div id="taskListModalContent" class="modalContent tasklist-modal-content">
+      <h1>Thanos's Gauntlet of Tasks</h1>
+      <h3>Conquer Your To-Do List, One Infinity Stone at a time</h3>
+      <task-list-widget data-file="data/tasklist/tasks.json"></task-list-widget>
+    </div>
+  </div>
+
   <script src="main.js"></script>
-  <script type = "module" src="scripts/calendar.js"></script>
-  <!-- Note that type=module is required to call functions from other files -->
-  <script src="main.js"></script>
-  <script type = "module" src="scripts/calendar.js"></script>
+  <script type="module" src="scripts/task-list.js"></script>
+  <script type="text/javascript" src="scripts/calculateStreakHelper.js"></script>
+  <script type="module" src="scripts/calendar.js"></script>
   <!-- Note that type=module is required to call functions from other files -->
 </body>
 

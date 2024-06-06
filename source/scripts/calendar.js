@@ -95,6 +95,19 @@ function formatButtons(inputArray, id) {
 }
 
 /**
+ * updates the streak count on the calendar page
+ * @function
+ * @returns {void}
+ */
+async function updateStreakCount() {
+    const jsonPath = 'data/entries.json';
+    const data = await window.api.readFile(jsonPath);
+    const entries = JSON.parse(data);
+    const streak = calculateConsecutiveDayStreak(entries);
+    document.getElementById('streakCount').innerHTML = streak;
+}
+
+/**
  * Listen for DOMContentLoaded
  *
  * @type {document} - the target of the event
@@ -104,11 +117,11 @@ function formatButtons(inputArray, id) {
 document.addEventListener('DOMContentLoaded', () => {
     // Set HTMLElements to elements in JS
     const dashboardButton = document.getElementById('dashboardLink');
+    const taskListButton = document.getElementById('taskListBtn');
     // const helpButton = document.getElementById('helpButton');
 
     const yearInput = document.getElementById('year');
     const calendarContainer = document.getElementById('calendar');
-    const clearDataButton = document.getElementById('clearBtn');
     const entryButtons = document.getElementsByClassName('entryButton');
     const monthSelect = document.getElementById('month');
     monthSelect.focus();
@@ -157,23 +170,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             let fill;
             const memory = results[day - 1];
-            // check what was stored for that day
-            if (memory.length === 0) {
-                fill = day;
-            } else {
-                fill = day + formatButtons(memory, `extra.${month + 1}-${day}-${year}`);
-            }
+
             if (currentDay === day && (currentMonth) === month && currentYear === year) {
-                console.log('Todays date is:', currentMonth + 1, currentDay, currentYear);
-                calendarHTML += `<td id='${month + 1}-${day}-${year}' class='mouseOut standardCell today'>${fill}</td>`;
+                fill = `<span class='today'>${day}</span>`;
             } else {
-                calendarHTML += `<td id='${month + 1}-${day}-${year}' class='mouseOut standardCell'>${fill}</td>`;
+                fill = `${day}`;
             }
+
+            // check what was stored for that day
+            if (memory.length !== 0) {
+                fill += formatButtons(memory, `extra.${month + 1}-${day}-${year}`);
+            }
+
+            calendarHTML += `<td id='${month + 1}-${day}-${year}' class='mouseOut standardCell'>${fill}</td>`;
+
             count += 1;
         }
 
         calendarHTML += '</tr></tbody>';
         calendarContainer.innerHTML = calendarHTML;
+
+        updateStreakCount();
     }
 
     // update calendar anytime user changes the month or year
@@ -270,10 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // correctly assign bookmark value
             const current = await window.api.getEntryByTitleAndDate([name, date]);
             bookmarked = current.bookmarked;
+            bookmarkButton.classList.add('bookmark');
             if (bookmarked) {
                 bookmarkButton.classList.add('filled');
-            } else {
-                bookmarkButton.className = 'bookmark';
             }
         }
 
@@ -488,6 +504,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    async function openTaskListModal(event) {
+        const modal = document.getElementById('taskListModal');
+
+        modal.style.display = 'block';
+
+        document.addEventListener('keydown', (pressedKey) => {
+            if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
+                // Call a function or execute an action when the Esc key is pressed
+                modal.style.display = 'none';
+            }
+        });
+    }
+
     calendarContainer.addEventListener('click', (event) => {
         console.log('This is what was just clicked:', event);
         if (event.target.classList.contains('standardCell') || event.target.classList.contains('entryButton')) {
@@ -537,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Prevent the default behavior of the hotkey (e.g., browser history navigation)
             event.preventDefault();
             // Call the function to execute the action
-            simulateMouseClick(document.getElementsByClassName('today')[0]);
+            simulateMouseClick(document.getElementsByClassName('today')[0].parentElement);
         }
         // Check if arrow key was pressed, will change month based on this
         if (event.key === 'ArrowRight' && document.getElementById('myModal').style.display === 'none') {
@@ -570,14 +600,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // simulate pressing the dashboardLink button
             simulateMouseClick(document.getElementById('dashboardLink'));
         }
-    });
 
-    // Event listener for the click of clear data button,
-    clearDataButton.addEventListener('click', async () => {
-        // localStorage.clear();
-        await window.api.clearEntries();
-
-        generateCalendar();
+        if ((event.ctrlKey || event.metaKey) && event.key === 't') {
+            // simulate pressing the taskListBtn button
+            simulateMouseClick(document.getElementById('taskListBtn'));
+        }
     });
 
     // Event listeners for the entry buttons ("Save as Markdown/Task")
@@ -629,5 +656,10 @@ document.addEventListener('DOMContentLoaded', () => {
     dashboardButton.addEventListener('click', () => {
         // Link to dashboard here
         window.api.loadHtmlFile('dashboard.html');
+    });
+
+    taskListButton.addEventListener('click', () => {
+        // Link to task list here
+        openTaskListModal();
     });
 });

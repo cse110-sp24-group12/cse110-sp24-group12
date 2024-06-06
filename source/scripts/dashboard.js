@@ -83,6 +83,23 @@ function updateStreak(entries) {
     updateStreakImage(currentStreak);
 }
 
+async function openEntryModal(entry) {
+    const modal = document.getElementById('entryModal');
+    const contentInput = document.getElementById('markdown-container');
+
+    const markdownContent = await window.api.readMarkdown(entry.fileName);
+
+    contentInput.innerHTML = markdownContent;
+
+    modal.style.display = 'block';
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            modal.style.display = 'none';
+        }
+    });
+}
+
 let entries;
 
 (async () => {
@@ -140,16 +157,22 @@ let entries;
                 `;
                 bookmarkedContainer.appendChild(entryElement);
 
+                entryElement.addEventListener('click', () => {
+                    openEntryModal(entry);
+                });
+
                 // Add event listener for delete button
                 entryElement.querySelector('.delete-button').addEventListener('click', async (event) => {
-                    const entryId = event.target.closest('.delete-button').getAttribute('data-id');
-                    console.log('Delete entry with ID:', entryId);
+                    event.stopPropagation();
                     // Remove the entry from the entries array
-                    entries = entries.filter((ent) => ent.id !== entryId);
-                    // Update the JSON file
-                    await window.api.writeFile(jsonPath, JSON.stringify(entries, null, 2));
-                    // Remove the entry element from the DOM
+                    entries = entries.filter((ent) => ent.id !== entry.id);
+
+                    // // Remove the entry element from the DOM
                     bookmarkedContainer.removeChild(entryElement);
+
+                    // Delete the entry from the database
+                    await window.api.deleteEntryByTitleAndDate([entry.title, entry.date]);
+
                     // Recalculate streak and update UI
                     const selectedMonth = parseInt(document.getElementById('monthDropdown').value, 10);
                     renderGraph(entries, selectedMonth);

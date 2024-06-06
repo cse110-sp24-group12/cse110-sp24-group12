@@ -36,6 +36,7 @@ contextBridge.exposeInMainWorld(
         writeFile: (args) => ipcRenderer.invoke('write-file', args),
         readMarkdown: (args) => ipcRenderer.invoke('read-markdown', args),
         readFile: (args) => ipcRenderer.invoke('read-file', args),
+        writeJsonFile: (args) => ipcRenderer.invoke('write-json-file', args),
         renderMarkdown: (args) => ipcRenderer.invoke('render-markdown', args),
         getEntryByMonth: (args) => ipcRenderer.invoke('get-entries-for-month', args),
         getEntryById: (args) => ipcRenderer.invoke('get-entry-by-id', args),

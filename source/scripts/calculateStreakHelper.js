@@ -1,3 +1,8 @@
+/**
+ * Calculate the current consecutive day streak based on the entries
+ * @param {*} entries  An array of entries, each containing a date property
+ * @returns The current consecutive day streak
+ */
 function calculateConsecutiveDayStreak(entries) {
     if (entries.length === 0) return 0;
 
