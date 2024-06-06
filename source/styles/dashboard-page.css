@@ -2,6 +2,7 @@
 html {
     height: 100%;
     width: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -11,28 +12,40 @@ html {
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
+    /*padding: 20px;*/
     background: rgba(105, 65, 177, 0.17);
 }
+
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    gap: 20px;
+}
+
 .containerbig {
     background: #49414F;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     border-radius: 25px;
-    width: 650px;
-    height: 250px;
-    align-self: center;
-    margin-left: 75px;
-    justify-content: center;
-    padding-bottom: 40px;
+    flex: 1;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 .containerbig2 {
     background: #49414F;
+    width: 95%;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     border-radius: 25px;
-    width: 1350px;
     height: 50px;
     align-self: center;
     margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px;
 }
 .containerbig3 {
     background: #49414F;
@@ -47,31 +60,23 @@ body {
     background: #49414F;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0);
     border-radius: 30px;
-    width: 1275px;
-    height: 300px;
-    align-self: center;
-    margin-left: 75px;
-    justify-content: center;
-    padding-bottom: 40px;
-    max-height: 350px;
-    margin-top: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+    height: 100%;
+    margin-bottom: 40px;
 }
 .containerbig5 {
     background: #49414F;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     border-radius: 25px;
-    width: 200px;
-    height: 250px;
-    align-self: center;
-    margin-left: 50px;
-    justify-content: center;
-    padding-bottom: 40px;
     flex: 1;
+    height: 100%;
+
 }
 .containerbig6 {
     background: #49414F;
-    width: 1275px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     align-self: center;
     justify-content: center;
     padding-bottom: 20px;
@@ -82,7 +87,16 @@ body {
 }
 .container-wrapper {
     display: flex;
-    width: 1350px;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+
+    height: 40%;
+    min-height: 300px;
+    width: 95%;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px;
 }
 .h3 {
     color: white;
@@ -112,13 +126,19 @@ body {
     margin-top: 7px;
     flex: 1;
 }
+.heatmap-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
 .whitecontainer {
     background: #2d2d44;
     background-blend-mode: overlay;
     width: 230px;
     height: 170px;
-    margin-left: 200px;
-    margin-top: 10px;
     background-color: #69697c; /* White background for the outer box */
     padding: 5px; /* Padding to create some space inside the white container */
     border-radius: 10px; /* Rounded corners for a smoother look */
@@ -213,22 +233,20 @@ a:hover {
     mix-blend-mode: overlay;
 }
 #navBar {
-    border-radius: 50px;
-    min-height: 60px;
-    border: none;
-    background: var(--primary-color);
-    box-shadow: 0px 5px 4px 0px var(--primary-shadow);
-    margin: 1%;
     margin-inline: 2%;
     padding-inline: 2%;
     align-items: center;
     display: flex;
 }
 #navBarLeftAlign {
-    flex: 1;
+    width: 100%;
     height: 100%;
     margin-bottom: 15px;
     margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 h5 {
     margin-top: 5px;
@@ -242,6 +260,7 @@ h5 {
 .navButton {
     flex: 1;
     height: 40px;
+    max-width: 100px;
     border-radius: 20px;
     font-size: 18px;
     background-color: #D5AC57;
@@ -347,9 +366,6 @@ h5 {
 }
 .clickable-image {
     height: 40px;
-    position: absolute;
-    bottom: 20px;
-    right: 10px;
     mix-blend-mode: overlay;
     cursor: pointer;
     color: #D5AC57;
@@ -360,20 +376,60 @@ h5 {
     right: 50px;
     mix-blend-mode: normal;
 }
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
+    z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
+
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.modalContent {
+    background-color: var(--secondary-color);
+    margin: 2% auto;
+    padding: 20px;
+    border: 0px solid var(--border-color-dark);
+    border-radius: 25px;
+    width: 80%; /* Could be more or less, depending on screen size */
+    height: 80%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    justify-content: center; /* Horizontally center the child elements*/
+}
+
+#markdown-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+    height: 100%;
+    width: 100%;
+  }
+
 .help-section {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
     font-family: Inter;
     background-color: #49414F;
+    border-radius: 10px;
 }
 .section p {
     margin: 0 0 5px 0;
@@ -403,13 +459,11 @@ h5 {
 }
 .close {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    color: #aaa;
-    float: right;
-    font-size: 50px;
-    font-weight: bold;
-}
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+  }
 .close:hover,
 .close:focus {
     color: black;

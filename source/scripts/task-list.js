@@ -13,7 +13,6 @@ class TaskListWidget extends HTMLElement {
      */
     init() {
         this.innerHTML = `
-            <h1 id="tasklist-title">Task List</h1>
                 <div class="container">
                     
                     <div class="inputContainer">
@@ -45,12 +44,11 @@ class TaskListWidget extends HTMLElement {
      */
     async connectedCallback() {
         // currently read if by it but could it change it to read by type?
-        const entryId = this.getAttribute('data-entry-id');
-        if (entryId) {
+        const dataFile = this.getAttribute('data-file');
+        if (dataFile) {
             try {
-                const entry = await window.api.getEntryById(entryId);
-                const tasks = await window.api.readFile(entry.fileName);
-                this.filePath = entry.fileName;
+                const tasks = await window.api.readFile(dataFile);
+                this.filePath = dataFile;
                 this.tasks = JSON.parse(tasks);
                 console.log(this.tasks);
                 console.log('Finish reading tasks');
@@ -61,7 +59,7 @@ class TaskListWidget extends HTMLElement {
                 console.error('Error fetching tasks:', error);
             }
         } else {
-            console.error('No data-entry-id provided.');
+            console.error('No data-file provided.');
         }
     }
 
@@ -98,7 +96,7 @@ class TaskListWidget extends HTMLElement {
         // priority.innerHTML = ` : ${task.priority}`;
         // console.log(task.priority)
         priority.style.marginRight = '10px';
-        switch (task.priority) {
+        switch (parseInt(task.priority, 10)) {
         case 4:
             priority.src = './images/priorityLevel4.png';
             priority.alt = 'Critical';
@@ -116,7 +114,7 @@ class TaskListWidget extends HTMLElement {
             priority.alt = 'Low';
             break;
         default:
-            console.log('Image error');
+            console.log('Image error', task.priority, typeof (task.priority));
         }
 
         // Here is the edit button pack
