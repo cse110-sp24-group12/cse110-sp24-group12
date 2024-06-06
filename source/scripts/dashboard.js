@@ -83,6 +83,23 @@ function updateStreak(entries) {
     updateStreakImage(currentStreak);
 }
 
+async function openEntryModal(entry) {
+    const modal = document.getElementById('entryModal');
+    const contentInput = document.getElementById('markdown-container');
+
+    const markdownContent = await window.api.readMarkdown(entry.fileName);
+
+    contentInput.innerHTML = markdownContent;
+
+    modal.style.display = 'block';
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            modal.style.display = 'none';
+        }
+    });
+}
+
 let entries;
 
 (async () => {
@@ -140,8 +157,13 @@ let entries;
                 `;
                 bookmarkedContainer.appendChild(entryElement);
 
+                entryElement.addEventListener('click', () => {
+                    openEntryModal(entry);
+                });
+
                 // Add event listener for delete button
-                entryElement.querySelector('.delete-button').addEventListener('click', async () => {
+                entryElement.querySelector('.delete-button').addEventListener('click', async (event) => {
+                    event.stopPropagation();
                     // Remove the entry from the entries array
                     entries = entries.filter((ent) => ent.id !== entry.id);
                     

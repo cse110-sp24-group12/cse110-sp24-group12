@@ -233,11 +233,6 @@ a:hover {
     mix-blend-mode: overlay;
 }
 #navBar {
-    border-radius: 50px;
-    min-height: 60px;
-    border: none;
-    background: var(--primary-color);
-    box-shadow: 0px 5px 4px 0px var(--primary-shadow);
     margin-inline: 2%;
     padding-inline: 2%;
     align-items: center;
@@ -381,16 +376,6 @@ h5 {
     right: 50px;
     mix-blend-mode: normal;
 }
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
 
 .modal {
     display: none; /* Hidden by default */
@@ -413,6 +398,29 @@ h5 {
     border-radius: 10px;
     width: 80%; /* Could be more or less, depending on screen size */
 }
+
+.modalContent {
+    background-color: var(--secondary-color);
+    margin: 2% auto;
+    padding: 20px;
+    border: 0px solid var(--border-color-dark);
+    border-radius: 25px;
+    width: 80%; /* Could be more or less, depending on screen size */
+    height: 80%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    justify-content: center; /* Horizontally center the child elements*/
+}
+
+#markdown-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+    height: 100%;
+    width: 100%;
+  }
 
 .help-section {
     display: flex;
