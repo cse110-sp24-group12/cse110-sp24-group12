@@ -200,8 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dispatch the mouse click event on the element
         element.dispatchEvent(mouseClickEvent);
     }
-  
-    //this is to remove the cmd enter keydown listener to fix duplicate save bug
+
+    // this is to remove the cmd enter keydown listener to fix duplicate save bug
     let keydownListener = null;
     /**
      * openModal - will open up a modal window with text box and title box
@@ -465,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // User can close out of extraModal window using esc key
-        document.addEventListener('keydown', (pressedKey)=>{
+        document.addEventListener('keydown', (pressedKey) => {
             if (pressedKey.key === 'Escape' || pressedKey.key === 'Esc') {
                 modal.style.display = 'none';
             }
@@ -487,7 +487,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 openModal(entryButtonClick);
             });
         });
-
     }
     calendarContainer.addEventListener('click', (event) => {
         console.log('This is what was just clicked:', event);
@@ -495,7 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
             openModal(event);
         }
     });
-  
+
     /**
     * Listens for mouseover of elements in the calendar.
     *
