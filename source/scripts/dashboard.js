@@ -47,7 +47,7 @@ function renderGraph(entries, month) {
 function updateStreakImage(streakLength) {
     const streakImage = document.getElementById('streakImage');
     let imagePath = '';
-      if (streakLength < 7) {
+        if (streakLength < 7) {
             streakImage.style.display = 'none';
         } else if (streakLength < 14) {
             imagePath = 'images/1is.png';
