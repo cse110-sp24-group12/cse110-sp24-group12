@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "electron .",
-    "test": "npx playwright test",
+    "test": "npx playwright test --workers 1",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "generate-docs": "node_modules/.bin/jsdoc --configure configs/.jsdoc.json --verbose",
