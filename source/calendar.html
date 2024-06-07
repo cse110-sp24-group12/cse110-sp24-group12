@@ -3,73 +3,99 @@
 
 <head>
   <title>Calendar</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+  <link rel="stylesheet" type="text/css" href="styles/color-theme.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+  <link rel="stylesheet" type="text/css" href="styles/color-theme.css" />
+  <link rel="stylesheet" type="text/css" href="styles/markdown.css" />
   <link rel="stylesheet" type="text/css" href="styles/calendarStyle.css" />
-
+  <link rel="stylesheet" type="text/css" href="styles/task-list-style.css" />
 </head>
 
 <body>
+  <div id="navBar">
+    <div id="navBarLeftAlign">
+      <button id="dashboardLink" class="navButton">
+        <img id="threeLines" src="../source/images/dashboard-lines-icon.png">
+        <span id="streakCount">[Streak #]</span>
+        <img id="fireSprite" src="../source/images/fireSprite.png">
+      </button>
 
-
-  <div class="pageTop">
-    <a class="backLink" href="./index.html">&#8592; Back</a>
-    <button id="clearBtn" class="clearBtn">Press Me to Clear data</button>
-    <select class="monthBox" id="month">
-      <option value="0">January</option>
-      <option value="1">February</option>
-      <option value="2">March</option>
-      <option value="3">April</option>
-      <option value="4">May</option>
-      <option value="5">June</option>
-      <option value="6">July</option>
-      <option value="7">August</option>
-      <option value="8">September</option>
-      <option value="9">October</option>
-      <option value="10">November</option>
-      <option value="11">December</option>
-    </select>
-    <input class="yearBox" type="number" id="year" placeholder="Year">
-    <h1 class="centeredTitle">Calendar</h1>
+      <button id="taskListBtn" class="navButton">Task List</button>
+    </div>
+    <div id="navBarRightAlign">
+      <button id="helpButton" class="navButton">?</button>
+    </div>
   </div>
   <div class="calendarBox">
+    <div id="monthNav">
+      <select class="monthBox" id="month">
+        <option value="0">January</option>
+        <option value="1">February</option>
+        <option value="2">March</option>
+        <option value="3">April</option>
+        <option value="4">May</option>
+        <option value="5">June</option>
+        <option value="6">July</option>
+        <option value="7">August</option>
+        <option value="8">September</option>
+        <option value="9">October</option>
+        <option value="10">November</option>
+        <option value="11">December</option>
+      </select>
+      <input class="yearBox" type="number" id="year" placeholder="Year">
+    </div>
     <table id='calendar'>
     </table>
   </div>
   <!-- The Modal -->
   <div id="myModal" class="modal">
-
     <!-- Modal content -->
-    <div class="modalContent">
-      <span id = 'closeModal' class="close">&times;</span>
-      <p id="modalTxt">Display Date here</p>
-      <!-- input for title entry -->
-      <label for="entryTitle"></label>
-      <input id="entryTitle" type="text" class="entryTitle" placeholder="enter your title here">
-      <!-- textarea for markdown input -->
-      <label for="markdown"></label>
-      <textarea id="markdown" type="text" placeholder="Enter Markdown Entry Here!"></textarea>
-
-      <!-- buttons to save to markdown or send to -->
-      <div class="saveButton">
-        <button class="saveMarkdown" type="button" id="save-markdown">Save As Markdown</button>
-        <button class="saveTask" type="button" id="save-task">Save As Task List</button>
+    <div class="modalContent" >
+      <div id="topOfModal" class="modalBar">
+        <p id="displayDate">Month day, year</p>
+        <span id="closeModal" class="close">&times;</span>
+      </div>
+      <div id="modalTxt" class="modalBar" ></div>
+      <div id="titleContainer" class="modalBar" >
+          <input id="entryTitle" type="text" class="titleElement" placeholder="Enter your title here">
+          <button id="bookmarkButton" class="modalButton titleElement" ></button>
+      </div>
+      <div id="markdown-main-container" class="modalBar" >
+          <textarea id="markdown" class="markdownContainer" placeholder="Enter Markdown Entry Here!"></textarea>
+          <div id="markdown-container"></div>
+      </div>
+      <div id="saveButtonBox" class="modalBar" >
+          <button id="saveMarkdown" type="button" class="modalButton">Save Entry</button>
       </div>
     </div>
-
-  </div>
+</div>
 
   <!-- The Extra Modal -->
-  <div id="extraModal" class="extraModal">
+  <div id="extraModal" class="modal">
 
     <!-- Modal content -->
-    <div class="extraModalContent">
-      <span id = 'closeExtra' class="close">&times;</span>
-      <div id = 'extraButtons'></div>
+    <div id="extraModalContent" class="modalContent">
+      <span id='closeExtra' class="close">&times;</span>
+      <div id='extraButtons'></div>
       </div>
     </div>
 
   </div>
 
-  <script src="scripts/calendar.js"></script>
+  <div id="taskListModal" class="modal">
+    <div id="taskListModalContent" class="modalContent tasklist-modal-content">
+      <h1>Thanos's Gauntlet of Tasks</h1>
+      <h3>Conquer Your To-Do List, One Infinity Stone at a time</h3>
+      <task-list-widget data-file="data/tasklist/tasks.json"></task-list-widget>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+  <script type="module" src="scripts/task-list.js"></script>
+  <script type="text/javascript" src="scripts/calculateStreakHelper.js"></script>
+  <script type="module" src="scripts/calendar.js"></script>
+  <!-- Note that type=module is required to call functions from other files -->
 </body>
 
 </html>

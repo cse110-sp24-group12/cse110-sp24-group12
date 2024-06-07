@@ -1,0 +1,47 @@
+/* color-theme.css */
+
+/* Primary Colors */
+:root {
+    --primary-color: rgba(73, 65, 79, 0.60);
+    --primary-color-hover: rgba(50, 44, 56, 0.6);
+    --secondary-color: #887244; /* Gold color */
+    --secondary-color-hover: #745e2f;
+}
+
+/* Text Colors */
+:root {
+    --text-color: #fff;
+}
+
+/* Background Colors */
+:root {
+    --background-color: #120B1E;
+    --background-gradient: 
+        linear-gradient(220deg, rgba(255, 255, 255, 0.00) 30.34%, rgba(147, 139, 165, 0.60) 54.76%, rgba(103, 93, 129, 0.60) 68.86%, rgba(40, 26, 77, 0.60) 99.13%),
+        radial-gradient(464.91% 342.31% at 39.13% 24.61%, rgba(223, 178, 111, 0.00) 12%, #D5AC57 29.72%),
+        linear-gradient(220deg, rgba(40, 26, 77, 0.30), rgba(40, 26, 77, 0.30));
+    --background-color-hover: #00000020;
+}
+
+/* Button Colors */
+:root {
+    --button-primary-color: #887244;
+    --button-secondary-color: #1e7294;
+}
+
+/* Border Colors */
+:root {
+    --border-color: #ccc;
+    --border-color-dark: #888;
+}
+
+/* Link Colors */
+:root {
+    --link-color: #61bfc1;
+    --link-color-visited: #466b6c;
+}
+
+/* Shadow Colors */
+:root {
+    --primary-shadow: rgba(0, 0, 0, 0.25);
+}

@@ -5,54 +5,93 @@
     <link rel="stylesheet" href="styles/dashboard-page.css">
     <link rel="stylesheet" href="https://cdn.rawgit.com/wa0x6e/cal-heatmap/master/cal-heatmap.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/color-theme.css">
+    <link rel="stylesheet" href="styles/markdown.css">
+    <link rel="stylesheet" href="styles/dashboard-page.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/wa0x6e/cal-heatmap/master/cal-heatmap.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <div class="background-layer1">
-    <div class="background-layer2">
-    <div class="background-layer3">
-        <div class="containerbig2">
-        </div>
-        <br>  
-        <div class="container-wrapper">
-            <div class="containerbig">
-                <h3 class="my-heading">
-                    <span class="tabwithsmallline"></span>Overview of May 2024
-                </h3>
-                <div class="whitecontainer"> 
-                    <div class="container" id="graph-container">
+        <div class="background-layer2">
+            <div class="background-layer3 main-layout">
+                <div class="containerbig2">
+                    <div id="navBar">
+                        <div id="navBarLeftAlign">
+                            <button id="dashboardLink" class="navButton">
+                                <img id="threeLines" src="../source/images/dashboard-lines-icon.png"><span id="streakNumber" class="streakNumber"></span><img id="fireSprite" src="../source/images/fireSprite.png">
+                            </button>
+                            <img src="images/questionMark.png" alt="helpBox" class="clickable-image" id="triggerPopup">
+                        </div>
+                        <div class="helpBox">
+                            <div id="myModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <div class="help-section">
+                                        <b>Help</b>
+                                        <div class="section">
+                                            <p>Calendar</p>
+                                            <ul>
+                                                <li>to add an entry, click on the desired day</li>
+                                                <li class="indented">alternative: [ ctrl + _ ]</li>
+                                                <li>change the calendar view by clicking the dropdown menu and filling in the respective year</li>
+                                            </ul>
+                                        </div>
+                                        <div class="section">
+                                            <p>Dashboard</p>
+                                            <ul>
+                                                <li>View recent activity</li>
+                                                <li>View streaks</li>
+                                                <li>Bookmarked entries</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="navigation-arrows">
-                    <button id="arrow-left" class="arrow">&#8592;
-                    </button>
-                    <button id="arrow-right" class="arrow">&#8594;
-                    </button>
+                
+                <div class="container-wrapper">
+                    <div class="containerbig">
+                        <h3 class="my-heading">
+                            <span class="tabwithsmallline"></span>Overview of <select id="monthDropdown" class="month-dropdown"></select> 2024
+                        </h3>
+                        <div class="heatmap-container">
+                            <div class="whitecontainer">
+                                <div class="container" id="graph-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="containerbig5">
+                        <h3 class="my-heading"><span class="tabwithsmallline"></span>Streak Tokens</h3>
+                        <img id="streakImage" src="" alt="Streak Image">
+                    </div>
                 </div>
-            </div>
-            <div class="containerbig5"> 
-                <h3 class="my-heading"><span class="tabwithsmallline"></span>Streak</h3>
+                <!-- Bookmarked notes -->
+                <div class="containerbig4">
+                    <div id="bookmarked-entries">
+                        <h3 class="my-heading"><span class="tabwithsmallline"></span>List of Bookmarked Entries</h3>
+                    </div>
+                    <div class="containerbig6">
+                        <div id="bookmarked-entries-container"></div>
+                    </div>
+                </div>
+                <script src="https://d3js.org/d3.v3.min.js"></script>
+                <script src="https://cdn.rawgit.com/wa0x6e/cal-heatmap/master/cal-heatmap.min.js"></script>
+                <script src="scripts/calculateStreakHelper.js"></script>
+                <script src="scripts/dashboard.js"></script>
             </div>
         </div>
-
-
-    <!-- Bookmarked notes -->
-    <div class="containerbig4">
-    <div id="bookmarked-notes">
-        <h3 class="my-heading"><br><span class="tabwithsmallline"></span>List of Entries</h3>
-        <ul>
-            <li>Note 1</li>
-            <li>Note 2</li>
-            <li>Note 3</li>
-        </ul>
     </div>
-</div>
-
-    <a href="./index.html">Back</a>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
-    <script src="https://cdn.rawgit.com/wa0x6e/cal-heatmap/master/cal-heatmap.min.js"></script>
-    <script src="scripts/dashboard.js"></script>
-</div>
-</div>
-</div>
+    <div id="entryModal" class="modal">
+        <div class="modalContent">
+            <div id="markdown-main-container" class="modalBar">
+                <div id="markdown-container">
+                    <!-- The rendering of the markdown goes here -->
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

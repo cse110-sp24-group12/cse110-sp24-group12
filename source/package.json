@@ -4,12 +4,12 @@
   "version": "1.0.0",
   "scripts": {
     "start": "electron .",
-    "test": "npx playwright test",
+    "test": "npx playwright test --workers 1",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
-    "lint": "npx eslint .",
-    "lint-fix": "npx eslint . --fix"
+    "generate-docs": "node_modules/.bin/jsdoc --configure configs/.jsdoc.json --verbose",
+    "lint": "npx eslint --config configs/.eslintrc.json --ignore-path configs/.eslintignore .",
+    "lint-fix": "npx eslint --config configs/.eslintrc.json --ignore-path configs/.eslintignore . --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
@@ -33,10 +33,11 @@
   "type": "module",
   "main": "main.js",
   "dependencies": {
-    "electron": "^30.0.6",
+    "crypto-js": "^4.2.0",
+    "electron": "^30.0.2",
     "electron-squirrel-startup": "^1.0.0",
     "highlight.js": "^11.9.0",
     "markdown-it": "^14.1.0",
-    "uuid": "^9.0.1"
+    "markdown-it-task-lists": "^2.1.1"
   }
 }

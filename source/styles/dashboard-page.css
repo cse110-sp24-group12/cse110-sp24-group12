@@ -1,133 +1,179 @@
 /* styles/dashboard-page.css */
+/* Set the height and width of the HTML and body to 100%, and remove default margins and paddings */
 html {
     height: 100%;
-    width:100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: black;
-    overflow: hidden;
+    overflow: hidden; /* Hide overflow to prevent scrolling */
 }
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
-    background: rgba(105, 65, 177, 0.17);
+    /*padding: 20px;*/ /* Commented out padding */
+    background: rgba(105, 65, 177, 0.17); /* Set background with rgba color */
 }
-.containerbig{
 
-    background: #49414F;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
-    border-radius: 25px;
-    width: 650px;
-    height: 250px;
-    align-self: center;
-    margin-left: 75px;
-    justify-content: center;
-    padding-bottom: 40px;
+/* Main layout styling */
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    gap: 20px; /* Gap between child elements */
 }
-.containerbig2{
 
+/* Styling for main content containers */
+.containerbig {
     background: #49414F;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Add shadow */
+    border-radius: 25px; /* Rounded corners */
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+/* Styling for secondary containers */
+.containerbig2 {
+    background: #49414F;
+    width: 95%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     border-radius: 25px;
-    width: 1350px;
     height: 50px;
-    align-self: center;
+    align-self: center; /* Center horizontally */
     margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px; /* Margin at the top */
 }
-.containerbig3{
 
+.containerbig3 {
     background: #49414F;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     border-radius: 25px;
     width: 95.3%;
     height: 10%;
     align-items: center;
     margin-left: 2%;
-
 }
-.containerbig4{
 
+.containerbig4 {
     background: #49414F;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
-    border-radius: 25px;
-    width: 1275px;
-    height: 400px;
-    align-self: center;
-    margin-left: 75px;
-    justify-content: center;
-    padding-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0);
+    border-radius: 30px;
+    margin-left: 40px;
+    margin-right: 40px;
+    height: 100%;
+    margin-bottom: 40px; /* Margin at the bottom */
 }
-.containerbig5{
 
+.containerbig5 {
     background: #49414F;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     border-radius: 25px;
-    width:200px;
-    height: 250px;
-    align-self: center;
-    margin-left: 50px;
-    justify-content: center;
-    padding-bottom: 40px;
     flex: 1;
+    height: 100%;
 }
+
+.containerbig6 {
+    background: #49414F;
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    justify-content: center;
+    padding-bottom: 20px;
+    max-height: 300px; /* Max height for scroll */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    margin-top: 20px; /* Margin at the top */
+    border-radius: 25px;
+}
+
 .container-wrapper {
     display: flex;
-    width: 1350px;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px; /* Gap between child elements */
+    height: 40%;
+    min-height: 300px; /* Minimum height */
+    width: 95%;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px; /* Margin at the top */
 }
-.h3 {  
-    color: white;
-    
-  }
+
+/* Heading styling */
+.h3 {
+    color: white; /* White color for h3 elements */
+}
+
 .my-heading {
-    color: white;
+    color: white; /* White color for headings */
     font-size: large;
-    font-weight: 100;
-  }
+    font-weight: 100; /* Light font weight */
+}
+
 .tab {
     display: inline-block;
-    margin-left: 20px;
+    margin-left: 20px; /* Margin on the left */
 }
+
 .tabwithsmallline {
     display: inline-block;
-    margin-left: 20px; 
-    margin-top: 20px;
+    margin-left: 20px; /* Margin on the left */
+    margin-top: 20px; /* Margin at the top */
 }
+
+/* Container styling */
 .container {
     display: grid;
-    width:130px;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-gap: 4px;
+    width: 130px;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns */
+    grid-template-rows: repeat(5, 1fr); /* 5 rows */
+    grid-gap: 4px; /* Gap between grid items */
     padding: 4px;
     margin-left: 5px;
     margin-top: 7px;
-    flex:1;
-}
-.whitecontainer {
-    background: #2d2d44;
-    background-blend-mode:overlay ;
-    width:230px;
-    height:170px;
-    margin-left:200px;
-    margin-top: 10px;
-    background-color: #69697c; /* White background for the outer box */
-    padding: 5px; /* Padding to create some space inside the white container */
-    border-radius: 10px; /* Rounded corners for a smoother look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a 3D effect */
-    max-width: 400px; /* Adjust width as needed */
-   /* margin: 0 auto; /* Center the container horizontally */
+    flex: 1;
 }
 
+.heatmap-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* White container styling */
+.whitecontainer {
+    background: #2d2d44;
+    background-blend-mode: overlay;
+    width: 230px;
+    height: 170px;
+    background-color: #69697c; /* Gray background color */
+    padding: 5px; /* Padding inside the container */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for 3D effect */
+    max-width: 400px; /* Maximum width */
+    /* margin: 0 auto; /* Center the container horizontally */
+}
+
+/* Background layers styling */
 .background-layer1 {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(54, 36, 110, 0.3);
+    background: rgba(54, 36, 110, 0.3); /* Background color with transparency */
 }
+
 .background-layer2 {
     position: absolute;
     top: 0;
@@ -136,6 +182,7 @@ body {
     height: 100%;
     background: radial-gradient(464.91% 342.31% at 39.13% 24.61%, rgba(205, 164, 102, 0) 12%, #D5AC57 29.72%);
 }
+
 .background-layer3 {
     position: absolute;
     top: 0;
@@ -144,52 +191,367 @@ body {
     height: 100%;
     background: linear-gradient(220deg, rgba(255, 255, 255, 0.00) 30.34%, rgba(164, 147, 202, 0.6) 54.76%, rgba(81, 67, 114, 0.6) 68.86%, rgba(40, 26, 77, 0.60) 99.13%);
 }
-/*  */
+
+/* Styling for squares in the heatmap */
 .square {
     width: 25px;
     margin: 1px;
     height: 25px;
-    border-radius: 5px;
+    border-radius: 5px; /* Rounded corners */
 }
+
+/* Styling for headings */
 h1, h2 {
     margin: 0 0 20px 0;
-    font-weight: normal;
+    font-weight: normal; /* Normal font weight */
 }
-h2{
+
+h2 {
     font-size: small;
 }
-.inactive {
-    background-color: white;
+
+h7 {
+    text-align: right;
 }
+
+/* Styling for different activity levels */
+.inactive {
+    background-color: white; /* White background for inactive days */
+}
+
 .active {
-    background-color: #9effb8; /* GitHub's contribution graph green */
+    background-color: #9effb8; /* Light green for active days */
 }
 
 .more-active {
-    background-color: #61bd4f; /* Darker green for more contributions */
-}
-.most-active {
-    background-color: #0a6a34; /* Darker green for more contributions */
+    background-color: #61bd4f; /* Darker green for more active days */
 }
 
-#bookmarked-notes ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.most-active {
+    background-color: #0a6a34; /* Darkest green for most active days */
 }
+
+/* Styling for list items in bookmarked notes */
 #bookmarked-notes li {
     background: #fff;
     padding: 10px;
-    border: 1px solid #ddd;
-    margin-bottom: 5px;
-    border-radius: 4px;
+    border: 1px solid #ddd; /* Light gray border */
+    margin-bottom: 5px; /* Space below each item */
+    border-radius: 4px; /* Rounded corners */
 }
+
+/* Styling for links */
 a {
     display: inline-block;
-    margin-top: 20px;
-    color: #007bff;
-    text-decoration: none;
+    margin-top: 20px; /* Margin at the top */
+    color: #007bff; /* Blue color for links */
+    text-decoration: none; /* Remove underline */
 }
+
 a:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* Help section styling */
+.help-section {
+    display: block;
+    font-family: Inter;
+}
+
+.help-section b {
+    display: block;
+    font-size: 40px; /* Large font size */
+    padding-right: 40px;
+    margin-bottom: 10px; /* Space below */
+    font-family: Inter;
+}
+
+/* Help box styling */
+.helpBox {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    mix-blend-mode: overlay;
+}
+
+/* Navbar styling */
+#navBar {
+    margin-inline: 2%;
+    padding-inline: 2%;
+    align-items: center;
+    display: flex;
+}
+
+#navBarLeftAlign {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 15px; /* Space below */
+    margin-top: 5px; /* Space above */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h5 {
+    margin-top: 5px; /* Space above */
+}
+#navBarRightAlign {
+    flex: 1;
+    height: 100%;
+    text-align: right;
+    margin-bottom: 10px; /* Space below */
+}
+
+/* Button styling in navbar */
+.navButton {
+    flex: 1;
+    height: 40px;
+    max-width: 100px;
+    border-radius: 20px;
+    font-size: 18px;
+    background-color: #D5AC57;
+}
+
+/* Delete button styling */
+.delete-button {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 18px; /* Adjust size as needed */
+}
+
+/* Icons styling */
+#threeLines {
+    margin-right: 3px;
+    width: 25%;
+    margin-bottom: 0px;
+}
+
+#fireSprite {
+    height: 60%;
+}
+
+#helpButton {
+    width: 40px;
+}
+
+#streakImage {
+    width: auto; /* Adjust size as needed */
+    height: 50px;
+    display: block;
+    margin: 0;
+    margin-left: 20px;
+}
+
+#streakNumber {
+    margin-bottom: 20px;
+}
+
+.bookmark-icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.cross-icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+    float: right;
+}
+
+/* Entry container styling */
+.entry {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+    background-color: #fff; /* Background color for each entry */
+    border-radius: 5px; /* Rounded corners for each entry */
+    border: 1px solid #555; /* Border for each entry */
+    justify-content: space-between;
+}
+
+/* Entry details styling */
+.entry-details {
+    display: flex;
+    flex-direction: column;
+    color: #000;
+    flex-grow: 1; /* This allows the details to take up remaining space */
+}
+
+/* Bookmarked entries container styling */
+.bookmarked-entries-container {
+    background-color: #49414F;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 0px;
+    width: 1275px;
+    max-height: 4px;
+    align-self: center;
+    margin-left: 75px;
+    justify-content: center;
+    padding-bottom: 40px;
+    overflow-y: visible; /* Enable vertical scrolling */
+    padding: 10px;
+}
+
+.entry-title {
+    font-size: 16px;
+    margin: 0;
+    color: #000; /* Adjust color as needed */
+}
+
+.entry-date {
+    font-size: 14px;
+    color: #000;
+    margin-right: 10px; /* Space between date and delete button */
+    text-align: right;
+}
+
+.entry-date-delete {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0; /* This prevents shrinking of the date and delete button */
+}
+
+#bookmarked-entries {
+    padding: 10px;
+    color: #fff;
+    margin-top: 0px;
+    max-height: 300px; /* Increase height for better scroll functionality */
+    overflow-y: visible;
+}
+
+.my-heading {
+    color: #fff; /* Adjust color as needed */
+}
+
+/* Clickable image styling */
+.clickable-image {
+    height: 40px;
+    mix-blend-mode: overlay;
+    cursor: pointer;
+    color: #D5AC57;
+}
+
+.helpBox {
+    position: absolute;
+    top: 77px;
+    right: 50px;
+    mix-blend-mode: normal;
+}
+
+/* Modal styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.modalContent {
+    background-color: var(--secondary-color);
+    margin: 2% auto;
+    padding: 20px;
+    border: 0px solid var(--border-color-dark);
+    border-radius: 25px;
+    width: 80%; /* Could be more or less, depending on screen size */
+    height: 80%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    justify-content: center; /* Horizontally center the child elements */
+}
+
+#markdown-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+    height: 100%;
+    width: 100%;
+}
+
+/* Help section styling */
+.help-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    font-family: Inter;
+    background-color: #49414F;
+    border-radius: 10px;
+}
+
+.section p {
+    margin: 0 0 5px 0;
+    font-family: Inter;
+    font-size: 24px;
+}
+
+.section ul {
+    margin: 0;
+    padding-left: 20px;
+    font-family: Inter;
+}
+
+.help-section b {
+    display: block;
+    font-size: 40px;
+    color: white;
+    padding-right: 40px;
+    font-family: Inter;
+}
+
+.section ul li.indented {
+    color: white;
+    position: relative;
+    left: 20px;
+}
+
+.section {
+    color: white;
+    padding-left: 20px;
+}
+
+/* Close button styling */
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
