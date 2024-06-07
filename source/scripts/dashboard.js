@@ -57,10 +57,14 @@ function updateStreakImage(streakLength) {
         imagePath = 'images/3is.png';
     } else if (streakLength < 35) {
         imagePath = 'images/4is.png';
-    } else if (streakLength < 60) {
+    } else if (streakLength < 42) {
+        imagePath = 'images/5is.png';
+    } else if (streakLength < 49) {
         imagePath = 'images/6is.png';
-    } else {
+    } else if (streakLength < 60) {
         imagePath = 'images/7is.png';
+    } else {
+        imagePath = 'images/8is.png';
     }
 
     console.log('Setting image path to:', imagePath); // Debugging statement
