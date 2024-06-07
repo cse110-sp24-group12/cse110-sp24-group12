@@ -12,7 +12,7 @@ const dateConversion = (date) => {
 };
 /**
  * Renders the contribution graph for the specified month.
- * @param {Array} entries - Array of entry objects.
+ * @param {Array} entries -Array of entry objects.
  * @param {number} month - The month to render the graph for.
  */
 function renderGraph(entries, month) {
