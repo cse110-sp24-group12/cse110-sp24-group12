@@ -1,3 +1,8 @@
+/**
+ * Converts a date string from 'YYYY-MM-DD' format to 'MM-DD-YYYY' format.
+ * @param {string} date - The date string to convert.
+ * @returns {string} The converted date string.
+ */
 const dateConversion = (date) => {
     const parts = date.split('-');
     const month = parseInt(parts[1], 10);
@@ -5,7 +10,11 @@ const dateConversion = (date) => {
     const year = parseInt(parts[0], 10);
     return `${month}-${day}-${year}`;
 };
-
+/**
+ * Renders the contribution graph for the specified month.
+ * @param {Array} entries -Array of entry objects.
+ * @param {number} month - The month to render the graph for.
+ */
 function renderGraph(entries, month) {
     const container = document.getElementById('graph-container');
     container.innerHTML = ''; // Clear previous graph
@@ -43,7 +52,10 @@ function renderGraph(entries, month) {
         container.appendChild(square);
     }
 }
-
+/**
+ * Updates the streak image based on the current streak length.
+ * @param {number} streakLength - The length of the current streak.
+ */
 function updateStreakImage(streakLength) {
     const streakImage = document.getElementById('streakImage');
     let imagePath = '';
@@ -69,7 +81,10 @@ function updateStreakImage(streakLength) {
     console.log('Setting image path to:', imagePath); // Debugging statement
     streakImage.src = imagePath;
 }
-
+/**
+ * Updates the streak number and image based on the current streak length.
+ * @param {Array} entries - Array of entry objects.
+ */
 function updateStreak(entries) {
     const currentStreak = calculateConsecutiveDayStreak(entries);
     console.log('Calculated current streak:', currentStreak); // Debugging statement
@@ -85,7 +100,10 @@ function updateStreak(entries) {
     // Update streak image based on the current streak length
     updateStreakImage(currentStreak);
 }
-
+/**
+ * Opens a modal to display the content of an entry.
+ * @param {Object} entry - The entry object.
+ */
 async function openEntryModal(entry) {
     const modal = document.getElementById('entryModal');
     const contentInput = document.getElementById('markdown-container');
@@ -107,7 +125,6 @@ let entries;
 
 (async () => {
     try {
-        // Define the path to the JSON file
         // Define the path to the JSON file
         const jsonPath = 'data/entries.json';
 
