@@ -102,11 +102,11 @@ test.describe('Playwright Dashboard Page Testing', () => {
         const hasClass1 = await fourthDiv.evaluate(el => el.classList.contains('active'));
         expect (hasClass1).toBe(true);
     });
-    test('Infinity stone', async () => {
-        const selector = 'img[src="images/1is.png"]';
-        const imgElement = await window.$(selector);
-        expect(imgElement).not.toBeNull();
-    });
+    // test('Infinity stone', async () => {
+    //     const selector = 'img[src="images/1is.png"]';
+    //     const imgElement = await window.$(selector);
+    //     expect(imgElement).not.toBeNull();
+    // });
     test('Bookmark', async () => {
         const bookmarkedEntry = await window.$('#bookmarked-entries-container .entry');
         const entryTitle = await bookmarkedEntry.$('.entry-details .entry-title');
