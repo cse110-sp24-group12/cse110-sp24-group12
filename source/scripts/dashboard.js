@@ -78,7 +78,6 @@ function updateStreakImage(streakLength) {
     } else {
         imagePath = 'images/8is.png';
     }
-
     console.log('Setting image path to:', imagePath); // Debugging statement
     streakImage.src = imagePath;
 }
