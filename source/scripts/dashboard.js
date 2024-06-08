@@ -86,6 +86,9 @@ function updateStreakImage(streakLength) {
  * @param {Array} entries - Array of entry objects.
  */
 function updateStreak(entries) {
+    // Make a small change
+    let unusedVar;
+
     const currentStreak = calculateConsecutiveDayStreak(entries);
     console.log('Calculated current streak:', currentStreak); // Debugging statement
 
