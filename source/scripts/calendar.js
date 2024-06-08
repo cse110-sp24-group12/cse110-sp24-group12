@@ -217,6 +217,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dispatch the mouse click event on the element
         element.dispatchEvent(mouseClickEvent);
     }
+    // Function to close the popup
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+    // Function to open the popup
+    function openPopup(text) {
+        console.log(text);
+        const popUp = document.getElementById('popup');
+        popUp.style.display = 'block';
+        const textElement = document.getElementById('popupText');
+        console.log(textElement);
+        textElement.innerText = text;
+        textElement.style.color = 'black';
+    }
+    document.getElementById('closePopup').addEventListener('click', () => {
+        closePopup();
+    });
 
     // this is to remove the cmd enter keydown listener to fix duplicate save bug
     let keydownListener = null;
@@ -261,7 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
          * if they clicked on an old event, we should include new option, delete button
          * we should also make the name of the event unchangable, or at least ask for a confirmation
         */
-
         // pull elements from HTML for the modal window
         const modal = document.getElementById('myModal');
         const span = document.getElementById('closeModal');
@@ -318,9 +334,11 @@ document.addEventListener('DOMContentLoaded', () => {
             title.value.replace(/ /g, '_');
             title.value = replaceQuotesWithEntities(title.value);
             if (title.value === '') {
-                alert('You must add a title!'); // eslint-disable-line no-alert
+                // alert('You must add a title!'); // eslint-disable-line no-alert
+                console.log('must add title!');
+                openPopup('Must include a title!');// replace the alert because it was causing a bug
             } else if (title.value.includes('.')) {
-                alert('Cannot use "." within title, please update your title.'); // eslint-disable-line no-alert
+                openPopup('Title cannot include . symbol!');
             } else {
                 // We enter this else if we are ready to close and save
                 // close popup
