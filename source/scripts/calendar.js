@@ -217,6 +217,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dispatch the mouse click event on the element
         element.dispatchEvent(mouseClickEvent);
     }
+    // Function to close the popup
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
     // Function to open the popup
     function openPopup(text) {
         console.log(text);
@@ -226,15 +230,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(textElement);
         textElement.innerText = text;
         textElement.style.color = 'black';
-
     }
-    document.getElementById('closePopup').addEventListener('click', ()=>{
+    document.getElementById('closePopup').addEventListener('click', () => {
         closePopup();
     });
-    // Function to close the popup
-    function closePopup() {
-        document.getElementById('popup').style.display = 'none';
-    }
 
     // this is to remove the cmd enter keydown listener to fix duplicate save bug
     let keydownListener = null;
@@ -335,11 +334,9 @@ document.addEventListener('DOMContentLoaded', () => {
             title.value.replace(/ /g, '_');
             title.value = replaceQuotesWithEntities(title.value);
             if (title.value === '') {
-                //alert('You must add a title!'); // eslint-disable-line no-alert
+                // alert('You must add a title!'); // eslint-disable-line no-alert
                 console.log('must add title!');
-                openPopup('Must include a title!');//replace the alert because it was causing a bug
-
-                
+                openPopup('Must include a title!');// replace the alert because it was causing a bug
             } else if (title.value.includes('.')) {
                 openPopup('Title cannot include . symbol!');
             } else {
