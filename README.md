@@ -1,4 +1,7 @@
-# Infinite Loops Developer Journal
+# Infinite Loops Developer Journal  
+
+[Public Final Project Video](https://youtu.be/bcrQLURp_nw?feature=shared)  
+[Private Final Project Video](https://youtu.be/qf45UFxQeCw?feature=shared)
 
 Welcome to the Thanos Developer Journal! Inspired by the formidable and balanced approach of the Mad Titan, our journal is designed to help developers keep track of their daily accomplishments, challenges, and progress. This project aims to provide a structured and efficient way to document your development journey, much like Thanos’ methodical quest for the Infinity Stones. Whether you're conquering bugs, building new features, or refining your code, the Thanos Developer Journal is your companion in achieving balance and excellence in your workflow.
 
